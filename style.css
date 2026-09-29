@@ -166,12 +166,12 @@ body {
     transform: translateY(-2px);
 }
 
-/* --- Nút "Trò chuyện" / "Game mini" / "Tính năng" (nut2, nut3, nut4) --- */
-.nut2, .nut3, .nut4 {
+/* --- Nút "Trò chuyện" / "Game mini" / "Tính năng" / "CHi tiết"(nut2, nut3, nut4) --- */
+.nut2, .nut3, .nut4, .nut5 {
     display: flex;
     transition: all 0.3s ease;
 }
-.nut2 a, .nut3 a, .nut4 a {
+.nut2 a, .nut3 a, .nut4 a, .nut5 a {
     color: white;
     text-decoration: none;
     font-size: 10px;
@@ -179,7 +179,7 @@ body {
     padding: 10px 20px;
     border-radius: 10px;
 }
-.nut2:hover a, .nut3:hover a, .nut4:hover a {
+.nut2:hover a, .nut3:hover a, .nut4:hover a, .nut5:hover a{
     background: linear-gradient(to right, #000000, #808080);
     transform: translateY(-2px);
 }
@@ -756,12 +756,12 @@ img {
         height: 45px;
     }
 
-    .nut0, .nut0chon, .nut1, .nut1chon, .nut2, .nut2chon, .nut3, .nut4, .nut4chon {
+    .nut0, .nut0chon, .nut1, .nut1chon, .nut2, .nut2chon, .nut3, .nut4, .nut4chon, .nut5, .nut5chon {
         margin-left: 0;
     }
 
     .nut0 a, .nut0chon a, .nut1 a, .nut1chon a,
-    .nut2 a, .nut2chon a, .nut3 a, .nut4 a, .nut4chon a {
+    .nut2 a, .nut2chon a, .nut3 a, .nut4 a, .nut4chon a, .nut5 a, .nut5chon {
         font-size: 12px;
         padding: 8px 12px;
     }
@@ -849,7 +849,7 @@ img {
     }
 
     .nut0 a, .nut0chon a, .nut1 a, .nut1chon a,
-    .nut2 a, .nut2chon a, .nut3 a, .nut4 a, .nut4chon a {
+    .nut2 a, .nut2chon a, .nut3 a, .nut4 a, .nut4chon a, .nut5, .nut5 a {
         font-size: 11px;
         padding: 6px 10px;
     }
