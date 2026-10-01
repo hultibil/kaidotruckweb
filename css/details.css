@@ -1,5 +1,12 @@
+
+/*==========================================================================
+   CSS CHUNG CHO CÁC TRANG DETAILS VÀ BLOG
+   (Dùng chung 1 file details.css để tránh trùng lặp code)
+   ==========================================================================*/
+
 /* ==================== 1. FONT ==================== */
 @import url('fonts.css');
+@import url('css/nav.css');
 
 
 /* ==================== 2. BASE / RESET ==================== */
@@ -142,12 +149,12 @@ body {
     transform: translateY(-2px);
 }
 
-/* --- Nút "Trò chuyện" / "Game mini" / "Tính năng" / "CHi tiết"(nut2, nut3, nut4) --- */
-.nut2, .nut3, .nut4, .nut5 {
+/* --- Nút "Trò chuyện" / "Game mini" / "Tính năng" / "CHi tiết"(nut2, nut3, nut4, nut5, nut6) --- */
+.nut2, .nut3, .nut4, .nut5, .nut6 {
     display: flex;
     transition: all 0.3s ease;
 }
-.nut2 a, .nut3 a, .nut4 a, .nut5 a {
+.nut2 a, .nut3 a, .nut4 a, .nut5 a, .nut6 a {
     color: white;
     text-decoration: none;
     font-size: 10px;
@@ -155,54 +162,17 @@ body {
     padding: 10px 20px;
     border-radius: 10px;
 }
-.nut2:hover a, .nut3:hover a, .nut4:hover a, .nut5:hover a{
+.nut2:hover a, .nut3:hover a, .nut4:hover a, .nut5:hover a, .nut6:hover a {
     background: linear-gradient(to right, #000000, #808080);
-    transform: translateY(-2px);
-}
-
-/* --- nut2 khi đang là trang hiện tại --- */
-.nut2chon {
-    display: flex;
-    transition: all 0.3s ease;
-}
-.nut2chon a {
-    color: white;
-    text-decoration: none;
-    font-size: 10px;
-    background: linear-gradient(to right, #000000, #808080);
-    padding: 10px 20px;
-    border-radius: 10px;
-}
-.nut2chon:hover a {
-    background: linear-gradient(to right, #ff416c, #ff4b2b);
-    transform: translateY(-2px);
-}
-
-/* --- nut4 khi đang là trang hiện tại --- */
-.nut4chon {
-    display: flex;
-    transition: all 0.3s ease;
-}
-.nut4chon a {
-    color: white;
-    text-decoration: none;
-    font-size: 10px;
-    background: linear-gradient(to right, #000000, #808080);
-    padding: 10px 20px;
-    border-radius: 10px;
-}
-.nut4chon:hover a {
-    background: linear-gradient(to right, #ff416c, #ff4b2b);
     transform: translateY(-2px);
 }
 
 /*nút 5 là trang hiện tại (nút chi tiết) */
-
-.nut5chon {
+.nut5chon, .nut6chon {
     display: flex;
     transition: all 0.3s ease;
 }
-.nut5chon a {
+.nut5chon a, .nut6chon a {
     color: white;
     text-decoration: none;
     font-size: 10px;
@@ -210,7 +180,7 @@ body {
     padding: 10px 20px;
     border-radius: 10px;
 }
-.nut5chon:hover a {
+.nut5chon:hover a, .nut6chon:hover a {
     background: linear-gradient(to right, #ff416c, #ff4b2b);
     transform: translateY(-2px);
 }
@@ -253,12 +223,11 @@ body {
     font-size: 24px;
     font-weight: bold;
     cursor: pointer;
-
-    transition: background 0.5s ease;
+    transition: background 0.3s ease;
 }
 /* Hover */
 .xe-details summary:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 75, 43, 1.0);
 }
 /* Hiệu ứng xuất hiện */
 @keyframes moNoiDung {
@@ -398,12 +367,12 @@ body {
         height: 45px;
     }
 
-    .nut0, .nut0chon, .nut1, .nut1chon, .nut2, .nut2chon, .nut3, .nut4, .nut4chon, .nut5, .nut5chon {
+    .nut0, .nut0chon, .nut1, .nut1chon, .nut2, .nut2chon, .nut3, .nut4, .nut4chon, .nut5, .nut5chon, .nut6, .nut6chon {
         margin-left: 0;
     }
 
     .nut0 a, .nut0chon a, .nut1 a, .nut1chon a,
-    .nut2 a, .nut2chon a, .nut3 a, .nut4 a, .nut4chon a, .nut5, .nut5chon {
+    .nut2 a, .nut2chon a, .nut3 a, .nut4 a, .nut4chon a, .nut5, .nut5chon, .nut6, .nut6chon {
         font-size: 12px;
         padding: 8px 12px;
     }
@@ -468,7 +437,7 @@ body {
     }
 
     .nut0 a, .nut0chon a, .nut1 a, .nut1chon a,
-    .nut2 a, .nut2chon a, .nut3 a, .nut4 a, .nut4chon a, .nut5 a, .nut5chon a {
+    .nut2 a, .nut2chon a, .nut3 a, .nut4 a, .nut4chon a, .nut5 a, .nut5chon a, .nut6 a, .nut6chon a {
         font-size: 11px;
         padding: 6px 10px;
     }

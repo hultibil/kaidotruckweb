@@ -1,0 +1,278 @@
+
+@import url('css/fonts.css');
+@import url('nav.css');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: 'HarmonyOS Sans', sans-serif;
+
+    background: #111827;
+    color: white;
+}
+
+
+/* Bảng đăng nhập / đăng ký */
+.auth-box {
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+    padding: 40px;
+
+    background: #1f2937;
+
+    border: 1px solid #374151;
+    border-radius: 15px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Tiêu đề */
+.auth-box h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+/* Ô nhập */
+.input-group {
+    margin-bottom: 18px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 7px;
+
+    font-size: 14px;
+    color: #d1d5db;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+
+    border: 1px solid #4b5563;
+    border-radius: 8px;
+
+    background: #111827;
+    color: white;
+
+    outline: none;
+}
+
+.input-group input:focus {
+    border-color: #9ca3af;
+}
+
+/* Nút */
+.auth-box button {
+    width: 100%;
+    padding: 12px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #e5e7eb;
+    color: #111827;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.auth-box button:hover {
+    background: white;
+}
+
+/* Chuyển trang */
+.auth-box p {
+    text-align: center;
+    margin-top: 20px;
+
+    color: #9ca3af;
+    font-size: 14px;
+}
+
+.auth-box a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.auth-box a:hover {
+    text-decoration: underline;
+}
+
+/* Về trang chủ */
+.back-home {
+    display: block;
+
+    margin-top: 18px;
+
+    text-align: center;
+
+    color: #9ca3af !important;
+    font-size: 14px;
+    font-weight: normal !important;
+}
+
+
+/* ==============================
+   TRANG TÀI KHOẢN
+   ============================== */
+
+.account-page {
+    min-height: 100vh;
+    display: block;
+    padding: 100px;
+
+    background: #111827;
+}
+
+/* Khung toàn trang */
+.account-container {
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 0 auto;
+    padding: 50px 30px;
+}
+
+/* Tiêu đề */
+.account-header {
+    margin-bottom: 30px;
+}
+
+.account-header h1 {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.account-header p {
+    color: #9ca3af;
+}
+
+/* Các khung thông tin */
+.account-card {
+    width: 100%;
+
+    background: #1f2937;
+
+    padding: 25px;
+    margin-bottom: 25px;
+
+    border: 1px solid #374151;
+    border-radius: 12px;
+}
+
+.account-card h2 {
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+/* Thông tin */
+.account-info {
+    width: 100%;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 17px 5px;
+
+    border-bottom: 1px solid #374151;
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-row span {
+    color: #9ca3af;
+}
+
+.info-row strong {
+    color: white;
+}
+
+/* Các nút chức năng */
+.account-actions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.account-actions button {
+    padding: 14px;
+
+    border: 1px solid #4b5563;
+    border-radius: 8px;
+
+    background: #111827;
+    color: white;
+
+    font-size: 15px;
+
+    cursor: pointer;
+}
+
+.account-actions button:hover {
+    background: #374151;
+}
+
+/* Chân trang */
+.account-footer {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 30px;
+}
+
+.account-footer a {
+    color: #d1d5db;
+    text-decoration: none;
+}
+
+.account-footer a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+/* Điện thoại */
+@media (max-width: 600px) {
+
+    .account-container {
+        padding: 30px 15px;
+    }
+
+    .account-header h1 {
+        font-size: 26px;
+    }
+
+    .info-row {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .account-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .account-footer {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
