@@ -321,7 +321,6 @@ body {
     background: linear-gradient(to right, #000000, #808080);
 }
 
-
 /* ==================== BLOG POST ==================== */
 
 .blog-header {
@@ -401,8 +400,6 @@ body {
 }
 
 
-
-
 /* ==================== 17. RESPONSIVE / MOBILE ====================
    Tất cả @media gộp về 1 chỗ duy nhất ở cuối file, xếp từ màn hình
    rộng thu hẹp dần xuống (1000px -> 768px -> 480px), để không phải
@@ -418,7 +415,6 @@ body {
 }
 
 @media (max-width: 768px) {
-
     body {
         padding: 15px;
     }
