@@ -382,6 +382,169 @@ form button:hover {
     background: linear-gradient(to right, #000000, #808080);
 }
 
+/* ==================== 16. KAIDO CAROUSEL ==================== */
+
+.kaido-carousel {
+    position: relative;
+    width: 100%;
+    max-width: 1400px;
+    height: 420px;
+    margin: 25px auto;
+    overflow: hidden;
+    border-radius: 18px;
+    background: #111827;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+.kaido-slides {
+    width: 100%;
+    height: 100%;
+}
+
+.kaido-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.7s ease;
+}
+
+.kaido-slide.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.kaido-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Lớp tối phủ lên ảnh */
+.kaido-slide::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.75),
+        rgba(0, 0, 0, 0.25),
+        rgba(0, 0, 0, 0.05)
+    );
+}
+
+/* Nội dung banner */
+.kaido-banner-content {
+    position: absolute;
+    z-index: 2;
+    left: 7%;
+    top: 50%;
+    transform: translateY(-50%);
+    max-width: 600px;
+    color: white;
+}
+
+.kaido-banner-content span {
+    display: inline-block;
+    margin-bottom: 8px;
+    padding: 5px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    font-size: 13px;
+    letter-spacing: 2px;
+}
+
+.kaido-banner-content h2 {
+    margin: 5px 0 12px;
+    font-size: 38px;
+    font-weight: 800;
+}
+
+.kaido-banner-content p {
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #e5e7eb;
+}
+
+.kaido-banner-content a {
+    display: inline-block;
+    padding: 11px 22px;
+    border-radius: 8px;
+    background: white;
+    color: #111827;
+    text-decoration: none;
+    font-weight: 700;
+    transition: 0.25s;
+}
+
+.kaido-banner-content a:hover {
+    transform: translateY(-2px);
+    background: #e5e7eb;
+}
+
+/* Nút trái phải */
+.kaido-prev,
+.kaido-next {
+    position: absolute;
+    z-index: 3;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 45px;
+    height: 45px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(0, 0, 0, 0.45);
+    color: white;
+
+    font-size: 20px;
+    cursor: pointer;
+
+    transition: 0.25s;
+}
+
+.kaido-prev {
+    left: 18px;
+}
+
+.kaido-next {
+    right: 18px;
+}
+
+.kaido-prev:hover,
+.kaido-next:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Dots */
+.kaido-dots {
+    position: absolute;
+    z-index: 3;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    gap: 8px;
+}
+
+.kaido-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.45);
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.kaido-dot.active {
+    width: 25px;
+    border-radius: 10px;
+    background: white;
+}
+
 /* ---- 6.3 Điện thoại đứng (<= 480px): lưới sản phẩm 1 cột ---- */
 @media (max-width: 480px) {
 
@@ -405,6 +568,35 @@ form button:hover {
         text-align: center;
     }
 }
+
+/* Mobile */
+@media (max-width: 700px) {
+
+    .kaido-carousel {
+        height: 300px;
+        border-radius: 12px;
+    }
+
+    .kaido-banner-content {
+        left: 6%;
+        right: 6%;
+    }
+
+    .kaido-banner-content h2 {
+        font-size: 24px;
+    }
+
+    .kaido-banner-content p {
+        font-size: 13px;
+    }
+
+    .kaido-prev,
+    .kaido-next {
+        width: 38px;
+        height: 38px;
+    }
+}
+
 
 /* ==================== 7. NÚT CHUYỂN HƯỚNG (.chuyentiep) ====================
    Rule này cũng có mặt y hệt trong style.css (dùng ở các trang khác).

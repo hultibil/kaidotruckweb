@@ -45,6 +45,59 @@
     </div>
 
     <h1>Kaido Shop</h1>
+
+
+<!-- ==================== KAIDO PROMOTION CAROUSEL ==================== -->
+<div class="kaido-carousel">
+
+    <div class="kaido-slides">
+
+        <div class="kaido-slide active">
+            <img src="image/xev5trinhchieu.jpg" alt="KAIDO">
+            <div class="kaido-banner-content">
+                <span>KAIDO RC</span>
+                <h2>XE RC V5 — PHIÊN BẢN MỚI</h2>
+                <p>Khám phá những cải tiến mới nhất của KAIDO.</p>
+                <a href="index.html">XEM NGAY</a>
+            </div>
+        </div>
+
+        <div class="kaido-slide">
+            <img src="image/loatrinhchieu.jpg" alt="KAIDO DIY">
+            <div class="kaido-banner-content">
+                <span>KAIDO DIY</span>
+                <h2>DIY — TẬN DỤNG & SÁNG TẠO</h2>
+                <p>Biến linh kiện cũ thành những sản phẩm hữu ích.</p>
+                <a href="khac.html">KHÁM PHÁ</a>
+            </div>
+        </div>
+
+        <div class="kaido-slide">
+            <img src="image/chiptrinhchieu.jpg" alt="KAIDO RC">
+            <div class="kaido-banner-content">
+                <span>DIY COMPONENTS</span>
+                <h2>LINH KIỆN BAO LA, GIÁ DỄ TIẾP CẬN, BẢO HÀNH DÀI HẠN, UY TÍN CHẤT LƯỢNG</h2>
+                <p>Xây dựng với dự án DIY của riêng bạn.</p>
+                <a href="#dautrang">MUA SẮM</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Nút điều hướng -->
+    <button class="kaido-prev" onclick="kaidoChangeSlide(-1)">❮</button>
+    <button class="kaido-next" onclick="kaidoChangeSlide(1)">❯</button>
+
+    <!-- Chấm chỉ slide -->
+    <div class="kaido-dots">
+        <span class="kaido-dot active" onclick="kaidoCurrentSlide(0)"></span>
+        <span class="kaido-dot" onclick="kaidoCurrentSlide(1)"></span>
+        <span class="kaido-dot" onclick="kaidoCurrentSlide(2)"></span>
+    </div>
+
+</div>
+
+<div id="dautrang">
 <h3 class="text">Linh kiện điện tử</h3>
 <div class="shop-list">
 
@@ -308,7 +361,7 @@
             Xem chi tiết
         </a>
     </article>
-
+</div>
 </div>
 
 

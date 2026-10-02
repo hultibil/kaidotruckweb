@@ -116,3 +116,83 @@ function clickSound() {
     const sound = new Audio("sound/ClickNext.mp3");
     sound.play();
 }
+
+/* ==================== SLIDE TRÌNH CHIẾU TRÊN shop.html ==================== */
+/* ==================== TỰ ĐỘNG CHAYHJ TRWN SLIDE ==================== */
+let kaidoSlideIndex = 0;
+let kaidoAutoSlide;
+
+function kaidoShowSlide(index) {
+
+    const slides = document.querySelectorAll(".kaido-slide");
+    const dots = document.querySelectorAll(".kaido-dot");
+
+    if (slides.length === 0) return;
+
+    if (index >= slides.length) {
+        kaidoSlideIndex = 0;
+    }
+
+    if (index < 0) {
+        kaidoSlideIndex = slides.length - 1;
+    }
+
+    slides.forEach(slide => {
+        slide.classList.remove("active");
+    });
+
+    dots.forEach(dot => {
+        dot.classList.remove("active");
+    });
+
+    slides[kaidoSlideIndex].classList.add("active");
+
+    if (dots[kaidoSlideIndex]) {
+        dots[kaidoSlideIndex].classList.add("active");
+    }
+}
+
+function kaidoChangeSlide(direction) {
+
+    kaidoSlideIndex += direction;
+
+    kaidoShowSlide(kaidoSlideIndex);
+
+    kaidoResetAutoSlide();
+}
+
+function kaidoCurrentSlide(index) {
+
+    kaidoSlideIndex = index;
+
+    kaidoShowSlide(kaidoSlideIndex);
+
+    kaidoResetAutoSlide();
+}
+
+function kaidoStartAutoSlide() {
+
+    kaidoAutoSlide = setInterval(() => {
+
+        kaidoSlideIndex++;
+
+        kaidoShowSlide(kaidoSlideIndex);
+
+    }, 5000);
+}
+
+function kaidoResetAutoSlide() {
+
+    clearInterval(kaidoAutoSlide);
+
+    kaidoStartAutoSlide();
+}
+
+/* Khởi động */
+document.addEventListener("DOMContentLoaded", () => {
+
+    kaidoShowSlide(kaidoSlideIndex);
+
+    kaidoStartAutoSlide();
+
+});
