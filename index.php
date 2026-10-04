@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +22,7 @@
             <img class="logo" src="image/kaidologo.jpg">
             <h2>Trang chủ giới thiệu Kaido</h2>
             <div class="nut0chon">
-                <a href="index.html" onclick="clickSound()">Trang chủ</a>
+                <a href="index.php" onclick="clickSound()">Trang chủ</a>
             </div>
             <div class="nut1"> <!--Add CSS-->
                 <a href="khac.html" onclick="clickSound()">Dự án khác</a>
@@ -39,6 +43,21 @@
                 <a href="gamemini.html" onclick="clickSound()">Game mini</a>
             </div>
     </div>
+<!--Khu vực chào mừng-->
+    <?php
+if (isset($_SESSION['username'])) {
+    echo '<div class="xinchao">';
+    echo 'Xin chào, <strong>' .
+         htmlspecialchars($_SESSION['username']) .
+         '</strong> 👋';
+    echo '</div>';
+
+} else {
+    echo '<div class="xinchao">';
+    echo 'Bạn chưa đăng nhập';
+    echo '</div>';
+}?>
+
     <h1 class="silver">KAIDO - The powerful mini engine</h1>
     <div class="gioithieu">
         <p>Mục lục</p>
