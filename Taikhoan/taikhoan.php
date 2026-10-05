@@ -3,7 +3,7 @@
 
 session_start();
 
-require_once "db.php";
+require_once "../db.php";
 
 
 // Nếu chưa đăng nhập
@@ -20,7 +20,7 @@ if (!isset($_SESSION['user_id'])) {
 
     <title>Chưa đăng nhập - Kaido</title>
 
-    <link rel="stylesheet" href="css/dndk.css">
+    <link rel="stylesheet" href="../css/dndk.css">
 </head>
 
 <body>
@@ -36,12 +36,12 @@ if (!isset($_SESSION['user_id'])) {
     <div class="account-actions">
 
         <!-- Nút này bạn tự đổi liên kết -->
-        <a href="tienich.html">
+        <a href="../tienich.html">
             Trở về
         </a>
 
         <!-- Dẫn tới trang đăng nhập -->
-        <a href="dangnhap.html">
+        <a href="../Taikhoan/dangnhap.html">
             Đăng nhập
         </a>
 
@@ -298,7 +298,7 @@ if (!$user) {
 
         <div class="account-footer">
 
-            <a href="tienich.html">
+            <a href="../tienich.html">
                 ← Trở về
             </a>
 

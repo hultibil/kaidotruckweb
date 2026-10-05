@@ -25,7 +25,7 @@ session_start();
                 <a href="index.php" onclick="clickSound()">Trang chủ</a>
             </div>
             <div class="nut1"> <!--Add CSS-->
-                <a href="khac.html" onclick="clickSound()">Dự án khác</a>
+                <a href="khac/khac.html" onclick="clickSound()">Dự án khác</a>
             </div>
             <div class="nut2">
                 <a href="hoithem.html" onclick="clickSound()">Trò chuyện</a>
@@ -34,10 +34,10 @@ session_start();
                 <a href="tienich.html" onclick="clickSound()">Tài khoản/Mua hàng</a>
             </div>
             <div class="nut5">
-                <a href="details.html">Chi tiết kỹ thuật</a>
+                <a href="kythuat/details.html">Chi tiết kỹ thuật</a>
             </div>
             <div class="nut6">
-                <a href="blog.html" onclick="clickSound()">Tin tức</a>
+                <a href="Blog/blog.html" onclick="clickSound()">Tin tức</a>
             </div>
             <div class="nut3">
                 <a href="gamemini.html" onclick="clickSound()">Game mini</a>
@@ -297,5 +297,5 @@ window.addEventListener("load", function() {
 });
 </script>
 </body>
-    <script src="slide.js"></script>
+    <script src="css/slide.js"></script>
 </html>
