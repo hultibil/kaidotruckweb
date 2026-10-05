@@ -3,7 +3,7 @@
 
 session_start();
 
-require_once "db.php";
+require_once "../db.php";
 
 
 $username = trim($_POST['username'] ?? '');
@@ -60,7 +60,7 @@ if ($user['role'] === 'admin') {
 
 } else {
 
-    header("Location: index.php");
+    header("Location: ../index.php");
 
 }
 

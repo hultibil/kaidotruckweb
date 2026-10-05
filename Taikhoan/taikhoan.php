@@ -86,7 +86,6 @@ if (!$user) {
 <head>
 
     <meta charset="UTF-8">
-
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
@@ -94,10 +93,7 @@ if (!$user) {
 
     <title>Tài khoản của bạn</title>
 
-    <link
-        rel="stylesheet"
-        href="css/dndk.css"
-    >
+    <link rel="stylesheet" href="../css/dndk.css">
 
 </head>
 
@@ -111,7 +107,7 @@ if (!$user) {
 
         <img
             class="logo"
-            src="image/kaidologo.jpg"
+            src="../image/kaidologo.jpg"
             alt="Kaido"
         >
 
@@ -121,49 +117,49 @@ if (!$user) {
 
 
         <div class="nut0">
-            <a href="index.php">
+            <a href="../index.php">
                 Trang chủ
             </a>
         </div>
 
 
         <div class="nut1">
-            <a href="khac.html">
+            <a href="../khac/khac.html">
                 Dự án khác
             </a>
         </div>
 
 
         <div class="nut2">
-            <a href="hoithem.html">
+            <a href="../hoithem.html">
                 Trò chuyện
             </a>
         </div>
 
 
         <div class="nut4chon">
-            <a href="tienich.html">
+            <a href="../tienich.html">
                 Tài khoản/Mua hàng
             </a>
         </div>
 
 
         <div class="nut5">
-            <a href="details.html">
+            <a href="../kythuat/details.html">
                 Chi tiết kỹ thuật
             </a>
         </div>
 
 
         <div class="nut6">
-            <a href="blog.html">
+            <a href="../Blog/blog.html">
                 Tin tức
             </a>
         </div>
 
 
         <div class="nut3">
-            <a href="gamemini.html">
+            <a href="../gamemini.html">
                 Game mini
             </a>
         </div>

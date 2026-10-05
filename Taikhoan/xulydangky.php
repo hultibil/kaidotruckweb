@@ -1,7 +1,7 @@
 
 <?php
 
-require_once "db.php";
+require_once "../db.php";
 
 $username = trim($_POST['username'] ?? '');
 $email = trim($_POST['email'] ?? '');
@@ -62,7 +62,7 @@ if ($stmt->execute()) {
     echo "
     <script>
         alert('Đăng ký thành công!');
-        window.location.href = '../dangnhap.html';
+        window.location.href = 'dangnhap.html';
     </script>
     ";
 
