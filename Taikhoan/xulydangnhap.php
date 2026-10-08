@@ -56,7 +56,7 @@ $_SESSION['role'] = $user['role'];
 // Đăng nhập thành công
 if ($user['role'] === 'admin') {
 
-    header("Location: quantri.php");
+    header("Location: ../quantri.php");
 
 } else {
 
