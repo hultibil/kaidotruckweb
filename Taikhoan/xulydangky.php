@@ -1,5 +1,31 @@
 
 <?php
+session_start();
+
+// Chỉ xử lý khi form được gửi bằng POST
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header("Location: dangky.php");
+    exit;
+}
+
+// Kiểm tra CAPTCHA trước khi tạo tài khoản
+$expectedCaptcha = $_SESSION['captcha_answer'] ?? null;
+$submittedCaptcha = $_POST['captcha_answer'] ?? '';
+
+// CAPTCHA chỉ được sử dụng một lần
+unset($_SESSION['captcha_answer']);
+
+$captchaIsValid = (
+    $expectedCaptcha !== null &&
+    is_string($submittedCaptcha) &&
+    ctype_digit($submittedCaptcha) &&
+    (int)$submittedCaptcha === (int)$expectedCaptcha
+);
+
+if (!$captchaIsValid) {
+    header("Location: dangky.php?error=captcha");
+    exit;
+}
 
 require_once "../db.php";
 
@@ -67,7 +93,6 @@ if ($stmt->execute()) {
     ";
 
 } else {
-
     echo "Đăng ký thất bại: " . $conn->error;
 
 }

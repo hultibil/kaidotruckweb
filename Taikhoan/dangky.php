@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+// Tạo CAPTCHA phép tính đơn giản cho mỗi lần mở trang
+$captcha_a = random_int(1, 9);
+$captcha_b = random_int(1, 9);
+$_SESSION['captcha_answer'] = $captcha_a + $captcha_b;
+
+// Hiện thông báo nếu CAPTCHA ở lần gửi trước không đúng
+$captcha_error = isset($_GET['error']) && $_GET['error'] === 'captcha';
+?>
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -17,6 +28,10 @@
 <div class="auth-box">
 
     <h2>Đăng ký tài khoản</h2>
+
+    <?php if ($captcha_error): ?>
+        <p role="alert">CAPTCHA không đúng hoặc đã hết hạn. Vui lòng thử lại.</p>
+    <?php endif; ?>
 
     <form action="xulydangky.php" method="POST">
 
@@ -75,6 +90,15 @@
 
         </div>
 
+        <div class="input-group">
+            <label>CAPTCHA: <?= $captcha_a ?> + <?= $captcha_b ?> = ?</label>
+            <input
+                type="number"
+                name="captcha_answer"
+                placeholder="Nhập kết quả phép tính"
+                required
+            >
+        </div>
 
         <button type="submit">
             Đăng ký

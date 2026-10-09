@@ -298,6 +298,9 @@ if (!$user) {
                 ← Trở về
             </a>
 
+            <a href="xoataikhoan.php">
+                Xóa tài khoản
+            </a>
 
             <a href="dangxuat.php">
                 Đăng xuất

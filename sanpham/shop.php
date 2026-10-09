@@ -1,9 +1,28 @@
 <?php
 // 1. Nhúng file kết nối cơ sở dữ liệu
-require_once '../db.php'; // Thay đổi đường dẫn tới db.php cho đúng cấu trúc thư mục của bạn
+require_once '../db.php'; // Điều chỉnh lại đường dẫn file db.php nếu cần (ví dụ: 'db.php')
 
-// 2. Truy vấn lấy tất cả sản phẩm từ Database
-$sql = "SELECT * FROM products ORDER BY id DESC";
+// 2. Lấy tham số category_id và search từ URL (nếu có)
+$category_id = isset($_GET['category_id']) ? (int)$_GET['category_id'] : 0;
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+
+// 3. Lấy danh sách tất cả Danh mục để tạo các nút bấm
+$cat_sql = "SELECT * FROM categories ORDER BY id ASC";
+$cat_result = mysqli_query($conn, $cat_sql);
+
+// 4. Xây dựng câu truy vấn SQL động dựa vào điều kiện Lọc & Tìm kiếm
+$sql = "SELECT * FROM products WHERE 1=1";
+
+if ($category_id > 0) {
+    $sql .= " AND category_id = " . $category_id;
+}
+
+if (!empty($search)) {
+    $search_clean = mysqli_real_escape_string($conn, $search);
+    $sql .= " AND (name LIKE '%$search_clean%' OR description LIKE '%$search_clean%')";
+}
+
+$sql .= " ORDER BY id DESC";
 $result = mysqli_query($conn, $sql);
 ?>
 <!DOCTYPE html>
@@ -14,6 +33,75 @@ $result = mysqli_query($conn, $sql);
     <link rel="icon" href="../image/kaidoLogomini.png">
     <title>Kaido Shop</title>
     <link rel="stylesheet" href="../css/shop.css">
+    <!-- CHÚ Ý: CSS RIÊNG CHO THANH LỌC TÌM KIẾM -->
+    <style>
+        /* CSS cho Thanh Tìm kiếm và Nút Phân loại */
+        .filter-section {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        /* Ô tìm kiếm */
+        .search-box {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            max-width: 500px;
+        }
+        .search-box input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .search-box input:focus {
+            border-color: #ff5722;
+        }
+        .search-box button {
+            padding: 10px 20px;
+            background: #ff5722;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .search-box button:hover {
+            background: #e64a19;
+        }
+
+        /* Hàng nút bấm phân loại */
+        .category-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .cat-btn {
+            padding: 8px 18px;
+            background-color: #f1f1f1;
+            color: #333;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: 500;
+            border: 1px solid #ccc;
+            transition: all 0.3s ease;
+        }
+        .cat-btn:hover, .cat-btn.active {
+            background-color: #ff5722;
+            color: #fff;
+            border-color: #ff5722;
+        }
+    </style>
 </head>
 <body>
 
@@ -78,53 +166,75 @@ $result = mysqli_query($conn, $sql);
 </div>
 
 <div id="dautrang">
-<h3 class="text">Danh sách sản phẩm</h3>
-<div class="shop-list">
 
-    <?php 
-    // 3. Vòng lặp lấy dữ liệu từ MySQL và sinh thẻ sản phẩm tự động
-    if ($result && mysqli_num_rows($result) > 0): 
-        while ($row = mysqli_fetch_assoc($result)): 
-            // Xử lý hiển thị trạng thái
-            $status_text = "Còn hàng";
-            if ($row['status'] == 'out_of_stock' || $row['stock'] <= 0) {
-                $status_text = "Đã hết hàng";
-            } elseif ($row['status'] == 'hidden') {
-                continue; // Bỏ qua không hiển thị nếu bị ẩn
-            }
-    ?>
+    <!-- ==================== KHU VỰC TÌM KIẾM & PHÂN LOẠI ==================== -->
+    <div class="filter-section">
+        <!-- 1.2 Tìm kiếm sản phẩm -->
+        <form action="shop.php#dautrang" method="GET" class="search-box">
+            <?php if ($category_id > 0): ?>
+                <input type="hidden" name="category_id" value="<?php echo $category_id; ?>">
+            <?php endif; ?>
+            <input type="text" name="search" placeholder="Nhập tên sản phẩm cần tìm..." value="<?php echo htmlspecialchars($search); ?>">
+            <button type="submit">Tìm kiếm</button>
+        </form>
 
-        <article class="product-card">
-            <div class="product-image">
-                <!-- Hiển thị ảnh sản phẩm từ thư mục image -->
-                <img src="../image/<?php echo htmlspecialchars($row['image']); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>">
-            </div>
-            
-            <h2><?php echo htmlspecialchars($row['name']); ?></h2>
-
-            <p><?php echo htmlspecialchars($row['description']); ?></p>
-
-            <p>
-                Giá: <strong><?php echo number_format($row['price'], 0, ',', '.'); ?> VNĐ</strong>
-            </p>
-
-            <p>
-                Tình trạng: <?php echo $status_text; ?>
-            </p>
-
-            <!-- Chuyển hướng kèm ID sản phẩm để xem chi tiết -->
-            <a href="details.php?id=<?php echo $row['id']; ?>">
-                Xem chi tiết
+        <!-- 1.2 Phân loại sản phẩm -->
+        <div class="category-buttons">
+            <!-- Nút Tất cả -->
+            <a href="shop.php#dautrang" class="cat-btn <?php echo ($category_id == 0) ? 'active' : ''; ?>">
+                Tất cả
             </a>
-        </article>
 
-    <?php 
-        endwhile; 
-    else: 
-    ?>
-        <p>Hiện chưa có sản phẩm nào trong cửa hàng.</p>
-    <?php endif; ?>
-</div>
+            <!-- Lấy các danh mục từ bảng categories -->
+            <?php if ($cat_result && mysqli_num_rows($cat_result) > 0): ?>
+                <?php while ($cat = mysqli_fetch_assoc($cat_result)): ?>
+                    <a href="shop.php?category_id=<?php echo $cat['id']; ?><?php echo !empty($search) ? '&search='.urlencode($search) : ''; ?>#dautrang" 
+                       class="cat-btn <?php echo ($category_id == $cat['id']) ? 'active' : ''; ?>">
+                        <?php echo htmlspecialchars($cat['name']); ?>
+                    </a>
+                <?php endwhile; ?>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <h3 class="text">
+        <?php 
+        if (!empty($search)) {
+            echo "Kết quả tìm kiếm cho: \"" . htmlspecialchars($search) . "\"";
+        } else {
+            echo "Danh sách sản phẩm";
+        }
+        ?>
+    </h3>
+
+    <div class="shop-list">
+        <?php 
+        if ($result && mysqli_num_rows($result) > 0): 
+            while ($row = mysqli_fetch_assoc($result)): 
+                if ($row['status'] == 'hidden') continue;
+
+                $status_text = "Còn hàng";
+                if ($row['status'] == 'out_of_stock' || $row['stock'] <= 0) {
+                    $status_text = "Đã hết hàng";
+                }
+        ?>
+            <article class="product-card">
+                <div class="product-image">
+                    <img src="../image/<?php echo htmlspecialchars($row['image']); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>">
+                </div>
+                <h2><?php echo htmlspecialchars($row['name']); ?></h2>
+                <p><?php echo htmlspecialchars($row['description']); ?></p>
+                <p>Giá: <strong><?php echo number_format($row['price'], 0, ',', '.'); ?> VNĐ</strong></p>
+                <p>Tình trạng: <?php echo $status_text; ?></p>
+                <a href="chitietsanpham.php?id=<?php echo $row['id']; ?>">Xem chi tiết</a>
+            </article>
+        <?php 
+            endwhile; 
+        else: 
+        ?>
+            <p style="text-align: center; width: 100%;">Không tìm thấy sản phẩm nào phù hợp.</p>
+        <?php endif; ?>
+    </div>
 
 <div class="thongtinweb">
     <h4 class="text">Bạn đang ở cuối trang.</h4>
@@ -161,7 +271,7 @@ $result = mysqli_query($conn, $sql);
     </div>
 
     <div class="quaylai">
-        <a href="giohang.html">Giỏ hàng của bạn</a>
+        <a href="giohang.php">Giỏ hàng của bạn</a>
     </div>
 
     <script>
