@@ -124,8 +124,8 @@
 
         <div class="cart-footer">
             <a href="../tienich.html">← Trở về</a>
-            <a href="../sanpham/shop.html">KAIDO SHOP</a>
-            <a href="../donhang/donhang.html">Xem đơn hàng</a>
+            <a href="../sanpham/shop.php">KAIDO SHOP</a>
+            <a href="../donhang/donhang.php">Xem đơn hàng</a>
         </div>
 
     </div>

@@ -271,7 +271,7 @@ $result = mysqli_query($conn, $sql);
     </div>
 
     <div class="quaylai">
-        <a href="giohang.php">Giỏ hàng của bạn</a>
+        <a href="../Giohang/giohang.php">Giỏ hàng của bạn</a>
     </div>
 
     <script>

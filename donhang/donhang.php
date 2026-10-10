@@ -117,8 +117,8 @@
 
         <div class="cart-footer">
             <a href="../tienich.html">← Trở về</a>
-            <a href="../sanpham/shop.html">KAIDO SHOP</a>
-            <a href="../Giohang/giohang.html">Giỏ hàng →</a>
+            <a href="../sanpham/shop.php">KAIDO SHOP</a>
+            <a href="../Giohang/giohang.php">Giỏ hàng →</a>
         </div>
     </div>
 </body>
