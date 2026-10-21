@@ -1,9 +1,23 @@
+<?php
+require_once '../../db.php';
+
+$sql = "SELECT id, username, email, role, created_at
+        FROM users
+        ORDER BY id DESC";
+
+$result = $conn->query($sql);
+
+if (!$result) {
+    die("Lỗi truy vấn: " . $conn->error);
+}
+?>
+
 <!doctype html>
 <html lang="en">
   <!--begin::Head-->
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Kaido Admin - Người dùng</title>
+    <title>Kaido Users - Danh sách người dùng</title>
 
     <!--begin::Theme Init (prevents flash of incorrect theme on load, #6043)-->
     <script>
@@ -1214,368 +1228,61 @@
                             <th class="text-end">Actions</th>
                           </tr>
                         </thead>
+                        <!--Hiện thị danh sách người dùng từ cơ sở dữ liệu-->
                         <tbody>
-                          <tr>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <img
-                                  src="./assets/img/user1-128x128.jpg"
-                                  alt=""
-                                  class="img-size-32 rounded-circle me-2"
-                                />
-                                <span class="fw-medium">Alexander Pierce</span>
-                              </div>
-                            </td>
-                            <td>alexander.pierce@example.com</td>
-                            <td>
-                              <span class="badge text-bg-danger"> Administrator </span>
-                            </td>
-                            <td>
-                              <span class="badge text-bg-success">Active</span>
-                            </td>
-                            <td>Mar 12, 2025</td>
-                            <td class="text-end">
-                              <div class="btn-group btn-group-sm">
-                                <button
-                                  type="button"
-                                  class="btn btn-outline-secondary"
-                                  aria-label="Edit Alexander Pierce"
-                                >
-                                  <i class="bi bi-pencil" aria-hidden="true"> </i>
-                                </button>
-                                <button
-                                  type="button"
-                                  class="btn btn-outline-danger"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#modal-delete-user"
-                                  aria-label="Delete Alexander Pierce"
-                                >
-                                  <i class="bi bi-trash" aria-hidden="true"> </i>
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <img
-                                  src="./assets/img/user3-128x128.jpg"
-                                  alt=""
-                                  class="img-size-32 rounded-circle me-2"
-                                />
-                                <span class="fw-medium">Sarah Bullock</span>
-                              </div>
-                            </td>
-                            <td>sarah.bullock@example.com</td>
-                            <td>
-                              <span class="badge text-bg-primary">Editor</span>
-                            </td>
-                            <td>
-                              <span class="badge text-bg-success">Active</span>
-                            </td>
-                            <td>Apr 3, 2025</td>
-                            <td class="text-end">
-                              <div class="btn-group btn-group-sm">
-                                <button
-                                  type="button"
-                                  class="btn btn-outline-secondary"
-                                  aria-label="Edit Sarah Bullock"
-                                >
-                                  <i class="bi bi-pencil" aria-hidden="true"> </i>
-                                </button>
-                                <button
-                                  type="button"
-                                  class="btn btn-outline-danger"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#modal-delete-user"
-                                  aria-label="Delete Sarah Bullock"
-                                >
-                                  <i class="bi bi-trash" aria-hidden="true"> </i>
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <img
-                                  src="./assets/img/user6-128x128.jpg"
-                                  alt=""
-                                  class="img-size-32 rounded-circle me-2"
-                                />
-                                <span class="fw-medium">Daniel Cooper</span>
-                              </div>
-                            </td>
-                            <td>daniel.cooper@example.com</td>
-                            <td>
-                              <span class="badge text-bg-info">Author</span>
-                            </td>
-                            <td>
-                              <span class="badge text-bg-warning">Pending</span>
-                            </td>
-                            <td>Apr 28, 2025</td>
-                            <td class="text-end">
-                              <div class="btn-group btn-group-sm">
-                                <button
-                                  type="button"
-                                  class="btn btn-outline-secondary"
-                                  aria-label="Edit Daniel Cooper"
-                                >
-                                  <i class="bi bi-pencil" aria-hidden="true"> </i>
-                                </button>
-                                <button
-                                  type="button"
-                                  class="btn btn-outline-danger"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#modal-delete-user"
-                                  aria-label="Delete Daniel Cooper"
-                                >
-                                  <i class="bi bi-trash" aria-hidden="true"> </i>
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <img
-                                  src="./assets/img/user4-128x128.jpg"
-                                  alt=""
-                                  class="img-size-32 rounded-circle me-2"
-                                />
-                                <span class="fw-medium">Nora Vans</span>
-                              </div>
-                            </td>
-                            <td>nora.vans@example.com</td>
-                            <td>
-                              <span class="badge text-bg-primary">Editor</span>
-                            </td>
-                            <td>
-                              <span class="badge text-bg-success">Active</span>
-                            </td>
-                            <td>May 9, 2025</td>
-                            <td class="text-end">
-                              <div class="btn-group btn-group-sm">
-                                <button
-                                  type="button"
-                                  class="btn btn-outline-secondary"
-                                  aria-label="Edit Nora Vans"
-                                >
-                                  <i class="bi bi-pencil" aria-hidden="true"> </i>
-                                </button>
-                                <button
-                                  type="button"
-                                  class="btn btn-outline-danger"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#modal-delete-user"
-                                  aria-label="Delete Nora Vans"
-                                >
-                                  <i class="bi bi-trash" aria-hidden="true"> </i>
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <img
-                                  src="./assets/img/user7-128x128.jpg"
-                                  alt=""
-                                  class="img-size-32 rounded-circle me-2"
-                                />
-                                <span class="fw-medium">Jane Holland</span>
-                              </div>
-                            </td>
-                            <td>jane.holland@example.com</td>
-                            <td>
-                              <span class="badge text-bg-secondary"> Subscriber </span>
-                            </td>
-                            <td>
-                              <span class="badge text-bg-success">Active</span>
-                            </td>
-                            <td>May 21, 2025</td>
-                            <td class="text-end">
-                              <div class="btn-group btn-group-sm">
-                                <button
-                                  type="button"
-                                  class="btn btn-outline-secondary"
-                                  aria-label="Edit Jane Holland"
-                                >
-                                  <i class="bi bi-pencil" aria-hidden="true"> </i>
-                                </button>
-                                <button
-                                  type="button"
-                                  class="btn btn-outline-danger"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#modal-delete-user"
-                                  aria-label="Delete Jane Holland"
-                                >
-                                  <i class="bi bi-trash" aria-hidden="true"> </i>
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <img
-                                  src="./assets/img/user8-128x128.jpg"
-                                  alt=""
-                                  class="img-size-32 rounded-circle me-2"
-                                />
-                                <span class="fw-medium">Kenneth Miles</span>
-                              </div>
-                            </td>
-                            <td>kenneth.miles@example.com</td>
-                            <td>
-                              <span class="badge text-bg-info">Author</span>
-                            </td>
-                            <td>
-                              <span class="badge text-bg-danger"> Suspended </span>
-                            </td>
-                            <td>Jun 2, 2025</td>
-                            <td class="text-end">
-                              <div class="btn-group btn-group-sm">
-                                <button
-                                  type="button"
-                                  class="btn btn-outline-secondary"
-                                  aria-label="Edit Kenneth Miles"
-                                >
-                                  <i class="bi bi-pencil" aria-hidden="true"> </i>
-                                </button>
-                                <button
-                                  type="button"
-                                  class="btn btn-outline-danger"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#modal-delete-user"
-                                  aria-label="Delete Kenneth Miles"
-                                >
-                                  <i class="bi bi-trash" aria-hidden="true"> </i>
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <img
-                                  src="./assets/img/user2-160x160.jpg"
-                                  alt=""
-                                  class="img-size-32 rounded-circle me-2"
-                                />
-                                <span class="fw-medium"> Nadia Carmichael </span>
-                              </div>
-                            </td>
-                            <td>nadia.carmichael@example.com</td>
-                            <td>
-                              <span class="badge text-bg-secondary"> Subscriber </span>
-                            </td>
-                            <td>
-                              <span class="badge text-bg-success">Active</span>
-                            </td>
-                            <td>Jun 15, 2025</td>
-                            <td class="text-end">
-                              <div class="btn-group btn-group-sm">
-                                <button
-                                  type="button"
-                                  class="btn btn-outline-secondary"
-                                  aria-label="Edit Nadia Carmichael"
-                                >
-                                  <i class="bi bi-pencil" aria-hidden="true"> </i>
-                                </button>
-                                <button
-                                  type="button"
-                                  class="btn btn-outline-danger"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#modal-delete-user"
-                                  aria-label="Delete Nadia Carmichael"
-                                >
-                                  <i class="bi bi-trash" aria-hidden="true"> </i>
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <img
-                                  src="./assets/img/user5-128x128.jpg"
-                                  alt=""
-                                  class="img-size-32 rounded-circle me-2"
-                                />
-                                <span class="fw-medium">Marcus Reed</span>
-                              </div>
-                            </td>
-                            <td>marcus.reed@example.com</td>
-                            <td>
-                              <span class="badge text-bg-primary">Editor</span>
-                            </td>
-                            <td>
-                              <span class="badge text-bg-warning">Pending</span>
-                            </td>
-                            <td>Jun 24, 2025</td>
-                            <td class="text-end">
-                              <div class="btn-group btn-group-sm">
-                                <button
-                                  type="button"
-                                  class="btn btn-outline-secondary"
-                                  aria-label="Edit Marcus Reed"
-                                >
-                                  <i class="bi bi-pencil" aria-hidden="true"> </i>
-                                </button>
-                                <button
-                                  type="button"
-                                  class="btn btn-outline-danger"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#modal-delete-user"
-                                  aria-label="Delete Marcus Reed"
-                                >
-                                  <i class="bi bi-trash" aria-hidden="true"> </i>
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <img
-                                  src="./assets/img/avatar5.png"
-                                  alt=""
-                                  class="img-size-32 rounded-circle me-2"
-                                />
-                                <span class="fw-medium">Elena Weber</span>
-                              </div>
-                            </td>
-                            <td>elena.weber@example.com</td>
-                            <td>
-                              <span class="badge text-bg-secondary"> Subscriber </span>
-                            </td>
-                            <td>
-                              <span class="badge text-bg-success">Active</span>
-                            </td>
-                            <td>Jul 1, 2025</td>
-                            <td class="text-end">
-                              <div class="btn-group btn-group-sm">
-                                <button
-                                  type="button"
-                                  class="btn btn-outline-secondary"
-                                  aria-label="Edit Elena Weber"
-                                >
-                                  <i class="bi bi-pencil" aria-hidden="true"> </i>
-                                </button>
-                                <button
-                                  type="button"
-                                  class="btn btn-outline-danger"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#modal-delete-user"
-                                  aria-label="Delete Elena Weber"
-                                >
-                                  <i class="bi bi-trash" aria-hidden="true"> </i>
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
+    <?php if ($result->num_rows > 0): ?>
+        <?php while ($user = $result->fetch_assoc()): ?>
+            <tr>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <div class="img-size-32 rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-2">
+                            <i class="bi bi-person-fill"></i>
+                        </div>
+                        <span class="fw-medium">
+                            <?= htmlspecialchars($user['username']) ?>
+                        </span>
+                    </div>
+                </td>
+
+                <td>
+                    <?= htmlspecialchars($user['email']) ?>
+                </td>
+
+                <td>
+                    <?php
+                    $role = $user['role'];
+                    $roleClass = ($role === 'admin')
+                        ? 'text-bg-danger'
+                        : 'text-bg-primary';
+                    ?>
+                    <span class="badge <?= $roleClass ?>">
+                        <?= htmlspecialchars($role) ?>
+                    </span>
+                </td>
+
+                <td>
+                    <span class="badge text-bg-success">
+                        Đang hoạt động
+                    </span>
+                </td>
+
+                <td>
+                    <?= htmlspecialchars($user['created_at'] ?? '') ?>
+                </td>
+
+                <td class="text-end">
+                    <span class="text-secondary">—</span>
+                </td>
+            </tr>
+        <?php endwhile; ?>
+    <?php else: ?>
+        <tr>
+            <td colspan="6" class="text-center py-4">
+                Chưa có người dùng nào.
+            </td>
+        </tr>
+    <?php endif; ?>
+</tbody>
                       </table>
                     </div>
                     <!-- /.table-responsive -->
