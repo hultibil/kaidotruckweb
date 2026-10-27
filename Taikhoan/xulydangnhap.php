@@ -46,6 +46,7 @@ if (!password_verify($password, $user['password'])) {
 
 
 // Tạo session
+session_regenerate_id(true);
 $_SESSION['user_id'] = $user['id'];
 
 $_SESSION['username'] = $user['username'];

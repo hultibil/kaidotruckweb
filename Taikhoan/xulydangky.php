@@ -30,13 +30,14 @@ if (!$captchaIsValid) {
 require_once "../db.php";
 
 $username = trim($_POST['username'] ?? '');
+$full_name = trim($_POST['full_name'] ?? '');
 $email = trim($_POST['email'] ?? '');
 $password = $_POST['password'] ?? '';
 $confirm_password = $_POST['confirm_password'] ?? '';
 
 
 // Kiểm tra dữ liệu
-if ($username === '' || $email === '' || $password === '') {
+if ($username === '' || $full_name === '' || $email === '' || $password === '') {
     die("Vui lòng nhập đầy đủ thông tin.");
 }
 
@@ -70,16 +71,17 @@ $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
 // Thêm tài khoản
 $sql = "INSERT INTO users
-        (username, email, password, role)
-        VALUES (?, ?, ?, 'user')";
+        (username, email, password, full_name, role)
+        VALUES (?, ?, ?, ?, 'user')";
 
 $stmt = $conn->prepare($sql);
 
 $stmt->bind_param(
-    "sss",
+    "ssss",
     $username,
     $email,
-    $password_hash
+    $password_hash,
+    $full_name
 );
 
 

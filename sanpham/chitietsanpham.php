@@ -11,9 +11,9 @@ if ($product_id <= 0) {
 }
 
 // 3. Truy vấn lấy thông tin sản phẩm và Tên danh mục (dùng JOIN)
-$sql_product = "SELECT p.*, c.name AS category_name 
-                FROM products p 
-                JOIN categories c ON p.category_id = c.id 
+$sql_product = "SELECT p.*, c.name AS category_name
+                FROM products p
+                JOIN categories c ON p.category_id = c.id
                 WHERE p.id = $product_id LIMIT 1";
 $res_product = mysqli_query($conn, $sql_product);
 $product = mysqli_fetch_assoc($res_product);
@@ -33,7 +33,7 @@ $res_specs = mysqli_query($conn, $sql_specs);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../image/kaidoLogomini.png">
-    <title><?php echo htmlspecialchars($product['name']); ?> - Kaido Shop</title>
+    <title><?php echo htmlspecialchars($product['product_name']); ?> - Kaido Shop</title>
     <link rel="stylesheet" href="../css/shop.css">
     <style>
         /* CSS cho trang chi tiết sản phẩm */
@@ -147,32 +147,34 @@ $res_specs = mysqli_query($conn, $sql_specs);
     
     <!-- Ảnh sản phẩm -->
     <div class="detail-image">
-        <img src="../image/<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
+    <?php $img = trim($product['image_path'] ?? ''); ?>
+    <?php if ($img !== '' && file_exists(__DIR__ . '/../image/' . $img)): ?>
+        <img src="../image/<?php echo htmlspecialchars($img); ?>" alt="<?php echo htmlspecialchars($product['product_name']); ?>">
+    <?php else: ?>
+        <div class="no-image">Chưa có ảnh minh họa</div>
+    <?php endif; ?>
+</div>
+
+<div class="detail-info">
+    <span class="category-badge">Danh mục: <?php echo htmlspecialchars($product['category_name']); ?></span>
+    <h2><?php echo htmlspecialchars($product['product_name']); ?></h2>
+
+    <div class="price"><?php echo number_format($product['price'], 0, ',', '.'); ?> VNĐ</div>
+
+    <div class="stock-status">
+        Tình trạng:
+        <?php if ($product['stock_qty'] > 0 && $product['status'] == 'active'): ?>
+            <span class="in-stock">Còn hàng (<?php echo $product['stock_qty']; ?> sản phẩm)</span>
+        <?php else: ?>
+            <span class="out-stock">Hết hàng</span>
+        <?php endif; ?>
     </div>
 
-    <!-- Thông tin chính -->
-    <div class="detail-info">
-        <span class="category-badge">Danh mục: <?php echo htmlspecialchars($product['category_name']); ?></span>
-        <h2><?php echo htmlspecialchars($product['name']); ?></h2>
-        
-        <div class="price">
-            <?php echo number_format($product['price'], 0, ',', '.'); ?> VNĐ
-        </div>
-
-        <div class="stock-status">
-            Tình trạng: 
-            <?php if ($product['stock'] > 0 && $product['status'] == 'active'): ?>
-                <span class="in-stock">Còn hàng (<?php echo $product['stock']; ?> sản phẩm)</span>
-            <?php else: ?>
-                <span class="out-stock">Hết hàng</span>
-            <?php endif; ?>
-        </div>
-
-        <div class="description-box">
-            <h3>Mô tả sản phẩm:</h3>
-            <p><?php echo nl2br(htmlspecialchars($product['description'])); ?></p>
-        </div>
+    <div class="description-box">
+        <h3>Mô tả sản phẩm:</h3>
+        <p><?php echo nl2br(htmlspecialchars($product['description'])); ?></p>
     </div>
+</div>
 
     <!-- Thông số kỹ thuật (Lấy từ bảng product_specs) -->
     <div class="specs-section">

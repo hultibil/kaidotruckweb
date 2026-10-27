@@ -168,6 +168,22 @@ form button:hover {
     margin-top: 30px;
 }
 
+.no-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 180px;
+    background: #3a3a3a;
+    color: #aaa;
+    border: 2px dashed #666;
+    border-radius: 8px;
+    font-style: italic;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
 /* ==================== 5. THẺ SẢN PHẨM (.product-card) ==================== */
 .product-card {
     background: rgba(255, 255, 255, 0.05);

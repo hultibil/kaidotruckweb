@@ -48,6 +48,19 @@ $captcha_error = isset($_GET['error']) && $_GET['error'] === 'captcha';
 
         </div>
 
+         <div class="input-group">
+
+            <label>Họ và tên</label>
+
+            <input
+                type="text"
+                name="full_name"
+                placeholder="Nhập họ và tên"
+                required
+            >
+
+        </div>
+
 
         <div class="input-group">
 

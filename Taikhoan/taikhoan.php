@@ -190,70 +190,46 @@ if (!$user) {
         <!-- ==================== THÔNG TIN ==================== -->
 
         <div class="account-card">
-
             <h2>
                 Thông tin tài khoản
             </h2>
+           <div class="account-info">
 
+    <div class="info-row">
+        <span>Tên đăng nhập</span>
+        <strong><?php echo htmlspecialchars($user['username']); ?></strong>
+    </div>
 
-            <div class="account-info">
+    <div class="info-row">
+        <span>Họ và tên</span>
+        <strong><?php echo htmlspecialchars($user['full_name'] ?? '') ?: 'Chưa cập nhật'; ?></strong>
+    </div>
 
+    <div class="info-row">
+        <span>Email</span>
+        <strong><?php echo htmlspecialchars($user['email']); ?></strong>
+    </div>
 
-                <div class="info-row">
+    <div class="info-row">
+        <span>Số điện thoại</span>
+        <strong><?php echo htmlspecialchars($user['phone'] ?? '') ?: 'Chưa cập nhật'; ?></strong>
+    </div>
 
-                    <span>
-                        Tên đăng nhập
-                    </span>
+    <div class="info-row">
+        <span>Vai trò</span>
+        <strong><?php echo htmlspecialchars($user['role']); ?></strong>
+    </div>
 
-                    <strong>
-                        <?php echo htmlspecialchars($user['username']); ?>
-                    </strong>
+    <div class="info-row">
+        <span>Ngày tham gia</span>
+        <strong>
+            <?php echo !empty($user['created_at'])
+                ? date("d/m/Y", strtotime($user['created_at']))
+                : 'Chưa rõ'; ?>
+        </strong>
+    </div>
 
-                </div>
-
-
-                <div class="info-row">
-
-                    <span>
-                        Email
-                    </span>
-
-                    <strong>
-                        <?php echo htmlspecialchars($user['email']); ?>
-                    </strong>
-
-                </div>
-
-
-                <div class="info-row">
-
-                    <span>
-                        Vai trò
-                    </span>
-
-                    <strong>
-                        <?php echo htmlspecialchars($user['role']); ?>
-                    </strong>
-
-                </div>
-
-
-                <div class="info-row">
-
-                    <span>
-                        Ngày tham gia
-                    </span>
-
-                    <strong>
-                        <?php echo date("d/m/Y", strtotime($user['created_at'])); ?>
-                    </strong>
-
-                </div>
-
-
-            </div>
-
-        </div>
+</div>
 
 
 

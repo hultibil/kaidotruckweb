@@ -3,7 +3,7 @@ session_start();
 
 // Bắt buộc phải đăng nhập mới được vào trang này
 if (!isset($_SESSION['user_id'])) {
-    header("Location: dangnhap.php");
+    header("Location: dangnhap.html");
     exit;
 }
 

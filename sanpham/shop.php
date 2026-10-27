@@ -19,7 +19,7 @@ if ($category_id > 0) {
 
 if (!empty($search)) {
     $search_clean = mysqli_real_escape_string($conn, $search);
-    $sql .= " AND (name LIKE '%$search_clean%' OR description LIKE '%$search_clean%')";
+    $sql .= " AND (product_name LIKE '%$search_clean%' OR description LIKE '%$search_clean%')";
 }
 
 $sql .= " ORDER BY id DESC";
@@ -208,32 +208,37 @@ $result = mysqli_query($conn, $sql);
     </h3>
 
     <div class="shop-list">
-        <?php 
-        if ($result && mysqli_num_rows($result) > 0): 
-            while ($row = mysqli_fetch_assoc($result)): 
-                if ($row['status'] == 'hidden') continue;
+        <?php
+if ($result && mysqli_num_rows($result) > 0):
+    while ($row = mysqli_fetch_assoc($result)):
+        if ($row['status'] == 'hidden') continue;
 
-                $status_text = "Còn hàng";
-                if ($row['status'] == 'out_of_stock' || $row['stock'] <= 0) {
-                    $status_text = "Đã hết hàng";
-                }
-        ?>
-            <article class="product-card">
-                <div class="product-image">
-                    <img src="../image/<?php echo htmlspecialchars($row['image']); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>">
-                </div>
-                <h2><?php echo htmlspecialchars($row['name']); ?></h2>
-                <p><?php echo htmlspecialchars($row['description']); ?></p>
-                <p>Giá: <strong><?php echo number_format($row['price'], 0, ',', '.'); ?> VNĐ</strong></p>
-                <p>Tình trạng: <?php echo $status_text; ?></p>
-                <a href="chitietsanpham.php?id=<?php echo $row['id']; ?>">Xem chi tiết</a>
-            </article>
-        <?php 
-            endwhile; 
-        else: 
-        ?>
-            <p style="text-align: center; width: 100%;">Không tìm thấy sản phẩm nào phù hợp.</p>
-        <?php endif; ?>
+        $status_text = "Còn hàng";
+        if ($row['status'] == 'out_of_stock' || $row['stock_qty'] <= 0) {
+            $status_text = "Đã hết hàng";
+        }
+        $img = trim($row['image_path'] ?? '');
+?>
+    <article class="product-card">
+        <div class="product-image">
+            <?php if ($img !== '' && file_exists(__DIR__ . '/../image/' . $img)): ?>
+                <img src="../image/<?php echo htmlspecialchars($img); ?>" alt="<?php echo htmlspecialchars($row['product_name']); ?>">
+            <?php else: ?>
+                <div class="no-image">Chưa có ảnh minh họa</div>
+            <?php endif; ?>
+        </div>
+        <h2><?php echo htmlspecialchars($row['product_name']); ?></h2>
+        <p><?php echo htmlspecialchars($row['description']); ?></p>
+        <p>Giá: <strong><?php echo number_format($row['price'], 0, ',', '.'); ?> VNĐ</strong></p>
+        <p>Tình trạng: <?php echo $status_text; ?></p>
+        <a href="chitietsanpham.php?id=<?php echo $row['id']; ?>">Xem chi tiết</a>
+    </article>
+<?php
+    endwhile;
+else:
+?>
+    <p style="text-align: center; width: 100%;">Không tìm thấy sản phẩm nào phù hợp.</p>
+<?php endif; ?>
     </div>
 
 <div class="thongtinweb">
