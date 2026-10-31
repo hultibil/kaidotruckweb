@@ -57,11 +57,11 @@ $_SESSION['role'] = $user['role'];
 // Đăng nhập thành công
 if ($user['role'] === 'admin') {
 
-    header("Location: ../Quantri/quantri.html");
+    header("Location: ../admin/admin.php"); // Chuyển hướng đến trang admin nếu role là admin
 
 } else {
 
-    header("Location: ../index.php");
+    header("Location: ../index.php"); // Chuyển hướng đến trang index nếu role là user
 
 }
 

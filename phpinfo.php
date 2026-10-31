@@ -1,3 +1,3 @@
 <h1>
-    <?php echo "MiniShop"; ?>
+    <?php phpinfo(); ?>
 </h1>

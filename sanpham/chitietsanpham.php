@@ -114,7 +114,7 @@ $res_specs = mysqli_query($conn, $sql_specs);
             text-align: left;
         }
         .specs-table th {
-            background-color: #f8f9fa;
+            background-color: #020303;
             width: 30%;
         }
 
@@ -148,8 +148,8 @@ $res_specs = mysqli_query($conn, $sql_specs);
     <!-- Ảnh sản phẩm -->
     <div class="detail-image">
     <?php $img = trim($product['image_path'] ?? ''); ?>
-    <?php if ($img !== '' && file_exists(__DIR__ . '/../image/' . $img)): ?>
-        <img src="../image/<?php echo htmlspecialchars($img); ?>" alt="<?php echo htmlspecialchars($product['product_name']); ?>">
+    <?php if ($img !== '' && file_exists(__DIR__ . '/../image/uploads/' . $img)): ?>
+        <img src="../image/uploads/<?php echo htmlspecialchars($img); ?>" alt="<?php echo htmlspecialchars($product['product_name']); ?>">
     <?php else: ?>
         <div class="no-image">Chưa có ảnh minh họa</div>
     <?php endif; ?>

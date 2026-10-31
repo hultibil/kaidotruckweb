@@ -113,7 +113,7 @@ $result = mysqli_query($conn, $sql);
 
 <div class="header">
     <img class="logo" src="../image/kaidologo.jpg">
-    <h2>Cửa hàng linh kiện Kaido</h2>
+    <h2>TRUNG TÂM CỬA HÀNG LINH KIỆN & THIẾT BỊ ĐIỆN TỬ</h2>
     <div class="nut0"><a href="../index.php" onclick="clickSound()">Trang chủ</a></div>
     <div class="nut1"><a href="../khac/khac.html" onclick="clickSound()">Dự án khác</a></div>
     <div class="nut2"><a href="../hoithem.html" onclick="clickSound()">Trò chuyện</a></div>
@@ -123,7 +123,7 @@ $result = mysqli_query($conn, $sql);
     <div class="nut3"><a href="../gamemini.html" onclick="clickSound()">Game mini</a></div>
 </div>
 
-<h1>Kaido Shop</h1>
+<h1>TRUNG TÂM CỬA HÀNG LINH KIỆN & THIẾT BỊ ĐIỆN TỬ</h1>
 
 <!-- KAIDO PROMOTION CAROUSEL -->
 <div class="kaido-carousel">
@@ -131,9 +131,9 @@ $result = mysqli_query($conn, $sql);
         <div class="kaido-slide active">
             <img src="../image/xev5trinhchieu.jpg" alt="KAIDO">
             <div class="kaido-banner-content">
-                <span>KAIDO RC</span>
-                <h2>XE RC V5 — PHIÊN BẢN MỚI</h2>
-                <p>Khám phá những cải tiến mới nhất của KAIDO.</p>
+                <span>XE TẢI RC</span>
+                <h2>LINH KIỆN CHẤT LƯỢNG, DỰ ÁN SIÊU BỀN</h2>
+                <p>Với chiếc xe tải RC V5 với nhiều công nghệ nâng cấp nhờ những linh kiện chất lượng cao được bán tại trung tâm cửa hàng linh kiện của chúng tôi!.</p>
                 <a href="../index.html">XEM NGAY</a>
             </div>
         </div>
@@ -150,8 +150,8 @@ $result = mysqli_query($conn, $sql);
             <img src="../image/chiptrinhchieu.jpg" alt="KAIDO RC">
             <div class="kaido-banner-content">
                 <span>DIY COMPONENTS</span>
-                <h2>LINH KIỆN BAO LA, GIÁ DỄ TIẾP CẬN, BẢO HÀNH DÀI HẠN</h2>
-                <p>Xây dựng với dự án DIY của riêng bạn.</p>
+                <h2>LINH KIỆN BAO LA, GIÁ DỄ TIẾP CẬN, HÀNG CHÍNH HÃNG MỚI, BỀN BỈ VÔ ĐỐI</h2>
+                <p>Yên tâm xây dựng với những linh kiện mới, chính hãng chất lượng cao cho dự án DIY của riêng bạn.</p>
                 <a href="#dautrang">MUA SẮM</a>
             </div>
         </div>
@@ -221,8 +221,8 @@ if ($result && mysqli_num_rows($result) > 0):
 ?>
     <article class="product-card">
         <div class="product-image">
-            <?php if ($img !== '' && file_exists(__DIR__ . '/../image/' . $img)): ?>
-                <img src="../image/<?php echo htmlspecialchars($img); ?>" alt="<?php echo htmlspecialchars($row['product_name']); ?>">
+            <?php if ($img !== '' && file_exists(__DIR__ . '/../image/uploads/' . $img)): ?>
+                <img src="../image/uploads/<?php echo htmlspecialchars($img); ?>" alt="<?php echo htmlspecialchars($row['product_name']); ?>">
             <?php else: ?>
                 <div class="no-image">Chưa có ảnh minh họa</div>
             <?php endif; ?>
