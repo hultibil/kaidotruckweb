@@ -1,6 +1,8 @@
 <?php
+session_start(); // cần cho giỏ hàng (CSRF token)
 // 1. Nhúng file kết nối cơ sở dữ liệu
 require_once '../db.php'; // Điều chỉnh lại đường dẫn file db.php nếu cần
+require_once '../donhang/trangthai.php'; // dhToken(), h()
 
 // 2. Lấy ID sản phẩm từ URL
 $product_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
@@ -118,6 +120,34 @@ $res_specs = mysqli_query($conn, $sql_specs);
             width: 30%;
         }
 
+        /* Form thêm vào giỏ hàng */
+        .add-cart-form {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .add-cart-form input[type="number"] {
+            width: 80px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+        .add-cart-btn {
+            padding: 10px 22px;
+            background: #ff5722;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 15px;
+            transition: background 0.3s;
+        }
+        .add-cart-btn:hover { background: #e64a19; }
+
         .back-btn {
             display: inline-block;
             margin-bottom: 15px;
@@ -169,6 +199,16 @@ $res_specs = mysqli_query($conn, $sql_specs);
             <span class="out-stock">Hết hàng</span>
         <?php endif; ?>
     </div>
+
+    <?php if ($product['stock_qty'] > 0 && $product['status'] == 'active'): ?>
+    <form class="add-cart-form" action="../Giohang/them_gio.php" method="post">
+        <input type="hidden" name="csrf_token" value="<?php echo h(dhToken()); ?>">
+        <input type="hidden" name="product_id" value="<?php echo (int)$product['id']; ?>">
+        <label for="so_luong">Số lượng:</label>
+        <input type="number" id="so_luong" name="so_luong" value="1" min="1" max="<?php echo min(99, (int)$product['stock_qty']); ?>">
+        <button class="add-cart-btn" type="submit">🛒 Thêm vào giỏ hàng</button>
+    </form>
+    <?php endif; ?>
 
     <div class="description-box">
         <h3>Mô tả sản phẩm:</h3>

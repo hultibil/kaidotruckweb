@@ -17,7 +17,7 @@ $captcha_error = isset($_GET['error']) && $_GET['error'] === 'captcha';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Đăng ký - Kaido</title>
+    <title>Đăng ký</title>
 
     <link rel="icon" href="../image/kaidoLogomini.png">
     <link rel="stylesheet" href="../css/dndk.css">

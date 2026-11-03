@@ -1,3 +1,39 @@
+<?php
+session_start();
+require_once __DIR__ . '/../db.php';
+require_once __DIR__ . '/trangthai.php';
+$userId = dhRequireLogin();
+
+// Thư mục chứa ảnh sản phẩm (giống shop.php)
+$THU_MUC_ANH = '../image/uploads/';
+
+// Danh sách đơn của tài khoản đang đăng nhập, mới nhất trước
+$stmt = $conn->prepare(
+    'SELECT id, created_at, total_amount, status
+     FROM orders WHERE user_id=? ORDER BY created_at DESC, id DESC'
+);
+$stmt->bind_param('i', $userId);
+$stmt->execute();
+$donHang = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+// Sản phẩm của tất cả các đơn đó, lấy một lần rồi nhóm theo đơn
+$spTheoDon = [];
+if ($donHang) {
+    $stmt = $conn->prepare(
+        'SELECT oi.order_id, oi.product_name, oi.quantity, oi.unit_price, p.image_path
+         FROM order_items oi
+         JOIN orders o ON o.id = oi.order_id
+         LEFT JOIN products p ON p.id = oi.product_id
+         WHERE o.user_id=?
+         ORDER BY oi.order_id, oi.id'
+    );
+    $stmt->bind_param('i', $userId);
+    $stmt->execute();
+    foreach ($stmt->get_result()->fetch_all(MYSQLI_ASSOC) as $it) {
+        $spTheoDon[(int)$it['order_id']][] = $it;
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -41,79 +77,74 @@
             <p>Theo dõi các đơn hàng đã đặt</p>
         </div>
 
-        <!-- Đơn hàng 1 -->
-        <div class="order-card">
+        <?php if (!$donHang): ?>
 
-            <div class="order-header">
-                <div>
-                    <strong>Đơn hàng #KD20261001</strong>
-                    <p>Ngày đặt: 01/10/2026</p>
-                </div>
-
-                <span class="order-status">
-                    Đang xử lý
-                </span>
+            <div class="cart-card">
+                <p>Bạn chưa có đơn hàng nào.</p>
+                <p><a href="../sanpham/shop.php">Mua sắm tại KAIDO SHOP</a></p>
             </div>
 
-            <div class="order-product">
-                <div class="product-image">
-                    <img src="images/sanpham1.jpg" alt="Sản phẩm">
+        <?php else: ?>
+
+            <?php foreach ($donHang as $d):
+                $dsSP = $spTheoDon[(int)$d['id']] ?? [];
+                $dau = $dsSP[0] ?? null;
+                $conLai = max(0, count($dsSP) - 1);
+                $tongSL = 0;
+                foreach ($dsSP as $x) $tongSL += (int)$x['quantity'];
+
+                $tenAnh = $dau ? trim((string)($dau['image_path'] ?? '')) : '';
+                $anh = ($tenAnh !== '' && file_exists(__DIR__ . '/' . $THU_MUC_ANH . $tenAnh))
+                    ? $THU_MUC_ANH . $tenAnh
+                    : '../image/kaidoLogomini.png';
+            ?>
+            <!-- Đơn hàng <?= h(maDon((int)$d['id'])) ?> -->
+            <div class="order-card">
+
+                <div class="order-header">
+                    <div>
+                        <strong>Đơn hàng #<?= h(maDon((int)$d['id'])) ?></strong>
+                        <p>Ngày đặt: <?= h(date('d/m/Y H:i', strtotime($d['created_at']))) ?></p>
+                    </div>
+
+                    <span class="order-status" style="background:<?= h(mauTrangThai($d['status'])) ?>;color:#fff">
+                        <?= h(tenTrangThai($d['status'])) ?>
+                    </span>
                 </div>
 
-                <div class="product-info">
-                    <h2>Xe mô hình Kaido Truck</h2>
-                    <p>Số lượng: 1</p>
-                    <p>350.000 VNĐ</p>
+                <?php if ($dau): ?>
+                <div class="order-product">
+                    <div class="product-image">
+                        <img src="<?= h($anh) ?>" alt="<?= h($dau['product_name']) ?>">
+                    </div>
+
+                    <div class="product-info">
+                        <h2><?= h($dau['product_name']) ?></h2>
+                        <p>Số lượng: <?= (int)$dau['quantity'] ?></p>
+                        <p><?= h(tien($dau['unit_price'] * $dau['quantity'])) ?></p>
+                        <?php if ($conLai > 0): ?>
+                            <p>và <?= $conLai ?> sản phẩm khác (tổng <?= $tongSL ?> sản phẩm)</p>
+                        <?php endif; ?>
+                    </div>
                 </div>
-            </div>
+                <?php endif; ?>
 
-            <div class="order-bottom">
-                <span>Tổng tiền</span>
-                <strong>380.000 VNĐ</strong>
-            </div>
-
-            <button class="detail-btn">
-                Xem chi tiết
-            </button>
-
-        </div>
-
-        <!-- Đơn hàng 2 -->
-        <div class="order-card">
-
-            <div class="order-header">
-                <div>
-                    <strong>Đơn hàng #KD20260928</strong>
-                    <p>Ngày đặt: 28/09/2026</p>
+                <div class="order-bottom">
+                    <span>Tổng tiền</span>
+                    <strong><?= h(tien($d['total_amount'])) ?></strong>
                 </div>
 
-                <span class="order-status completed">
-                    Đã giao
-                </span>
+                <form action="theodoi.php" method="get">
+                    <input type="hidden" name="id" value="<?= (int)$d['id'] ?>">
+                    <button class="detail-btn" type="submit">
+                        Xem chi tiết
+                    </button>
+                </form>
+
             </div>
+            <?php endforeach; ?>
 
-            <div class="order-product">
-                <div class="product-image">
-                    <img src="images/sanpham2.jpg" alt="Sản phẩm">
-                </div>
-
-                <div class="product-info">
-                    <h2>Xe RC Kaido Off-road</h2>
-                    <p>Số lượng: 2</p>
-                    <p>1.100.000 VNĐ</p>
-                </div>
-            </div>
-
-            <div class="order-bottom">
-                <span>Tổng tiền</span>
-                <strong>1.130.000 VNĐ</strong>
-            </div>
-
-            <button class="detail-btn">
-                Xem chi tiết
-            </button>
-
-        </div>
+        <?php endif; ?>
 
         <div class="cart-footer">
             <a href="../tienich.html">← Trở về</a>
