@@ -81,13 +81,37 @@ $result = mysqli_query($conn, $sql);
             background: #e64a19;
         }
 
-        /* Hàng nút bấm phân loại */
+       /* Hàng nút bấm phân loại - Chuyển sang lướt ngang gọn gàng */
         .category-buttons {
             display: flex;
-            flex-wrap: wrap;
+            flex-wrap: nowrap; /* Không cho xuống hàng */
             gap: 10px;
-            justify-content: center;
+            overflow-x: auto;  /* Cho phép cuộn ngang khi vượt quá màn hình */
+            width: 100%;
+            max-width: 800px;
+            padding: 8px 5px 12px 5px; /* Thêm padding đáy để không bị sát thanh cuộn */
+            scroll-behavior: smooth; /* Cuộn mượt mà */
+            /* Tùy chỉnh thanh cuộn cho đẹp mắt trên trình duyệt Webkit (Chrome, Safari, Edge) */
+            scrollbar-width: thin; /* Cho Firefox */
+            scrollbar-color: #ff5722 #f1f1f1;
         }
+
+        /* Tùy chỉnh thanh cuộn ngang (Scrollbar) */
+        .category-buttons::-webkit-scrollbar {
+            height: 6px;
+        }
+        .category-buttons::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .category-buttons::-webkit-scrollbar-thumb {
+            background: #ff5722;
+            border-radius: 10px;
+        }
+        .category-buttons::-webkit-scrollbar-thumb:hover {
+            background: #e64a19;
+        }
+
         .cat-btn {
             padding: 8px 18px;
             background-color: #f1f1f1;
@@ -96,6 +120,8 @@ $result = mysqli_query($conn, $sql);
             border-radius: 20px;
             font-weight: 500;
             border: 1px solid #ccc;
+            white-space: nowrap; /* BẮT BUỘC: Giữ tên danh mục không bị bẻ chữ xuống dòng */
+            flex-shrink: 0;      /* Không cho các nút bị bóp méo chiều rộng */
             transition: all 0.3s ease;
         }
         .cat-btn:hover, .cat-btn.active {
@@ -227,10 +253,10 @@ $result = mysqli_query($conn, $sql);
         <?php
 if ($result && mysqli_num_rows($result) > 0):
     while ($row = mysqli_fetch_assoc($result)):
-        if ($row['status'] == 'hidden') continue;
+        if ($row['status'] !== 'active') continue;   // sản phẩm inactive không hiện trên cửa hàng
 
         $status_text = "Còn hàng";
-        if ($row['status'] == 'out_of_stock' || $row['stock_qty'] <= 0) {
+        if ($row['stock_qty'] <= 0) {
             $status_text = "Đã hết hàng";
         }
         $img = trim($row['image_path'] ?? '');

@@ -1,6 +1,8 @@
 <?php
+session_start(); // cần cho giỏ hàng (CSRF token)
 // 1. Nhúng file kết nối cơ sở dữ liệu
 require_once '../db.php'; // Điều chỉnh lại đường dẫn file db.php nếu cần (ví dụ: 'db.php')
+require_once '../donhang/trangthai.php'; // dhToken(), h()
 
 // 2. Lấy tham số category_id và search từ URL (nếu có)
 $category_id = isset($_GET['category_id']) ? (int)$_GET['category_id'] : 0;
@@ -101,6 +103,20 @@ $result = mysqli_query($conn, $sql);
             color: #fff;
             border-color: #ff5722;
         }
+
+        /* Nút thêm vào giỏ trên thẻ sản phẩm */
+        .add-cart-form { margin-top: 10px; }
+        .add-cart-btn {
+            padding: 8px 16px;
+            background: #ff5722;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .add-cart-btn:hover { background: #e64a19; }
     </style>
 </head>
 <body>
@@ -232,6 +248,14 @@ if ($result && mysqli_num_rows($result) > 0):
         <p>Giá: <strong><?php echo number_format($row['price'], 0, ',', '.'); ?> VNĐ</strong></p>
         <p>Tình trạng: <?php echo $status_text; ?></p>
         <a href="chitietsanpham.php?id=<?php echo $row['id']; ?>">Xem chi tiết</a>
+        <?php if ($row['status'] == 'active' && $row['stock_qty'] > 0): ?>
+        <form class="add-cart-form" action="../Giohang/them_gio.php" method="post">
+            <input type="hidden" name="csrf_token" value="<?php echo h(dhToken()); ?>">
+            <input type="hidden" name="product_id" value="<?php echo (int)$row['id']; ?>">
+            <input type="hidden" name="so_luong" value="1">
+            <button class="add-cart-btn" type="submit">🛒 Thêm vào giỏ</button>
+        </form>
+        <?php endif; ?>
     </article>
 <?php
     endwhile;

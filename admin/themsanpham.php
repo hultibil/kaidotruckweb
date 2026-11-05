@@ -1,33 +1,9 @@
 <?php
-require_once __DIR__ . '/baove.php';   // PHẢI nằm đầu tiên
+require_once __DIR__ . '/baove.php';
+require_once __DIR__ . '/anh.php';
 
 $error = '';
 $old = ['product_name' => '', 'category_id' => '', 'sku' => '', 'price' => '0', 'stock_qty' => '10', 'status' => 'active', 'description' => ''];
-
-/** Lưu ảnh: kiểm tra đây đúng là ảnh thật, đổi tên ngẫu nhiên, lưu thẳng vào thư mục image/ (chỉ lưu TÊN FILE vào DB) */
-function luu_anh_san_pham(array $f): ?string
-{
-    if (!isset($f['error']) || $f['error'] === UPLOAD_ERR_NO_FILE) {
-        return null;
-    }
-    if ($f['error'] !== UPLOAD_ERR_OK) {
-        throw new RuntimeException('Tải ảnh lên thất bại (mã lỗi ' . (int)$f['error'] . ').');
-    }
-    if ($f['size'] > 2 * 1024 * 1024) {
-        throw new RuntimeException('Ảnh tối đa 2MB.');
-    }
-    $info = @getimagesize($f['tmp_name']);   // false nếu không phải ảnh thật
-    $cho_phep = [IMAGETYPE_JPEG => 'jpg', IMAGETYPE_PNG => 'png', IMAGETYPE_GIF => 'gif', IMAGETYPE_WEBP => 'webp'];
-    if (!$info || !isset($cho_phep[$info[2]])) {
-        throw new RuntimeException('Chỉ nhận ảnh JPG, PNG, GIF hoặc WEBP hợp lệ.');
-    }
-    $ten = 'sp_' . bin2hex(random_bytes(8)) . '.' . $cho_phep[$info[2]];   // đuôi do SERVER quyết định
-    $thu_muc = __DIR__ . '/../image/';
-    if (!is_dir($thu_muc) || !move_uploaded_file($f['tmp_name'], $thu_muc . $ten)) {
-        throw new RuntimeException('Không lưu được ảnh. Kiểm tra thư mục image có tồn tại và có quyền ghi.');
-    }
-    return $ten;
-}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     admin_csrf_check();
@@ -40,18 +16,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $old['status']       = $_POST['status'] ?? 'active';
     $old['description']  = trim($_POST['description'] ?? '');
 
-    $price = (float)$old['price'];
-    $stock = (int)$old['stock_qty'];
+    $priceInput = trim((string)$old['price']);
+    $stockInput = trim((string)$old['stock_qty']);
+    $priceValid = (bool)preg_match('/^\d{1,12}(?:\.\d{1,2})?$/D', $priceInput);
+    $stockValid = filter_var($stockInput, FILTER_VALIDATE_INT, ['options' => ['min_range' => 0]]);
+    $price = $priceValid ? (float)$priceInput : 0;
+    $stock = $stockValid !== false ? (int)$stockValid : 0;
 
     if ($old['product_name'] === '' || $old['category_id'] <= 0 || $old['sku'] === '') {
         $error = 'Vui lòng điền đầy đủ Tên sản phẩm, Danh mục và SKU!';
-    } elseif ($price < 0 || $stock < 0) {
+    } elseif (!$priceValid || $stockValid === false) {
         $error = 'Giá và số lượng tồn kho không được âm.';
-    } elseif (!in_array($old['status'], ['active', 'out_of_stock', 'hidden'], true)) {
+    } elseif (!in_array($old['status'], ['active', 'inactive'], true)) {   // khớp enum products.status
         $error = 'Trạng thái không hợp lệ.';
     } else {
+        $image_path = null;
         try {
-            $image_path = luu_anh_san_pham($_FILES['image_file'] ?? []);   // null nếu không chọn ảnh
+            $image_path = admin_luu_anh($_FILES['image_file'] ?? []);   // null nếu không chọn ảnh
 
             $stmt = $conn->prepare(
                 'INSERT INTO products (category_id, sku, product_name, description, price, stock_qty, image_path, status, created_at, updated_at)
@@ -70,6 +51,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } catch (RuntimeException $e) {
             $error = $e->getMessage();
         } catch (mysqli_sql_exception $e) {
+            if ($image_path !== null) { @unlink(__DIR__ . '/../image/uploads/' . $image_path); }
+            error_log($e->getMessage());
             if ($e->getCode() === 1062) {
                 $error = 'SKU "' . $old['sku'] . '" đã tồn tại, hãy dùng mã khác.';
             } elseif ($e->getCode() === 1452) {
@@ -87,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thêm Sản Phẩm Mới</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/style.css"><link rel="icon" href="../image/kaidoLogomini.png">
     <style>
         .form-container { width: 700px; max-width: 90%; margin: 30px auto; background: rgba(0,0,0,0.5); padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         .form-group { margin-bottom: 20px; }
@@ -150,9 +133,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="form-group">
             <label>Trạng thái sản phẩm:</label>
             <select name="status">
-                <option value="active"       <?= $old['status'] === 'active' ? 'selected' : '' ?>>active - Đang bán</option>
-                <option value="out_of_stock" <?= $old['status'] === 'out_of_stock' ? 'selected' : '' ?>>out_of_stock - Hết hàng</option>
-                <option value="hidden"       <?= $old['status'] === 'hidden' ? 'selected' : '' ?>>hidden - Ẩn khỏi cửa hàng</option>
+                <option value="active"   <?= $old['status'] === 'active' ? 'selected' : '' ?>>active - Đang bán</option>
+                <option value="inactive" <?= $old['status'] === 'inactive' ? 'selected' : '' ?>>inactive - Ngừng bán (ẩn khỏi cửa hàng)</option>
             </select>
         </div>
 
