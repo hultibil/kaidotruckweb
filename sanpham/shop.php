@@ -4,6 +4,16 @@ session_start(); // cần cho giỏ hàng (CSRF token)
 require_once '../db.php'; // Điều chỉnh lại đường dẫn file db.php nếu cần (ví dụ: 'db.php')
 require_once '../donhang/trangthai.php'; // dhToken(), h()
 
+// [YÊU THÍCH] Lấy danh sách sản phẩm yêu thích của người đang đăng nhập
+$yeuThich = [];
+if (!empty($_SESSION['user_id'])) {
+    $uid = (int)$_SESSION['user_id'];
+    $ys = mysqli_query($conn, "SELECT product_id FROM san_pham_yeu_thich WHERE user_id = $uid");
+    if ($ys) {
+        while ($y = mysqli_fetch_assoc($ys)) $yeuThich[(int)$y['product_id']] = true;
+    }
+}
+
 // 2. Lấy tham số category_id và search từ URL (nếu có)
 $category_id = isset($_GET['category_id']) ? (int)$_GET['category_id'] : 0;
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
@@ -143,6 +153,51 @@ $result = mysqli_query($conn, $sql);
             transition: background 0.3s;
         }
         .add-cart-btn:hover { background: #e64a19; }
+
+        /* [YÊU THÍCH] Nút trái tim */
+        .fav-form { margin-top: 8px; }
+        .fav-btn {
+            padding: 7px 16px;
+            background: transparent;
+            color: #e91e63;
+            border: 2px solid #e91e63;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .fav-btn:hover, .fav-btn.on { background: #e91e63; color: #fff; }
+
+        /* Thông báo "Người dùng" */
+.user-header-badge {
+    background: rgba(0, 0, 0, 0.55); /* Nền đen mờ */
+    backdrop-filter: blur(8px); /* Hiệu ứng làm mờ kính mờ */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 6px 14px;
+    display: inline-flex;
+    align-items: center;
+    color: #f1f5f9;
+    font-size: 13px;
+    margin-left: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+}
+
+.user-header-badge strong {
+    color: #ff416c; /* Tô điểm tên user màu hồng cam sáng */
+    margin-left: 4px;
+}
+
+.user-header-badge.visitor a {
+    color: #38bdf8;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.user-header-badge.visitor a:hover {
+    text-decoration: underline;
+}
     </style>
 </head>
 <body>
@@ -159,10 +214,20 @@ $result = mysqli_query($conn, $sql);
     <div class="nut0"><a href="../index.php" onclick="clickSound()">Trang chủ</a></div>
     <div class="nut1"><a href="../khac/khac.html" onclick="clickSound()">Dự án khác</a></div>
     <div class="nut2"><a href="../hoithem.html" onclick="clickSound()">Trò chuyện</a></div>
-    <div class="nut4chon"><a href="../tienich.html" onclick="clickSound()">Tài khoản/Mua hàng</a></div>
+    <div class="nut4chon"><a href="../tienich.php" onclick="clickSound()">Tài khoản/Mua hàng</a></div>
     <div class="nut5"><a href="../kythuat/details.html">Chi tiết kỹ thuật</a></div>
     <div class="nut6"><a href="../Blog/blog.html" onclick="clickSound()">Tin tức</a></div>
     <div class="nut3"><a href="../gamemini.html" onclick="clickSound()">Game mini</a></div>
+    <!-- HIỂN THỊ TÊN TÀI KHOẢN VỚI NỀN ĐEN MỜ TRÊN THANH HEADER -->
+            <?php if (isset($_SESSION['username'])): ?>
+                <div class="user-header-badge">
+                    <span>👋 Hi, <strong><?= htmlspecialchars($_SESSION['username']) ?></strong></span>
+                </div>
+            <?php else: ?>
+                <div class="user-header-badge visitor">
+                    <a href="Taikhoan/dangnhap.html">🔑 Đăng nhập/ đăng ký</a>
+                </div>
+            <?php endif; ?>
 </div>
 
 <h1>TRUNG TÂM CỬA HÀNG LINH KIỆN & THIẾT BỊ ĐIỆN TỬ</h1>
@@ -274,6 +339,14 @@ if ($result && mysqli_num_rows($result) > 0):
         <p>Giá: <strong><?php echo number_format($row['price'], 0, ',', '.'); ?> VNĐ</strong></p>
         <p>Tình trạng: <?php echo $status_text; ?></p>
         <a href="chitietsanpham.php?id=<?php echo $row['id']; ?>">Xem chi tiết</a>
+        <?php $daThich = isset($yeuThich[(int)$row['id']]); ?>
+        <form class="fav-form" action="xuly_yeuthich.php" method="post">
+            <input type="hidden" name="csrf_token" value="<?php echo h(dhToken()); ?>">
+            <input type="hidden" name="product_id" value="<?php echo (int)$row['id']; ?>">
+            <input type="hidden" name="action" value="<?php echo $daThich ? 'remove' : 'add'; ?>">
+            <input type="hidden" name="return_page" value="shop">
+            <button class="fav-btn <?php echo $daThich ? 'on' : ''; ?>" type="submit"><?php echo $daThich ? '♥ Bỏ yêu thích' : '♡ Yêu thích'; ?></button>
+        </form>
         <?php if ($row['status'] == 'active' && $row['stock_qty'] > 0): ?>
         <form class="add-cart-form" action="../Giohang/them_gio.php" method="post">
             <input type="hidden" name="csrf_token" value="<?php echo h(dhToken()); ?>">

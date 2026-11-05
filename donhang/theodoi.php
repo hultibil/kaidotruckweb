@@ -73,7 +73,7 @@ $thanhToan = ($don['payment_method'] === 'cod' || $don['payment_method'] === nul
                 <a href="../hoithem.html" onclick="clickSound()">Trò chuyện</a>
             </div>
             <div class="nut4chon">
-                <a href="../tienich.html" onclick="clickSound()">Tài khoản/Mua hàng</a>
+                <a href="../tienich.php" onclick="clickSound()">Tài khoản/Mua hàng</a>
             </div>
             <div class="nut5">
                 <a href="../kythuat/details.html">Chi tiết kỹ thuật</a>

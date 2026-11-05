@@ -126,7 +126,7 @@ $captcha_error = isset($_GET['error']) && $_GET['error'] === 'captcha';
     </p>
 
 
-    <a href="../tienich.html" class="back-home">
+    <a href="../index.php" class="back-home">
         ← Trở về trang chủ
     </a>
 

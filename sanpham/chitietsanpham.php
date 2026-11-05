@@ -4,6 +4,15 @@ session_start(); // cần cho giỏ hàng (CSRF token)
 require_once '../db.php'; // Điều chỉnh lại đường dẫn file db.php nếu cần
 require_once '../donhang/trangthai.php'; // dhToken(), h()
 
+// [YÊU THÍCH] Kiểm tra người đang đăng nhập đã thích sản phẩm này chưa
+$daThich = false;
+if (!empty($_SESSION['user_id']) && isset($_GET['id'])) {
+    $uid = (int)$_SESSION['user_id'];
+    $pid = (int)$_GET['id'];
+    $ys = mysqli_query($conn, "SELECT 1 FROM san_pham_yeu_thich WHERE user_id = $uid AND product_id = $pid LIMIT 1");
+    if ($ys) $daThich = (mysqli_num_rows($ys) > 0);
+}
+
 // 2. Lấy ID sản phẩm từ URL
 $product_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
@@ -148,6 +157,21 @@ $res_specs = mysqli_query($conn, $sql_specs);
         }
         .add-cart-btn:hover { background: #e64a19; }
 
+        /* [YÊU THÍCH] Nút trái tim */
+        .fav-form { margin-top: 12px; }
+        .fav-btn {
+            padding: 9px 22px;
+            background: transparent;
+            color: #e91e63;
+            border: 2px solid #e91e63;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+        .fav-btn:hover, .fav-btn.on { background: #e91e63; color: #fff; }
+
         .back-btn {
             display: inline-block;
             margin-bottom: 15px;
@@ -209,6 +233,15 @@ $res_specs = mysqli_query($conn, $sql_specs);
         <button class="add-cart-btn" type="submit">🛒 Thêm vào giỏ hàng</button>
     </form>
     <?php endif; ?>
+
+    <!-- [YÊU THÍCH] -->
+    <form class="fav-form" action="xuly_yeuthich.php" method="post">
+        <input type="hidden" name="csrf_token" value="<?php echo h(dhToken()); ?>">
+        <input type="hidden" name="product_id" value="<?php echo (int)$product['id']; ?>">
+        <input type="hidden" name="action" value="<?php echo $daThich ? 'remove' : 'add'; ?>">
+        <input type="hidden" name="return_page" value="detail">
+        <button class="fav-btn <?php echo $daThich ? 'on' : ''; ?>" type="submit"><?php echo $daThich ? '♥ Bỏ yêu thích' : '♡ Thêm vào yêu thích'; ?></button>
+    </form>
 
     <div class="description-box">
         <h3>Mô tả sản phẩm:</h3>

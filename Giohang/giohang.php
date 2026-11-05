@@ -94,7 +94,7 @@ foreach ($sanPham as $sp) {
                 <a href="../hoithem.html" onclick="clickSound()">Trò chuyện</a>
             </div>
             <div class="nut4chon">
-                <a href="../tienich.html" onclick="clickSound()">Tài khoản/Mua hàng</a>
+                <a href="../tienich.php" onclick="clickSound()">Tài khoản/Mua hàng</a>
             </div>
             <div class="nut5">
                 <a href="../kythuat/details.html">Chi tiết kỹ thuật</a>
@@ -236,7 +236,7 @@ foreach ($sanPham as $sp) {
         <?php endif; ?>
 
         <div class="cart-footer">
-            <a href="../tienich.html">← Trở về</a>
+            <a href="../tienich.php">← Trở về</a>
             <a href="../sanpham/shop.php">KAIDO SHOP</a>
             <a href="../donhang/donhang.php">Xem đơn hàng</a>
         </div>

@@ -10,6 +10,37 @@ session_start();
     <title>Trang chủ giới thiệu Kaido</title>
     <link rel="icon" href="image/kaidoLogomini.png">
     <link rel="stylesheet" href="css/style.css">
+    <style>
+.user-header-badge {
+    background: rgba(0, 0, 0, 0.55); /* Nền đen mờ */
+    backdrop-filter: blur(8px); /* Hiệu ứng làm mờ kính mờ */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 6px 14px;
+    display: inline-flex;
+    align-items: center;
+    color: #f1f5f9;
+    font-size: 13px;
+    margin-left: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+}
+
+.user-header-badge strong {
+    color: #ff416c; /* Tô điểm tên user màu hồng cam sáng */
+    margin-left: 4px;
+}
+
+.user-header-badge.visitor a {
+    color: #38bdf8;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.user-header-badge.visitor a:hover {
+    text-decoration: underline;
+}
+    </style>
 </head>
 <body>
     <!--TRANG LOADING-->
@@ -18,20 +49,20 @@ session_start();
         <p>Đang tải, gần xong rồi!!<span id="dots">...</span></p>
     </div>
     <div id="dautrang"> 
-    <div class="header"> <!--Add CSS-->
+    <div class="header">
             <img class="logo" src="image/kaidologo.jpg">
             <h2>Trang chủ giới thiệu Kaido</h2>
             <div class="nut0chon">
                 <a href="index.php" onclick="clickSound()">Trang chủ</a>
             </div>
-            <div class="nut1"> <!--Add CSS-->
+            <div class="nut1">
                 <a href="khac/khac.html" onclick="clickSound()">Dự án khác</a>
             </div>
             <div class="nut2">
                 <a href="hoithem.html" onclick="clickSound()">Trò chuyện</a>
             </div>
             <div class="nut4">
-                <a href="tienich.html" onclick="clickSound()">Tài khoản/Mua hàng</a>
+                <a href="tienich.php" onclick="clickSound()">Tài khoản/Mua hàng</a>
             </div>
             <div class="nut5">
                 <a href="kythuat/details.html">Chi tiết kỹ thuật</a>
@@ -42,6 +73,17 @@ session_start();
             <div class="nut3">
                 <a href="gamemini.html" onclick="clickSound()">Game mini</a>
             </div>
+
+            <!-- HIỂN THỊ TÊN TÀI KHOẢN VỚI NỀN ĐEN MỜ TRÊN THANH HEADER -->
+            <?php if (isset($_SESSION['username'])): ?>
+                <div class="user-header-badge">
+                    <span>👋 Hi, <strong><?= htmlspecialchars($_SESSION['username']) ?></strong></span>
+                </div>
+            <?php else: ?>
+                <div class="user-header-badge visitor">
+                    <a href="Taikhoan/dangnhap.html">🔑 Đăng nhập/ đăng ký</a>
+                </div>
+            <?php endif; ?>
     </div>
 <!--Khu vực chào mừng-->
     <?php
@@ -54,7 +96,7 @@ if (isset($_SESSION['username'])) {
 
 } else {
     echo '<div class="xinchao">';
-    echo 'Bạn chưa đăng nhập';
+    echo 'Bạn chưa đăng nhập tài khoản nào. <a href="Taikhoan/dangnhap.html">Đăng nhập</a> hoặc <a href="Taikhoan/dangky.php">Đăng ký</a> để trải nghiệm đầy đủ các tính năng!';
     echo '</div>';
 }?>
 
