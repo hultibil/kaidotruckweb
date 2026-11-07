@@ -88,22 +88,22 @@ foreach ($sanPham as $sp) {
                 <a href="../index.php" onclick="clickSound()">Trang chủ</a>
             </div>
             <div class="nut1"> <!--Add CSS-->
-                <a href="../khac/khac.html" onclick="clickSound()">Dự án khác</a>
+                <a href="../khac/khac.php" onclick="clickSound()">Dự án khác</a>
             </div>
             <div class="nut2">
-                <a href="../hoithem.html" onclick="clickSound()">Trò chuyện</a>
+                <a href="../hoithem.php" onclick="clickSound()">Trò chuyện</a>
             </div>
             <div class="nut4chon">
                 <a href="../tienich.php" onclick="clickSound()">Tài khoản/Mua hàng</a>
             </div>
             <div class="nut5">
-                <a href="../kythuat/details.html">Chi tiết kỹ thuật</a>
+                <a href="../kythuat/details.php">Chi tiết kỹ thuật</a>
             </div>
             <div class="nut6">
-                <a href="../Blog/blog.html" onclick="clickSound()">Tin tức</a>
+                <a href="../Blog/blog.php" onclick="clickSound()">Tin tức</a>
             </div>
             <div class="nut3">
-                <a href="../gamemini.html" onclick="clickSound()">Game mini</a>
+                <a href="../gamemini.php" onclick="clickSound()">Game mini</a>
             </div>
     </div>
     <div class="cart-container">
@@ -206,7 +206,7 @@ foreach ($sanPham as $sp) {
 
                 <?php elseif (empty($_SESSION['user_id'])): ?>
 
-                    <p>Vui lòng <a href="../Taikhoan/dangnhap.html">đăng nhập</a> trước khi đặt hàng.</p>
+                    <p>Vui lòng <a href="../Taikhoan/dangnhap.php">đăng nhập</a> trước khi đặt hàng.</p>
 
                 <?php else: ?>
 

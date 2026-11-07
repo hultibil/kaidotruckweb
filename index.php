@@ -56,22 +56,22 @@ session_start();
                 <a href="index.php" onclick="clickSound()">Trang chủ</a>
             </div>
             <div class="nut1">
-                <a href="khac/khac.html" onclick="clickSound()">Dự án khác</a>
+                <a href="khac/khac.php" onclick="clickSound()">Dự án khác</a>
             </div>
             <div class="nut2">
-                <a href="hoithem.html" onclick="clickSound()">Trò chuyện</a>
+                <a href="hoithem.php" onclick="clickSound()">Trò chuyện</a>
             </div>
             <div class="nut4">
                 <a href="tienich.php" onclick="clickSound()">Tài khoản/Mua hàng</a>
             </div>
             <div class="nut5">
-                <a href="kythuat/details.html">Chi tiết kỹ thuật</a>
+                <a href="kythuat/details.php">Chi tiết kỹ thuật</a>
             </div>
             <div class="nut6">
-                <a href="Blog/blog.html" onclick="clickSound()">Tin tức</a>
+                <a href="Blog/blog.php" onclick="clickSound()">Tin tức</a>
             </div>
             <div class="nut3">
-                <a href="gamemini.html" onclick="clickSound()">Game mini</a>
+                <a href="gamemini.php" onclick="clickSound()">Game mini</a>
             </div>
 
             <!-- HIỂN THỊ TÊN TÀI KHOẢN VỚI NỀN ĐEN MỜ TRÊN THANH HEADER -->
@@ -81,7 +81,7 @@ session_start();
                 </div>
             <?php else: ?>
                 <div class="user-header-badge visitor">
-                    <a href="Taikhoan/dangnhap.html">🔑 Đăng nhập/ đăng ký</a>
+                    <a href="Taikhoan/dangnhap.php">🔑 Đăng nhập/ đăng ký</a>
                 </div>
             <?php endif; ?>
     </div>
@@ -96,7 +96,7 @@ if (isset($_SESSION['username'])) {
 
 } else {
     echo '<div class="xinchao">';
-    echo 'Bạn chưa đăng nhập tài khoản nào. <a href="Taikhoan/dangnhap.html">Đăng nhập</a> hoặc <a href="Taikhoan/dangky.php">Đăng ký</a> để trải nghiệm đầy đủ các tính năng!';
+    echo 'Bạn chưa đăng nhập tài khoản nào. <a href="Taikhoan/dangnhap.php">Đăng nhập</a> hoặc <a href="Taikhoan/dangky.php">Đăng ký</a> để trải nghiệm đầy đủ các tính năng!';
     echo '</div>';
 }?>
 

@@ -212,12 +212,12 @@ $result = mysqli_query($conn, $sql);
     <img class="logo" src="../image/kaidologo.jpg">
     <h2>TRUNG TÂM CỬA HÀNG LINH KIỆN & THIẾT BỊ ĐIỆN TỬ</h2>
     <div class="nut0"><a href="../index.php" onclick="clickSound()">Trang chủ</a></div>
-    <div class="nut1"><a href="../khac/khac.html" onclick="clickSound()">Dự án khác</a></div>
-    <div class="nut2"><a href="../hoithem.html" onclick="clickSound()">Trò chuyện</a></div>
+    <div class="nut1"><a href="../khac/khac.php" onclick="clickSound()">Dự án khác</a></div>
+    <div class="nut2"><a href="../hoithem.php" onclick="clickSound()">Trò chuyện</a></div>
     <div class="nut4chon"><a href="../tienich.php" onclick="clickSound()">Tài khoản/Mua hàng</a></div>
-    <div class="nut5"><a href="../kythuat/details.html">Chi tiết kỹ thuật</a></div>
-    <div class="nut6"><a href="../Blog/blog.html" onclick="clickSound()">Tin tức</a></div>
-    <div class="nut3"><a href="../gamemini.html" onclick="clickSound()">Game mini</a></div>
+    <div class="nut5"><a href="../kythuat/details.php">Chi tiết kỹ thuật</a></div>
+    <div class="nut6"><a href="../Blog/blog.php" onclick="clickSound()">Tin tức</a></div>
+    <div class="nut3"><a href="../gamemini.php" onclick="clickSound()">Game mini</a></div>
     <!-- HIỂN THỊ TÊN TÀI KHOẢN VỚI NỀN ĐEN MỜ TRÊN THANH HEADER -->
             <?php if (isset($_SESSION['username'])): ?>
                 <div class="user-header-badge">
@@ -225,7 +225,7 @@ $result = mysqli_query($conn, $sql);
                 </div>
             <?php else: ?>
                 <div class="user-header-badge visitor">
-                    <a href="Taikhoan/dangnhap.html">🔑 Đăng nhập/ đăng ký</a>
+                    <a href="Taikhoan/dangnhap.php">🔑 Đăng nhập/ đăng ký</a>
                 </div>
             <?php endif; ?>
 </div>
@@ -241,7 +241,7 @@ $result = mysqli_query($conn, $sql);
                 <span>XE TẢI RC</span>
                 <h2>LINH KIỆN CHẤT LƯỢNG, DỰ ÁN SIÊU BỀN</h2>
                 <p>Với chiếc xe tải RC V5 với nhiều công nghệ nâng cấp nhờ những linh kiện chất lượng cao được bán tại trung tâm cửa hàng linh kiện của chúng tôi!.</p>
-                <a href="../index.html">XEM NGAY</a>
+                <a href="../index.php">XEM NGAY</a>
             </div>
         </div>
         <div class="kaido-slide">
@@ -250,7 +250,7 @@ $result = mysqli_query($conn, $sql);
                 <span>KAIDO DIY</span>
                 <h2>DIY — TẬN DỤNG & SÁNG TẠO</h2>
                 <p>Biến linh kiện cũ thành những sản phẩm hữu ích.</p>
-                <a href="../khac/khac.html">KHÁM PHÁ</a>
+                <a href="../khac/khac.php">KHÁM PHÁ</a>
             </div>
         </div>
         <div class="kaido-slide">

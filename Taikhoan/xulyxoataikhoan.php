@@ -4,7 +4,7 @@ require_once "../db.php";
 
 // 1. Phải đăng nhập
 if (!isset($_SESSION['user_id'])) {
-    header("Location: dangnhap.html");
+    header("Location: dangnhap.php");
     exit;
 }
 
@@ -75,5 +75,5 @@ if (ini_get("session.use_cookies")) {
 }
 session_destroy();
 
-header("Location: dangnhap.html?deleted=success");
+header("Location: dangnhap.php?deleted=success");
 exit;

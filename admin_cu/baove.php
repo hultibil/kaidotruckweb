@@ -22,7 +22,7 @@ header('Pragma: no-cache');
 
 // 1. Chưa đăng nhập
 if (empty($_SESSION['user_id'])) {
-    header('Location: ../Taikhoan/dangnhap.html');
+    header('Location: ../Taikhoan/dangnhap.php');
     exit;
 }
 
@@ -38,7 +38,7 @@ $__st->close();
 if (!$__user) {
     $_SESSION = [];
     session_destroy();
-    header('Location: ../Taikhoan/dangnhap.html');
+    header('Location: ../Taikhoan/dangnhap.php');
     exit;
 }
 

@@ -122,7 +122,7 @@ $captcha_error = isset($_GET['error']) && $_GET['error'] === 'captcha';
 
     <p>
         Đã có tài khoản?
-        <a href="dangnhap.html">Đăng nhập</a>
+        <a href="dangnhap.php">Đăng nhập</a>
     </p>
 
 

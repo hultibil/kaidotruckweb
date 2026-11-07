@@ -90,7 +90,7 @@ if ($stmt->execute()) {
     echo "
     <script>
         alert('Đăng ký thành công!');
-        window.location.href = 'dangnhap.html';
+        window.location.href = 'dangnhap.php';
     </script>
     ";
 

@@ -117,7 +117,7 @@ function clickSound() {
     sound.play();
 }
 
-/* ==================== SLIDE TRÌNH CHIẾU TRÊN shop.html ==================== */
+/* ==================== SLIDE TRÌNH CHIẾU TRÊN shop.php ==================== */
 /* ==================== TỰ ĐỘNG CHAYHJ TRWN SLIDE ==================== */
 let kaidoSlideIndex = 0;
 let kaidoAutoSlide;

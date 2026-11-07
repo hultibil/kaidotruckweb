@@ -166,12 +166,12 @@ if ($a > 0 && $b > 0) {
     <img class="logo" src="../image/kaidologo.jpg" alt="Logo">
     <h2>Kiểm tra tương thích giữa các linh kiện</h2>
     <div class="nut0"><a href="../index.php">Trang chủ</a></div>
-    <div class="nut1"><a href="../khac/khac.html">Dự án khác</a></div>
-    <div class="nut2"><a href="../hoithem.html">Trò chuyện</a></div>
+    <div class="nut1"><a href="../khac/khac.php">Dự án khác</a></div>
+    <div class="nut2"><a href="../hoithem.php">Trò chuyện</a></div>
     <div class="nut4chon"><a href="../tienich.php">Tài khoản/Mua hàng</a></div>
-    <div class="nut5"><a href="../kythuat/details.html">Chi tiết kỹ thuật</a></div>
-    <div class="nut6"><a href="../Blog/blog.html">Tin tức</a></div>
-    <div class="nut3"><a href="../gamemini.html">Game mini</a></div>
+    <div class="nut5"><a href="../kythuat/details.php">Chi tiết kỹ thuật</a></div>
+    <div class="nut6"><a href="../Blog/blog.php">Tin tức</a></div>
+    <div class="nut3"><a href="../gamemini.php">Game mini</a></div>
 </div>
 
 <div class="compat-container">

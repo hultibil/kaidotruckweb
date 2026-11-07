@@ -55,7 +55,7 @@ function dhCheckToken(): void
         exit('Yêu cầu không hợp lệ (CSRF). Vui lòng tải lại trang.');
     }
 }
-function dhRequireLogin(string $redirect = '../Taikhoan/dangnhap.html'): int
+function dhRequireLogin(string $redirect = '../Taikhoan/dangnhap.php'): int
 {
     if (empty($_SESSION['user_id'])) {
         header('Location: ' . $redirect);
