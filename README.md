@@ -66,10 +66,10 @@ kaidotruckweb/
 │   └── slide.js
 │
 ├── khac/
-│   └── khac.html
+│   └── khac.php
 │
 ├── kythuat/
-│   └── details.html
+│   └── details.php
 │
 ├── sanpham/
 │   ├── chitietsanpham_cu.php
@@ -81,7 +81,7 @@ kaidotruckweb/
 │
 ├── Taikhoan/
 │   ├── dangky.php
-│   ├── dangnhap.html
+│   ├── dangnhap.php
 │   ├── dangxuat.php
 │   ├── taikhoan.php
 │   ├── xoataikhoan.php
@@ -92,12 +92,12 @@ kaidotruckweb/
 ├── video/
 │
 ├── db.php
-├── gamemini.html
-├── hoithem.html
+├── gamemini.php
+├── hoithem.php
 ├── index.php
 ├── phpinfo.php
 ├── README.md
-└── tienich.html
+└── tienich.php
 ```
 
 ## 3. Mô tả các thư mục
@@ -125,9 +125,9 @@ kaidotruckweb/
 |---|---|
 | `db.php` | File kết nối cơ sở dữ liệu. |
 | `index.php` | Trang chính của website. |
-| `tienich.html` | Trang tiện ích. |
-| `gamemini.html` | Trang trò chơi mini. |
-| `hoithem.html` | Trang HTML bổ sung. |
+| `tienich.php` | Trang tiện ích. |
+| `gamemini.php` | Trang trò chơi mini. |
+| `hoithem.php` | Trang HTML bổ sung. |
 | `phpinfo.php` | Trang hiển thị thông tin cấu hình PHP. |
 | `README.md` | Tài liệu mô tả dự án và cấu trúc thư mục. |
 

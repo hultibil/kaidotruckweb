@@ -23,22 +23,22 @@
                 <a href="../index.php">Trang chủ</a>
             </div>
             <div class="nut1chon"> <!--Add CSS-->
-                <a href="../khac/khac.html">Dự án khác</a>
+                <a href="../khac/khac.php">Dự án khác</a>
             </div>
             <div class="nut2">
-                <a href="../hoithem.html">Trò chuyện</a>
+                <a href="../hoithem.php">Trò chuyện</a>
             </div>
             <div class="nut4">
                 <a href="../tienich.php" onclick="clickSound()">Tài khoản/Mua hàng</a>
             </div>
             <div class="nut5">
-                <a href="../kythuat/details.html">Chi tiết kỹ thuật</a>
+                <a href="../kythuat/details.php">Chi tiết kỹ thuật</a>
             </div>
             <div class="nut6">
-                <a href="../Blog/blog.html" onclick="clickSound()">Tin tức</a>
+                <a href="../Blog/blog.php" onclick="clickSound()">Tin tức</a>
             </div>
             <div class="nut3">
-                <a href="../gamemini.html">Game mini</a>
+                <a href="../gamemini.php">Game mini</a>
             </div>
     </div>
     <div class="gioithieu">
