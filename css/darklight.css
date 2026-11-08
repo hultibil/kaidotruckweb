@@ -115,3 +115,48 @@ body.light-mode .thongtinweb p,
 body.light-mode .thongtinweb h4 {
     color: #334155 !important; /* Đổi màu chữ thông thường ở footer thành màu tối */
 }
+
+/* ============================================================
+   7. FIX GIAO DIỆN LIGHT MODE CHO TRANG TÀI KHOẢN (TAIKHOAN.PHP)
+   ============================================================ */
+body.light-mode .account-card {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
+    color: #0f172a !important;
+}
+
+body.light-mode .account-card h2,
+body.light-mode .account-header h1 {
+    color: #0f172a !important;
+}
+
+body.light-mode .account-header p {
+    color: #64748b !important;
+}
+
+body.light-mode .info-row {
+    border-bottom: 1px solid #e2e8f0 !important;
+}
+
+body.light-mode .info-row span {
+    color: #64748b !important; /* Nhãn thông tin (Tên đăng nhập, Email...) */
+}
+
+body.light-mode .info-row strong {
+    color: #0f172a !important; /* Giá trị thông tin tài khoản chuyển sang màu tối rõ nét */
+}
+
+body.light-mode .account-actions button {
+    background: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #0f172a !important;
+}
+
+body.light-mode .account-actions button:hover {
+    background: #e2e8f0 !important;
+}
+
+body.light-mode .account-footer a {
+    color: #0284c7 !important;
+}

@@ -2,7 +2,7 @@
 session_start();
 require_once "../db.php";
 
-// Nếu ĐÃ ĐĂNG NHẬP -> Hiển thị trang quản lý tài khoản bình thường
+// Nếu ĐÃ ĐĂNG NHẬP -> Hiển thị trang quản lý tài khoản
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
     $sql = "SELECT * FROM users WHERE id = ?";
@@ -25,6 +25,7 @@ if (isset($_SESSION['user_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tài khoản của bạn</title>
     <link rel="stylesheet" href="../css/dndk.css">
+    <link rel="stylesheet" href="../css/darklight.css">
 </head>
 <body class="account-page">
     <div class="header">
@@ -37,6 +38,16 @@ if (isset($_SESSION['user_id'])) {
         <div class="nut5"><a href="../kythuat/details.php">Chi tiết kỹ thuật</a></div>
         <div class="nut6"><a href="../Blog/blog.php">Tin tức</a></div>
         <div class="nut3"><a href="../gamemini.php">Game mini</a></div>
+
+        <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()">
+            🌙 Dark
+        </button>
+
+        <?php if (isset($_SESSION['username'])): ?>
+            <div class="user-header-badge">
+                <span>👋 Hi, <strong><?= htmlspecialchars($_SESSION['username']) ?></strong></span>
+            </div>
+        <?php endif; ?>
     </div>
 
     <div class="account-container">
@@ -93,11 +104,41 @@ if (isset($_SESSION['user_id'])) {
             <a href="dangxuat.php">Đăng xuất</a>
         </div>
     </div>
+    <!--SCRIPT CHUYỂN ĐỔI GIAO DIỆN SÁNG/TỐI-->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const savedTheme = localStorage.getItem("kaido_theme");
+            const themeBtn = document.getElementById("themeToggle");
+
+            if (savedTheme === "light") {
+                document.body.classList.add("light-mode");
+                if (themeBtn) themeBtn.innerHTML = "☀️ Light";
+            } else {
+                document.body.classList.remove("light-mode");
+                if (themeBtn) themeBtn.innerHTML = "🌙 Dark";
+            }
+        });
+
+        function toggleTheme() {
+            const body = document.body;
+            const themeBtn = document.getElementById("themeToggle");
+
+            body.classList.toggle("light-mode");
+
+            if (body.classList.contains("light-mode")) {
+                localStorage.setItem("kaido_theme", "light");
+                if (themeBtn) themeBtn.innerHTML = "☀️ Light";
+            } else {
+                localStorage.setItem("kaido_theme", "dark");
+                if (themeBtn) themeBtn.innerHTML = "🌙 Dark";
+            }
+        }
+    </script>
 </body>
 </html>
 
 <?php 
-// NẾU CHƯA ĐĂNG NHẬP -> Ở lại trang hiện tại (không chuyển đi đâu) và hiện thông báo góc trên bên phải
+// KẾT THÚC KHỐI IF: Dấu đóng ngoặc nhọn này ứng với `if (isset($_SESSION['user_id']))`
 } else {
 ?>
 <!DOCTYPE html>
@@ -109,7 +150,6 @@ if (isset($_SESSION['user_id'])) {
     <title>Kaido Shop</title>
     <link rel="stylesheet" href="../css/style.css">
     <style>
-        /* Hiệu ứng thông báo đẩy góc TRÊN bên phải (PC) và trên cùng dạng status phone (Mobile) */
         .kaido-top-notification {
             position: fixed;
             top: -100px;
@@ -158,7 +198,7 @@ if (isset($_SESSION['user_id'])) {
                 justify-content: space-between;
             }
             .kaido-top-notification.show {
-                top: 15px; /* Hiện sát trên cùng như thông báo điện thoại */
+                top: 15px; 
             }
         }
     </style>
@@ -166,7 +206,6 @@ if (isset($_SESSION['user_id'])) {
 <body>
     <script>
         window.addEventListener('DOMContentLoaded', () => {
-            // Tạo thông báo hiển thị dần
             const notif = document.createElement('div');
             notif.className = 'kaido-top-notification';
             notif.innerHTML = `
@@ -178,12 +217,10 @@ if (isset($_SESSION['user_id'])) {
             `;
             document.body.appendChild(notif);
 
-            // Cho trượt xuống xuất hiện mượt mà
             setTimeout(() => {
                 notif.classList.add('show');
             }, 100);
 
-            // Đợi đúng 5 giây (5000ms) thì mờ dần và ẩn đi, TUYỆT ĐỐI KHÔNG chuyển hướng trang
             setTimeout(() => {
                 notif.style.opacity = '0';
                 notif.style.top = '-100px';
@@ -196,5 +233,5 @@ if (isset($_SESSION['user_id'])) {
 </body>
 </html>
 <?php
-}
+} 
 ?>

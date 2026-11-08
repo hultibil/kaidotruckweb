@@ -229,7 +229,7 @@ $result = mysqli_query($conn, $sql);
                 </div>
             <?php else: ?>
                 <div class="user-header-badge visitor">
-                    <a href="Taikhoan/dangnhap.php">🔑 Đăng nhập/ đăng ký</a>
+                    <a href="../Taikhoan/dangnhap.php">🔑 Đăng nhập/ đăng ký</a>
                 </div>
             <?php endif; ?>
 </div>

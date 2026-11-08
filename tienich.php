@@ -203,7 +203,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
                     <p><strong>⚠️ Thông báo</strong></p>
                     <p>Bạn chưa thể sử dụng mục này khi bạn chưa đăng nhập :(( !</p>
                 </div>
-                <a href="Taikhoan/dangnhap.html" class="login-quick-btn">Đăng nhập</a>
+                <a href="Taikhoan/dangnhap.php" class="login-quick-btn">Đăng nhập</a>
             `;
             document.body.appendChild(notif);
 
