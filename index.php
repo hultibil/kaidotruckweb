@@ -74,6 +74,11 @@ session_start();
                 <a href="gamemini.php" onclick="clickSound()">Game mini</a>
             </div>
 
+            <!-- NÚT BẤM CHUYỂN ĐỔI DARK / LIGHT MODE -->
+            <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()">
+                🌙 Dark
+            </button>
+
             <!-- HIỂN THỊ TÊN TÀI KHOẢN VỚI NỀN ĐEN MỜ TRÊN THANH HEADER -->
             <?php if (isset($_SESSION['username'])): ?>
                 <div class="user-header-badge">
@@ -339,5 +344,5 @@ window.addEventListener("load", function() {
 });
 </script>
 </body>
-    <script src="css/slide.js"></script>
+    <script src="js/slide.js"></script>
 </html>

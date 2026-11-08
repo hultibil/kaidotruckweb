@@ -24,8 +24,7 @@
 /* ==================== 1. FONT ==================== */
 @import url('css/fonts.css');
 @import url('nav.css'); /* Dùng chung menu header cho tất cả các trang, không cần copy lặp lại */
-
-
+@import url('darklight.css'); /* Dùng chung cho tất cả các trang, không cần copy lặp lại */
 /* ==================== 2. BASE / RESET ==================== */
 html {
     scroll-behavior: smooth;
@@ -153,7 +152,7 @@ body {
     text-align: left;
     background-image:
         linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.0)),
-        url('/image/anhmucluc.jpg');
+        url('anhmucluc.jpg');
     background-repeat: no-repeat;
     background-position: center;
     border-radius: 10px;

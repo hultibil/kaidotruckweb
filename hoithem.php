@@ -6,6 +6,37 @@
         <title>Trò chuyện</title>
         <link rel="icon" href="image/kaidoLogomini.png">
         <link rel="stylesheet" href="css/style.css">
+        <style>
+.user-header-badge {
+    background: rgba(0, 0, 0, 0.55); /* Nền đen mờ */
+    backdrop-filter: blur(8px); /* Hiệu ứng làm mờ kính mờ */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 6px 14px;
+    display: inline-flex;
+    align-items: center;
+    color: #f1f5f9;
+    font-size: 13px;
+    margin-left: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+}
+
+.user-header-badge strong {
+    color: #ff416c; /* Tô điểm tên user màu hồng cam sáng */
+    margin-left: 4px;
+}
+
+.user-header-badge.visitor a {
+    color: #38bdf8;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.user-header-badge.visitor a:hover {
+    text-decoration: underline;
+}
+    </style>
     </head>
     <body>
         <!--TRANG LOADING-->
@@ -37,6 +68,23 @@
             <div class="nut3">
                 <a href="gamemini.php">Game mini</a>
             </div>
+
+            <!-- NÚT BẤM CHUYỂN ĐỔI DARK / LIGHT MODE -->
+            <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()">
+                🌙 Dark
+            </button>
+
+            <!-- HIỂN THỊ TÊN TÀI KHOẢN VỚI NỀN ĐEN MỜ TRÊN THANH HEADER -->
+            <?php if (isset($_SESSION['username'])): ?>
+                <div class="user-header-badge">
+                    <span>👋 Hi, <strong><?= htmlspecialchars($_SESSION['username']) ?></strong></span>
+                </div>
+            <?php else: ?>
+                <div class="user-header-badge visitor">
+                    <a href="Taikhoan/dangnhap.php">🔑 Đăng nhập/ đăng ký</a>
+                </div>
+            <?php endif; ?>
+
     </div>
     <h3 class="text">Chatbox</h3>
 <!--Tro chuyen-->
@@ -171,4 +219,5 @@ window.addEventListener("load", function() {
 </script>
 </body>
     <script src="js/chat.js"></script>
+    <script src="js/slide.js"></script>
 </html>

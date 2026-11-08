@@ -40,6 +40,11 @@
             <div class="nut3">
                 <a href="../gamemini.php">Game mini</a>
             </div>
+
+            <!-- NÚT BẤM CHUYỂN ĐỔI DARK / LIGHT MODE -->
+            <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()">
+                🌙 Dark
+            </button>
     </div>
     <div class="gioithieu">
         <p>Mục lục</p>
@@ -103,5 +108,5 @@ window.addEventListener("load", function() {
 });
 </script>
 </body>
-    <script src="slide.js"></script>
+    <script src="../js/slide.js"></script>
 </html>

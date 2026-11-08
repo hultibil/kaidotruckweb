@@ -1,0 +1,97 @@
+/* ============================================================
+   BỔ SUNG GIAO DIỆN LIGHT MODE (CHẾ ĐỘ SÁNG)
+   ============================================================ */
+
+
+/* 1. Nền body và màu chữ chung */
+body.light-mode {
+    background-color: #f8fafc !important;
+    color: #0f172a !important;
+}
+
+/* 2. Các thẻ giới thiệu xe và khung nội dung */
+body.light-mode .xe,
+body.light-mode .thoisokhai,
+body.light-mode .thoimoi,
+body.light-mode .hiendai,
+body.light-mode .hientai,
+body.light-mode .hino,
+body.light-mode .xediahinh,
+body.light-mode .xetaiv5,
+body.light-mode .xetaiv6,
+body.light-mode .tienich-card 
+body.light-mode .account-card,
+body.light-mode .cart-card {
+    background: #ffffff !important;
+    color: #1e293b !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
+    border: 1px solid #e2e8f0;
+}
+
+body.light-mode .xe p,
+body.light-mode .thoisokhai p,
+body.light-mode .thoimoi p,
+body.light-mode .hiendai p,
+body.light-mode .hientai p,
+body.light-mode .xediahinh p,
+body.light-mode .xetaiv5 p,
+body.light-mode .xetaiv6 p {
+    color: #334155 !important;
+}
+
+/* 3. Tiêu đề chữ bạc (.text) */
+body.light-mode .text {
+    color: #1e293b !important;
+    text-shadow: none !important;
+}
+
+/* 4. Thẻ User Badge mờ trên Header */
+body.light-mode .user-header-badge {
+    background: rgba(255, 255, 255, 0.8) !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #0f172a !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 5. Nút bấm chuyển đổi Chế độ Sáng / Tối */
+.theme-toggle-btn {
+    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.theme-toggle-btn:hover {
+    transform: scale(1.05);
+}
+
+body.light-mode .theme-toggle-btn {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #0f172a;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .footer {
+    background: #f8fafc;
+    color: #0f172a;
+    padding: 20px;
+    text-align: center;
+}
+
+.account-info {
+    width: 100%;
+    background: #ffffff;
+    color: #1e293b;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e2e8f0;
+}

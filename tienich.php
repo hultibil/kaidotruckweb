@@ -104,8 +104,12 @@ $isLoggedIn = isset($_SESSION['user_id']);
             <div class="nut3">
                 <a href="gamemini.php" onclick="clickSound()">Game mini</a>
             </div>
-    </div>
 
+            <!-- NÚT BẤM CHUYỂN ĐỔI DARK / LIGHT MODE -->
+            <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()">
+                🌙 Dark
+            </button>
+    </div>
 <!--Nội dung chính-->
     <h3 class="text">Tài khoản và Mua hàng</h3>
 <div class="tienich-grid">
@@ -235,4 +239,5 @@ window.addEventListener("load", function() {
 });
 </script>
 </body>
+    <script src="js/slide.js"></script>
 </html>

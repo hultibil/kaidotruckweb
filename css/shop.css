@@ -7,6 +7,7 @@
    cả phần responsive riêng cho header, không cần viết lại ở đây) */
 @import url('css/fonts.css');
 @import url('nav.css');
+@import url('darklight.css'); /* Dùng chung cho tất cả các trang, không cần copy lặp lại */
 
 html {
     scroll-behavior: smooth;

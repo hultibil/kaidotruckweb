@@ -8,6 +8,38 @@
    gọi createSlider() mới ở cuối file, không phải copy cả khối.
    ============================================================ */
  
+
+// 1. Kiểm tra trạng thái lưu trữ khi vừa tải trang , ở đây là tính trạng dark/light mode
+    document.addEventListener("DOMContentLoaded", function() {
+        const savedTheme = localStorage.getItem("kaido_theme");
+        const themeBtn = document.getElementById("themeToggle");
+
+        if (savedTheme === "light") {
+            document.body.classList.add("light-mode");
+            if (themeBtn) themeBtn.innerHTML = "☀️ Light";
+        } else {
+            document.body.classList.remove("light-mode");
+            if (themeBtn) themeBtn.innerHTML = "🌙 Dark";
+        }
+    });
+
+    // 2. Hàm kích hoạt khi bấm nút chuyển đổi
+    function toggleTheme() {
+        const body = document.body;
+        const themeBtn = document.getElementById("themeToggle");
+
+        body.classList.toggle("light-mode");
+
+        if (body.classList.contains("light-mode")) {
+            localStorage.setItem("kaido_theme", "light");
+            if (themeBtn) themeBtn.innerHTML = "☀️ Light";
+        } else {
+            localStorage.setItem("kaido_theme", "dark");
+            if (themeBtn) themeBtn.innerHTML = "🌙 Dark";
+        }
+    }
+
+
 function createSlider(imgId, imageList) {
     const slideEl = document.getElementById(imgId);
     if (!slideEl) return null; // Trang không có slider này thì bỏ qua, không lỗi

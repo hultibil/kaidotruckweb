@@ -37,6 +37,11 @@
             <div class="nut3">
                 <a href="../gamemini.php" onclick="clickSound()">Game mini</a>
             </div>
+
+            <!-- NÚT BẤM CHUYỂN ĐỔI DARK / LIGHT MODE -->
+            <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()">
+                🌙 Dark
+            </button>
     </div>
     <div id="dautrang">
     <!--///////////////////////////////////////////////////////////-->
@@ -626,5 +631,6 @@ window.addEventListener("load", function() {
     }, 500);
 });
 </script>
-    </body>
+</body>
+<script src="../js/slide.js"></script>
 </html>

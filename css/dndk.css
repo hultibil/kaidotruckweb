@@ -1,6 +1,7 @@
 
 @import url('css/fonts.css');
 @import url('nav.css');
+@import url('darklight.css'); /* Dùng chung cho tất cả các trang, không cần copy lặp lại */
 
 * {
     margin: 0;
