@@ -95,3 +95,23 @@ body.light-mode .footer {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     border: 1px solid #e2e8f0;
 }
+
+/* ============================================================
+   6. FIX MÀU CHỮ THẺ <a> Ở FOOTER CHO LIGHT MODE
+   ============================================================ */
+body.light-mode .footer a,
+body.light-mode .thongtinweb a {
+    color: #0284c7 !important; /* Chữ link chuyển sang màu xanh dương dễ đọc trên nền sáng */
+}
+
+body.light-mode .footer a:hover,
+body.light-mode .thongtinweb a:hover {
+    color: #0369a1 !important;
+    text-decoration: underline;
+}
+
+body.light-mode .footer p,
+body.light-mode .thongtinweb p,
+body.light-mode .thongtinweb h4 {
+    color: #334155 !important; /* Đổi màu chữ thông thường ở footer thành màu tối */
+}

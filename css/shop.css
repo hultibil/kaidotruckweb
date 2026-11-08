@@ -637,3 +637,51 @@ form button:hover {
 .chuyentiep a:hover {
     background: linear-gradient(to right, #000000, #808080);
 }
+
+/* ============================================================
+   LIGHT MODE CHO SHOP.PHP
+   ============================================================ */
+body.light-mode {
+    background-color: #f8fafc !important;
+    color: #0f172a !important;
+}
+
+body.light-mode .product-card {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
+}
+
+body.light-mode .product-card h2 {
+    color: #0284c7 !important;
+    text-shadow: none !important;
+}
+
+body.light-mode .product-card p {
+    color: #334155 !important; /* Đảm bảo phần mô tả và tình trạng sản phẩm hiển thị màu tối rõ nét */
+}
+
+body.light-mode .product-card p strong {
+    color: #e11d48 !important; /* Màu giá tiền nổi bật */
+}
+
+body.light-mode .categories {
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid #cbd5e1;
+}
+
+body.light-mode .filter-section input[type="text"],
+body.light-mode form input[type="text"] {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    border: 1px solid #cbd5e1 !important;
+}
+
+body.light-mode .thongtinweb {
+    background: rgba(0, 0, 0, 0.04);
+    color: #334155;
+}
+
+body.light-mode .thongtinweb a {
+    color: #0284c7 !important;
+}

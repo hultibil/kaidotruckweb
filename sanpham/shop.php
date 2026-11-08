@@ -218,6 +218,10 @@ $result = mysqli_query($conn, $sql);
     <div class="nut5"><a href="../kythuat/details.php">Chi tiết kỹ thuật</a></div>
     <div class="nut6"><a href="../Blog/blog.php" onclick="clickSound()">Tin tức</a></div>
     <div class="nut3"><a href="../gamemini.php" onclick="clickSound()">Game mini</a></div>
+    <!-- NÚT BẤM CHUYỂN ĐỔI DARK / LIGHT MODE -->
+            <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()">
+                🌙 Dark
+            </button>
     <!-- HIỂN THỊ TÊN TÀI KHOẢN VỚI NỀN ĐEN MỜ TRÊN THANH HEADER -->
             <?php if (isset($_SESSION['username'])): ?>
                 <div class="user-header-badge">
