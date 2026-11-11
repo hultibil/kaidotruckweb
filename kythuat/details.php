@@ -1,3 +1,7 @@
+<?php
+session_start(); // Bắt đầu session để quản lý đăng nhập
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -8,28 +12,55 @@
         <link rel="stylesheet" href="../css/details.css">
     </head>
     <body>
-         <!--TRANG LOADING-->
+         <!-- TRANG LOADING -->
     <div id="loading">
         <img src="../image/imgload.png">
         <p>Đang tải, gần xong rồi!!<span id="dots">...</span></p>
     </div>
-        <div class="header"> <!--Add CSS-->
+
+    <!-- THANH MÀU XÁM (Đầu trang - Smart Header: Tự ẩn khi lướt xuống, hiện khi lướt lên) -->
+    <div class="header" id="mainHeader">
+        <div class="header-left">
             <img class="logo" src="../image/kaidologo.jpg">
-            <h2>Chi tiết kỹ thuật</h2>
+            <h2>Trang chủ giới thiệu Kaido</h2>
+        </div>
+        <div class="header-right">
+            <!-- NÚT BẤM CHUYỂN ĐỔI DARK / LIGHT MODE -->
+            <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()">
+                🌙 Dark
+            </button>
+
+            <!-- HIỂN THỊ TÊN TÀI KHOẢN HOẶC ĐĂNG NHẬP -->
+            <?php if (isset($_SESSION['username'])): ?>
+                <div class="user-header-badge">
+                    <span>👋 Hi, <strong><?= htmlspecialchars($_SESSION['username']) ?></strong></span>
+                </div>
+            <?php else: ?>
+                <div class="user-header-badge visitor">
+                    <a href="../Taikhoan/dangnhap.php">🔑 Đăng nhập/ đăng ký</a>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <!-- THANH ĐIỀU HƯỚNG MỚI (Nằm dưới thanh màu xám, không ghim, lướt ngang trên mobile) -->
+    <div id="dautrang"> 
+    <div class="nav-container">
+        <div class="nav-scroll-wrapper">
             <div class="nut0">
                 <a href="../index.php" onclick="clickSound()">Trang chủ</a>
             </div>
-            <div class="nut1"> <!--Add CSS-->
-                <a href="../khac/khac.php" onclick="clickSound()">Dự án khác</a>
+            <div class="nut1">
+                <a>Dự án khác</a>
             </div>
             <div class="nut2">
-                <a href="../hoithem.php" onclick="clickSound()">Trò chuyện</a>
+                <a href="../hoithem.php">Trò chuyện</a>
             </div>
             <div class="nut4">
                 <a href="../tienich.php" onclick="clickSound()">Tài khoản/Mua hàng</a>
             </div>
             <div class="nut5chon">
-                <a href="../kythuat/details.php">Chi tiết kỹ thuật</a>
+                <a>Chi tiết kỹ thuật</a>
             </div>
             <div class="nut6">
                 <a href="../Blog/blog.php" onclick="clickSound()">Tin tức</a>
@@ -37,12 +68,12 @@
             <div class="nut3">
                 <a href="../gamemini.php" onclick="clickSound()">Game mini</a>
             </div>
-
-            <!-- NÚT BẤM CHUYỂN ĐỔI DARK / LIGHT MODE -->
-            <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()">
-                🌙 Dark
-            </button>
+        </div>
     </div>
+
+
+
+
     <div id="dautrang">
     <!--///////////////////////////////////////////////////////////-->
     <h3 class="text">Xem chi tiết kỹ thuật về những chiếc xe được giới thiệu theo giai đoạn</h3>

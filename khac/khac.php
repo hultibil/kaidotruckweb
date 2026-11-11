@@ -1,3 +1,6 @@
+<?php
+session_start(); // Bắt đầu session để quản lý đăng nhập
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,20 +13,46 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    <!--TRANG LOADING-->
+    <!-- TRANG LOADING -->
     <div id="loading">
         <img src="../image/imgload.png">
-        <p>Đang tải, gần xong rồi!!<span id="dots">.</span></p>
+        <p>Đang tải, gần xong rồi!!<span id="dots">...</span></p>
     </div>
-    <div id="dautrang"> 
-    <div class="header"> <!--Add CSS-->
+
+    <!-- THANH MÀU XÁM (Đầu trang - Smart Header: Tự ẩn khi lướt xuống, hiện khi lướt lên) -->
+    <div class="header" id="mainHeader">
+        <div class="header-left">
             <img class="logo" src="../image/kaidologo.jpg">
-            <h2>Dự án khác của Kaido</h2>
-            <div class="nut0"> <!--Add CSS-->
-                <a href="../index.php">Trang chủ</a>
+            <h2>Trang chủ giới thiệu Kaido</h2>
+        </div>
+        <div class="header-right">
+            <!-- NÚT BẤM CHUYỂN ĐỔI DARK / LIGHT MODE -->
+            <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()">
+                🌙 Dark
+            </button>
+
+            <!-- HIỂN THỊ TÊN TÀI KHOẢN HOẶC ĐĂNG NHẬP -->
+            <?php if (isset($_SESSION['username'])): ?>
+                <div class="user-header-badge">
+                    <span>👋 Hi, <strong><?= htmlspecialchars($_SESSION['username']) ?></strong></span>
+                </div>
+            <?php else: ?>
+                <div class="user-header-badge visitor">
+                    <a href="../Taikhoan/dangnhap.php">🔑 Đăng nhập/ đăng ký</a>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <!-- THANH ĐIỀU HƯỚNG MỚI (Nằm dưới thanh màu xám, không ghim, lướt ngang trên mobile) -->
+    <div id="dautrang"> 
+    <div class="nav-container">
+        <div class="nav-scroll-wrapper">
+            <div class="nut0">
+                <a href="../index.php" onclick="clickSound()">Trang chủ</a>
             </div>
-            <div class="nut1chon"> <!--Add CSS-->
-                <a href="../khac/khac.php">Dự án khác</a>
+            <div class="nut1chon">
+                <a>Dự án khác</a>
             </div>
             <div class="nut2">
                 <a href="../hoithem.php">Trò chuyện</a>
@@ -38,14 +67,12 @@
                 <a href="../Blog/blog.php" onclick="clickSound()">Tin tức</a>
             </div>
             <div class="nut3">
-                <a href="../gamemini.php">Game mini</a>
+                <a href="../gamemini.php" onclick="clickSound()">Game mini</a>
             </div>
-
-            <!-- NÚT BẤM CHUYỂN ĐỔI DARK / LIGHT MODE -->
-            <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()">
-                🌙 Dark
-            </button>
+        </div>
     </div>
+
+
     <div class="gioithieu">
         <p>Mục lục</p>
         <a href="#xecongnong">Chưa có sản phẩm nào được giới thiệu</a><br>

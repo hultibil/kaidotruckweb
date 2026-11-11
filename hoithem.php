@@ -1,3 +1,7 @@
+<?php
+session_start(); // Bắt đầu session để quản lý đăng nhập
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -6,75 +10,27 @@
         <title>Trò chuyện</title>
         <link rel="icon" href="image/kaidoLogomini.png">
         <link rel="stylesheet" href="css/style.css">
-        <style>
-.user-header-badge {
-    background: rgba(0, 0, 0, 0.55); /* Nền đen mờ */
-    backdrop-filter: blur(8px); /* Hiệu ứng làm mờ kính mờ */
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 20px;
-    padding: 6px 14px;
-    display: inline-flex;
-    align-items: center;
-    color: #f1f5f9;
-    font-size: 13px;
-    margin-left: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    white-space: nowrap;
-}
-
-.user-header-badge strong {
-    color: #ff416c; /* Tô điểm tên user màu hồng cam sáng */
-    margin-left: 4px;
-}
-
-.user-header-badge.visitor a {
-    color: #38bdf8;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.user-header-badge.visitor a:hover {
-    text-decoration: underline;
-}
-    </style>
     </head>
     <body>
-        <!--TRANG LOADING-->
+        <!-- TRANG LOADING -->
     <div id="loading">
         <img src="image/imgload.png">
-        <p>Đang tải, gần xong rồi!!<span id="dots">.</span></p>
+        <p>Đang tải, gần xong rồi!!<span id="dots">...</span></p>
     </div>
-        <div class="header"> <!--Add CSS-->
-            <img class="logo" src="image/kaidologo.jpg">
-            <h2>Trò chuyện</h2>
-            <div class="nut0"> <!--Add CSS-->
-                <a href="index.php">Trang chủ</a>
-            </div>
-            <div class="nut1"> <!--Add CSS-->
-                <a href="khac/khac.php">Dự án khác</a>
-            </div>
-            <div class="nut2chon">
-                <a href="hoithem.php">Trò chuyện</a>
-            </div>
-            <div class="nut4">
-                <a href="tienich.php">Tài khoản/Mua hàng</a>
-            </div>
-            <div class="nut5">
-                <a href="kythuat/details.php">Chi tiết kỹ thuật</a>
-            </div>
-            <div class="nut6">
-                <a href="Blog/blog.php" onclick="clickSound()">Tin tức</a>
-            </div>
-            <div class="nut3">
-                <a href="gamemini.php">Game mini</a>
-            </div>
 
+    <!-- THANH MÀU XÁM (Đầu trang - Smart Header: Tự ẩn khi lướt xuống, hiện khi lướt lên) -->
+    <div class="header" id="mainHeader">
+        <div class="header-left">
+            <img class="logo" src="image/kaidologo.jpg">
+            <h2>Trang chủ giới thiệu Kaido</h2>
+        </div>
+        <div class="header-right">
             <!-- NÚT BẤM CHUYỂN ĐỔI DARK / LIGHT MODE -->
             <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()">
                 🌙 Dark
             </button>
 
-            <!-- HIỂN THỊ TÊN TÀI KHOẢN VỚI NỀN ĐEN MỜ TRÊN THANH HEADER -->
+            <!-- HIỂN THỊ TÊN TÀI KHOẢN HOẶC ĐĂNG NHẬP -->
             <?php if (isset($_SESSION['username'])): ?>
                 <div class="user-header-badge">
                     <span>👋 Hi, <strong><?= htmlspecialchars($_SESSION['username']) ?></strong></span>
@@ -84,6 +40,36 @@
                     <a href="Taikhoan/dangnhap.php">🔑 Đăng nhập/ đăng ký</a>
                 </div>
             <?php endif; ?>
+        </div>
+    </div>
+
+    <!-- THANH ĐIỀU HƯỚNG MỚI (Nằm dưới thanh màu xám, không ghim, lướt ngang trên mobile) -->
+    <div id="dautrang"> 
+    <div class="nav-container">
+        <div class="nav-scroll-wrapper">
+            <div class="nut0">
+                <a href="index.php" onclick="clickSound()">Trang chủ</a>
+            </div>
+            <div class="nut1">
+                <a href="khac/khac.php" onclick="clickSound()">Dự án khác</a>
+            </div>
+            <div class="nut2chon">
+                <a>Trò chuyện</a>
+            </div>
+            <div class="nut4">
+                <a href="tienich.php" onclick="clickSound()">Tài khoản/Mua hàng</a>
+            </div>
+            <div class="nut5">
+                <a href="kythuat/details.php">Chi tiết kỹ thuật</a>
+            </div>
+            <div class="nut6">
+                <a href="Blog/blog.php" onclick="clickSound()">Tin tức</a>
+            </div>
+            <div class="nut3">
+                <a href="gamemini.php" onclick="clickSound()">Game mini</a>
+            </div>
+        </div>
+    </div>
 
     </div>
     <h3 class="text">Chatbox</h3>

@@ -8,41 +8,30 @@
     <link rel="stylesheet" href="../css/dndk.css">
 </head>
 <body>
-
     <!-- Nút chuyển đổi Dark / Light mode -->
     <button id="themeToggle" class="auth-theme-btn" onclick="toggleTheme()">
         🌙 Dark
     </button>
-
 <div class="auth-box">
-
     <h2>Đăng nhập vào Kaido</h2>
-
     <form action="xulydangnhap.php" method="POST">
-
         <div class="input-group">
             <label>Tên đăng nhập</label>
             <input type="text" name="username" placeholder="Nhập tên đăng nhập" required>
         </div>
-
         <div class="input-group">
             <label>Mật khẩu</label>
             <input type="password" name="password" placeholder="Nhập mật khẩu" required>
         </div>
-
         <button type="submit">Đăng nhập</button>
-
     </form>
-
     <p>
         Chưa có tài khoản?
         <a href="dangky.php">Đăng ký ngay</a>
     </p>
-
     <a href="../index.php" class="back-home">
         ← Về trang chủ
     </a>
-
 </div>
 </body>
 <script src="../js/slide.js"></script>

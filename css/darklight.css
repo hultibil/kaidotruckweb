@@ -160,3 +160,55 @@ body.light-mode .account-actions button:hover {
 body.light-mode .account-footer a {
     color: #0284c7 !important;
 }
+
+
+/* ============================================================
+   8. FIX GIAO DIỆN LIGHT MODE CHO TRANG GIỎ HÀNG (GIOHANG.PHP)
+   ============================================================ */
+body.light-mode .cart-card,
+body.light-mode .cart-summary {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #0f172a !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
+}
+
+body.light-mode .cart-header h1,
+body.light-mode .cart-summary .grand-total,
+body.light-mode .product-info h2,
+body.light-mode .product-info .product-price,
+body.light-mode .product-total {
+    color: #0f172a !important;
+}
+
+body.light-mode .cart-header p,
+body.light-mode .product-info p,
+body.light-mode .cart-summary > div {
+    color: #000000 !important;
+}
+
+body.light-mode .product-quantity button {
+    background: #f1f5f9 !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #0f172a !important;
+}
+
+body.light-mode .product-quantity button:disabled {
+    opacity: 0.4;
+}
+
+body.light-mode .a {
+    color: #000000 !important;
+}
+
+body.light-mode .remove-btn {
+    color: #dc2626 !important;
+}
+
+body.light-mode .cart-card a {
+    color: #0284c7 !important;
+}
+
+body.light-mode .cart-card a:hover {
+    text-decoration: underline;
+}

@@ -9,6 +9,24 @@
    ============================================================ */
  
 
+// ========Khu vực cuộn ẩn trên thanh màu xám =========
+let lastScrollTop = 0;
+const mainHeader = document.getElementById('mainHeader');
+
+window.addEventListener('scroll', function() {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+    if (scrollTop > lastScrollTop && scrollTop > 80) {
+        // Đang lướt xuống -> Ẩn thanh màu xám đi
+        mainHeader.style.transform = 'translateY(-100%)';
+    } else {
+        // Đang lướt lên hoặc ở đầu trang -> Hiện thanh màu xám ra
+        mainHeader.style.transform = 'translateY(0)';
+    }
+    
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+}, false);
+
 // 1. Kiểm tra trạng thái lưu trữ khi vừa tải trang , ở đây là tính trạng dark/light mode
     document.addEventListener("DOMContentLoaded", function() {
         const savedTheme = localStorage.getItem("kaido_theme");

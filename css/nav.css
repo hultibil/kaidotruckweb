@@ -14,30 +14,101 @@
 
 /* ==================== 1. HEADER ==================== */
 .header {
-    position: fixed; /* Đặt vị trí cố định để header luôn hiển thị trên cùng */
-    z-index: 1000;   /* Đảm bảo header nằm trên các phần tử khác */
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    padding: 10px;
-    border-radius: 15px;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 20px;
     display: flex;
-    justify-content: left;
+    justify-content: space-between;
     align-items: center;
-    gap: 10px;
     background: linear-gradient(to right, rgb(111, 111, 111), rgb(167, 167, 167));
-}
-.header h2 {
-    color: black;
-    font-size: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out; /* Hiệu ứng trượt mượt mà */
 }
 
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header h2 {
+    color: black;
+    font-size: 18px;
+    margin: 0;
+}
 
 /* ==================== 2. LOGO ==================== */
 .logo {
-    text-align: center;
-    width: 100px;
-    height: 60px;
+    width: 80px;
+    height: 50px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+/* ==================== THANH ĐIỀU HƯỚNG MỚI ==================== */
+.nav-container {
+    width: 100%;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center; /* Đưa toàn bộ khung chứa nút ra giữa màn hình (trên PC) */
+}
+
+.nav-scroll-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Căn các nút ở giữa trên PC */
+    gap: 5px;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 1px 5px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+}
+
+/* Tùy chỉnh thanh cuộn ngang cho gọn gàng */
+.nav-scroll-wrapper::-webkit-scrollbar {
+    height: 8px;
+}
+.nav-scroll-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+/* Các nút điều hướng */
+.nut0, .nut0chon, .nut1, .nut1chon, .nut2, .nut2chon, .nut3, .nut4, .nut4chon, .nut5,  .nut5chon, .nut6, .nut6chon {
+    display: inline-flex;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.nut0 a, .nut0chon a, .nut1 a, .nut1chon a, .nut2 a, .nut2chon a, .nut3 a, .nut4 a, .nut4chon a, .nut5 a, .nut5chon a, .nut6 a, .nut6chon a {
+    color: white;
+    text-decoration: none;
+    font-size: 10px;
+    background: linear-gradient(to right, #ff416c, #ff4b2b);
+    padding: 10px 18px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Trạng thái trang hiện tại (màu xám) và trạng thái hover */
+.nut0chon a, .nut1chon a, .nut2chon a, .nut4chon a, .nut5chon a, .nut6chon a {
+    background: linear-gradient(to right, #000000, #555555) !important;
+}
+
+.nut0:hover a, .nut1:hover a, .nut2:hover a, .nut3:hover a, .nut4:hover a, .nut5:hover a, .nut6:hover a {
+    background: linear-gradient(to right, #000000, #808080);
+    transform: translateY(-2px);
 }
 
 
@@ -205,12 +276,12 @@
     }
 
     .nut0, .nut0chon, .nut1, .nut1chon,
-    .nut2, .nut2chon, .nut3, .nut4, .nut4chon, .nut5, .nut6 {
+    .nut2, .nut2chon, .nut3, .nut4, .nut4chon, .nut5, .nut5chon .nut6, .nut6chon {
         margin-left: 0;
     }
 
     .nut0 a, .nut0chon a, .nut1 a, .nut1chon a,
-    .nut2 a, .nut2chon a, .nut3 a, .nut4 a, .nut4chon a, .nut5 a, .nut6 a {
+    .nut2 a, .nut2chon a, .nut3 a, .nut4 a, .nut4chon a, .nut5 a, .nut5chon a, .nut6 a, .nut6chon a {
         font-size: 12px;
         padding: 8px 12px;
     }
@@ -222,8 +293,17 @@
     }
 
     .nut0 a, .nut0chon a, .nut1 a, .nut1chon a,
-    .nut2 a, .nut2chon a, .nut3 a, .nut4 a, .nut4chon a, .nut5 a, .nut6 a {
+    .nut2 a, .nut2chon a, .nut3 a, .nut4 a, .nut4chon a, .nut5 a, .nut5chon a, .nut6 a, .nut6chon a {
         font-size: 11px;
         padding: 6px 10px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .nav-container {
+        justify-content: flex-start; /* Mobile vẫn giữ lướt từ trái qua */
+    }
+    .nav-scroll-wrapper {
+        justify-content: flex-start;
     }
 }

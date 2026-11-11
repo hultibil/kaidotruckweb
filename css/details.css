@@ -7,6 +7,9 @@
 /* ==================== 1. FONT ==================== */
 @import url('fonts.css');
 @import url('darklight.css'); /* Dùng chung menu header cho tất cả các trang, không cần copy lặp lại */
+@import url('nav.css'); /* Dùng chung menu header cho tất cả các trang, không cần copy lặp lại */
+@import url('nutdangnhap.css'); /* Dùng chung menu header cho tất cả các trang, không cần copy lặp lại */
+@import url('footer.css'); /* Dùng chung menu header cho tất cả các trang, không cần copy lặp lại */
 
 /* ==================== 2. BASE / RESET ==================== */
 html {
@@ -53,136 +56,6 @@ body {
     100% { transform: scale(1.0); opacity: 0.7; }
 }
 
-
-/* ==================== 4. HEADER & MENU ==================== */
-.header {
-    position: fixed; /* Đặt vị trí cố định để header luôn hiển thị trên cùng */
-    z-index: 1000;   /* Đảm bảo header nằm trên các phần tử khác */
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    padding: 10px;
-    border-radius: 15px;
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    gap: 10px;
-    background: linear-gradient(to right, rgb(111, 111, 111), rgb(167, 167, 167));
-}
-.header h2 {
-    color: black;
-    font-size: 20px;
-}
-
-/* --- Nút "Trang chủ" (nut0) --- */
-.nut0 {
-    margin-left: auto;
-    display: flex;
-    transition: all 0.3s ease;
-}
-.nut0 a {
-    color: white;
-    text-decoration: none;
-    font-size: 10px;
-    background: linear-gradient(to right, #ff416c, #ff4b2b);
-    padding: 10px 20px;
-    border-radius: 10px;
-}
-.nut0:hover a {
-    background: linear-gradient(to right, #000000, #808080);
-    transform: translateY(-2px);
-}
-
-/* --- nut0 khi đang là trang hiện tại --- */
-.nut0chon {
-    margin-left: auto;
-    display: flex;
-    transition: all 0.3s ease;
-}
-.nut0chon a {
-    color: white;
-    text-decoration: none;
-    font-size: 10px;
-    background: linear-gradient(to right, #000000, #808080);
-    padding: 10px 20px;
-    border-radius: 10px;
-}
-.nut0chon:hover a {
-    background: linear-gradient(to right, #ff416c, #ff4b2b);
-    transform: translateY(-2px);
-}
-
-/* --- Nút "Dự án khác" (nut1) --- */
-.nut1 {
-    display: flex;
-    transition: all 0.3s ease;
-}
-.nut1 a {
-    color: white;
-    text-decoration: none;
-    font-size: 10px;
-    background: linear-gradient(to right, #ff416c, #ff4b2b);
-    padding: 10px 20px;
-    border-radius: 10px;
-}
-.nut1:hover a {
-    background: linear-gradient(to right, #000000, #808080);
-    transform: translateY(-2px);
-}
-
-/* --- nut1 khi đang là trang hiện tại --- */
-.nut1chon {
-    display: flex;
-    transition: all 0.3s ease;
-}
-.nut1chon a {
-    color: white;
-    text-decoration: none;
-    font-size: 10px;
-    background: linear-gradient(to right, #000000, #808080);
-    padding: 10px 20px;
-    border-radius: 10px;
-}
-.nut1chon:hover a {
-    background: linear-gradient(to right, #ff416c, #ff4b2b);
-    transform: translateY(-2px);
-}
-
-/* --- Nút "Trò chuyện" / "Game mini" / "Tính năng" / "CHi tiết"(nut2, nut3, nut4, nut5, nut6) --- */
-.nut2, .nut3, .nut4, .nut5, .nut6 {
-    display: flex;
-    transition: all 0.3s ease;
-}
-.nut2 a, .nut3 a, .nut4 a, .nut5 a, .nut6 a {
-    color: white;
-    text-decoration: none;
-    font-size: 10px;
-    background: linear-gradient(to right, #ff416c, #ff4b2b);
-    padding: 10px 20px;
-    border-radius: 10px;
-}
-.nut2:hover a, .nut3:hover a, .nut4:hover a, .nut5:hover a, .nut6:hover a {
-    background: linear-gradient(to right, #000000, #808080);
-    transform: translateY(-2px);
-}
-
-/*nút 5 là trang hiện tại (nút chi tiết) */
-.nut5chon, .nut6chon {
-    display: flex;
-    transition: all 0.3s ease;
-}
-.nut5chon a, .nut6chon a {
-    color: white;
-    text-decoration: none;
-    font-size: 10px;
-    background: linear-gradient(to right, #000000, #808080);
-    padding: 10px 20px;
-    border-radius: 10px;
-}
-.nut5chon:hover a, .nut6chon:hover a {
-    background: linear-gradient(to right, #ff416c, #ff4b2b);
-    transform: translateY(-2px);
-}
 
 /* ==================== 5. LOGO ==================== */
 .logo {

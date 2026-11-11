@@ -1,0 +1,29 @@
+.user-header-badge {
+    background: rgba(0, 0, 0, 0.55); /* Nền đen mờ */
+    backdrop-filter: blur(8px); /* Hiệu ứng làm mờ kính mờ */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 6px 14px;
+    display: inline-flex;
+    align-items: center;
+    color: #f1f5f9;
+    font-size: 13px;
+    margin-left: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+}
+
+.user-header-badge strong {
+    color: #ff416c; /* Tô điểm tên user màu hồng cam sáng */
+    margin-left: 4px;
+}
+
+.user-header-badge.visitor a {
+    color: #38bdf8;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.user-header-badge.visitor a:hover {
+    text-decoration: underline;
+}
