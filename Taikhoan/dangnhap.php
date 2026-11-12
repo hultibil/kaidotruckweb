@@ -14,6 +14,9 @@
     </button>
 <div class="auth-box">
     <h2>Đăng nhập vào Kaido</h2>
+    <?php if (($_GET['reset'] ?? '') === 'ok'): ?>
+        <div style="padding:10px 14px;border-radius:8px;margin-bottom:14px;font-size:14px;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.5);color:#16a34a">Đổi mật khẩu thành công! Hãy đăng nhập bằng mật khẩu mới.</div>
+    <?php endif; ?>
     <form action="xulydangnhap.php" method="POST">
         <div class="input-group">
             <label>Tên đăng nhập</label>
@@ -25,6 +28,7 @@
         </div>
         <button type="submit">Đăng nhập</button>
     </form>
+    <p style="margin-top:12px"><a href="quenmatkhau.php">Quên mật khẩu?</a></p>
     <p>
         Chưa có tài khoản?
         <a href="dangky.php">Đăng ký ngay</a>
