@@ -1,7 +1,8 @@
 
-@import url('css/fonts.css');
+@import url('fonts.css');
 @import url('nav.css');
 @import url('darklight.css'); /* Dùng chung cho tất cả các trang, không cần copy lặp lại */
+@import url('nutdangnhap.css'); /* Dùng chung cho tất cả các trang, không cần copy lặp lại */
 
 * {
     margin: 0;
@@ -14,9 +15,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-
     font-family: 'HarmonyOS Sans', sans-serif;
-
     background: #111827;
     color: white;
 }
@@ -28,12 +27,9 @@ body {
     max-width: 420px;
     height: auto;
     padding: 40px;
-
     background: #1f2937;
-
     border: 1px solid #374151;
     border-radius: 15px;
-
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 

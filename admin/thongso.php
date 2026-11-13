@@ -87,14 +87,36 @@ $specs[] = ['spec_name' => '', 'spec_value' => ''];
 ?>
 <!DOCTYPE html>
 <html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Thông số kỹ thuật sản phẩm</title><link rel="stylesheet" href="../css/style.css"><link rel="icon" href="../image/kaidoLogomini.png">
+<title>Thông số kỹ thuật sản phẩm</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/darklight.css">
+<link rel="icon" href="../image/kaidoLogomini.png">
 <style>
 .spec-box{max-width:950px;margin:30px auto;padding:28px;border-radius:12px;background:#242424;color:#eee}
-.spec-box a{color:#9dc6ff}.spec-box input{padding:10px;width:100%;box-sizing:border-box;border:1px solid #666;background:#101010;color:#fff}
-.spec-box table{width:100%;border-collapse:collapse}.spec-box td,.spec-box th{padding:10px;border-bottom:1px solid #555;text-align:left}
-.spec-box button{padding:10px 15px;background:#27834e;color:white;border:0;cursor:pointer;border-radius:5px}.spec-box .remove{background:#b53645}
+.spec-box a{color:#9dc6ff}
+.spec-box input{padding:10px;width:100%;box-sizing:border-box;border:1px solid #666;background:#101010;color:#fff}
+.spec-box table{width:100%;border-collapse:collapse}
+.spec-box td,.spec-box th{padding:10px;border-bottom:1px solid #555;text-align:left}
+.spec-box button{padding:10px 15px;background:#27834e;color:white;border:0;cursor:pointer;border-radius:5px}
+.spec-box .remove{background:#b53645}
 .spec-box .error{color:#ffb3b3}.spec-box .ok{color:#adeabc}
-</style></head><body><main class="spec-box">
+
+/* Hỗ trợ Light Mode */
+body.light-mode { background-color: #f1f5f9 !important; color: #0f172a !important; }
+body.light-mode .spec-box { background: #ffffff !important; border: 1px solid #cbd5e1 !important; color: #0f172a !important; box-shadow: 0 4px 15px rgba(0,0,0,0.05) !important; }
+body.light-mode .spec-box input { background: #f8fafc !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important; }
+body.light-mode .spec-box th { background: #f8fafc !important; color: #475569 !important; }
+body.light-mode .spec-box td { border-bottom: 1px solid #e2e8f0 !important; color: #1e293b !important; }
+body.light-mode h1, body.light-mode h2 { color: #0f172a !important; }
+body.light-mode .theme-toggle-btn { background: rgba(0,0,0,0.08) !important; border: 1px solid rgba(0,0,0,0.2) !important; color: #0f172a !important; }
+</style></head><body>
+
+<div style="text-align: right; padding: 15px 30px;">
+    <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 12px; border-radius: 6px; cursor: pointer;">
+        🌙 Dark
+    </button>
+</div>
+<main class="spec-box">
 <h1>THÔNG SỐ KỸ THUẬT</h1>
 <h2><?= h($product['product_name']) ?></h2>
 <p><a href="suasanpham.php?id=<?= (int)$productId ?>">← Sửa sản phẩm</a> | <a href="admin.php">Quản trị</a> | <a href="../sanpham/chitietsanpham.php?id=<?= (int)$productId ?>">Xem trang khách</a></p>
@@ -117,4 +139,4 @@ function addRow() {
     document.getElementById('spec-rows').appendChild(tr);
 }
 </script>
-</main></body></html>
+</main></body><script src="../js/slide.js"></script></html>

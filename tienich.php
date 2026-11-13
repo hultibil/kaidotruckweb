@@ -85,7 +85,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
     <div class="header" id="mainHeader">
         <div class="header-left">
             <img class="logo" src="image/kaidologo.jpg">
-            <h2>Trang chủ giới thiệu Kaido</h2>
+            <h2>Tài khoản và mua hàng</h2>
         </div>
         <div class="header-right">
             <!-- NÚT BẤM CHUYỂN ĐỔI DARK / LIGHT MODE -->
@@ -120,7 +120,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
                 <a href="hoithem.php">Trò chuyện</a>
             </div>
             <div class="nut4chon">
-                <a>Tài khoản/Mua hàng</a>
+                <a href="tienich.php" onclick="clickSound()">Tài khoản/Mua hàng</a>
             </div>
             <div class="nut5">
                 <a href="kythuat/details.php">Chi tiết kỹ thuật</a>
@@ -141,7 +141,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
     <div class="tienich-card">
         <!-- Gọi hàm kiểm tra đăng nhập khi bấm vào Tài khoản của bạn -->
         <h3><a href="Taikhoan/taikhoan.php" onclick="handleAuthClick(event, this.href)">Tài khoản của bạn</a></h3>
-        <p>Thông tin tài khoản của bạn</p>
+        <p>Thông tin tài khoản và chức năng liên quan</p>
     </div>
 
     <div class="tienich-card">

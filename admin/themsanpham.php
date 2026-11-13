@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thêm Sản Phẩm Mới</title>
     <link rel="stylesheet" href="../css/style.css"><link rel="icon" href="../image/kaidoLogomini.png">
-    <style>
+<style>
         .form-container { width: 700px; max-width: 90%; margin: 30px auto; background: rgba(0,0,0,0.5); padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         .form-group { margin-bottom: 20px; }
         .form-group label { display: block; margin-bottom: 8px; color: silver; font-weight: bold; }
@@ -81,9 +81,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .btn-submit:hover { opacity: 0.8; }
         .alert-error { background: rgba(255,65,108,0.2); border: 1px solid #ff416c; padding: 10px; border-radius: 8px; margin-bottom: 15px; color: #ff8fa3; }
         .hint { font-size: 13px; color: #aaa; margin-top: 4px; }
+
+        /* Hỗ trợ Light Mode */
+        body.light-mode { background-color: #f1f5f9 !important; color: #0f172a !important; }
+        body.light-mode .form-container { background: #ffffff !important; border: 1px solid #cbd5e1 !important; box-shadow: 0 4px 15px rgba(0,0,0,0.05) !important; }
+        body.light-mode .form-group label { color: #0f172a !important; }
+        body.light-mode .form-group input, body.light-mode .form-group select, body.light-mode .form-group textarea { background: #f8fafc !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important; }
+        body.light-mode h1 { text-shadow: none !important; color: #0f172a !important; }
+        body.light-mode .theme-toggle-btn { background: rgba(0,0,0,0.08) !important; border: 1px solid rgba(0,0,0,0.2) !important; color: #0f172a !important; }
     </style>
 </head>
 <body>
+
+<div style="text-align: right; padding: 15px 30px;">
+    <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 12px; border-radius: 6px; cursor: pointer;">
+        🌙 Dark
+    </button>
+</div>
 
 <div class="form-container">
     <h1 class="silver" style="margin-top:0; text-align:center; font-size:28px;">THÊM SẢN PHẨM MỚI</h1>
@@ -155,6 +169,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </form>
 </div>
-
 </body>
+<script src="../js/slide.js"></script>
 </html>

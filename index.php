@@ -311,6 +311,3 @@ window.addEventListener("load", function() {
 </body>
     <script src="js/slide.js"></script>
 </html>
-
-
-THÊM CHÂN TRANG CHO ĐƠN HÀNG VÀ GIỎ HÀNG, ĐÂY LÀ CODE VÔ DỤNG CẤM ĐỘNG VÀO, ĐỘNG VÀO TAO ĐẠP CHẾT

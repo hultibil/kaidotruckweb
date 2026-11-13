@@ -197,10 +197,6 @@ body.light-mode .product-quantity button:disabled {
     opacity: 0.4;
 }
 
-body.light-mode .a {
-    color: #000000 !important;
-}
-
 body.light-mode .remove-btn {
     color: #dc2626 !important;
 }
@@ -211,4 +207,126 @@ body.light-mode .cart-card a {
 
 body.light-mode .cart-card a:hover {
     text-decoration: underline;
+}
+
+
+/* ============================================================
+   9. FIX GIAO DIỆN LIGHT MODE CHO TRANG ĐƠN HÀNG (DONHANG.PHP)
+   ============================================================ */
+body.light-mode .order-card {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #0f172a !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
+}
+
+body.light-mode .order-header strong,
+body.light-mode .order-bottom strong,
+body.light-mode .order-product h2,
+body.light-mode .order-product .product-price {
+    color: #0f172a !important;
+}
+
+body.light-mode .order-header p,
+body.light-mode .order-product p,
+body.light-mode .order-bottom span {
+    color: #475569 !important;
+}
+
+body.light-mode .detail-btn {
+    background: #f1f5f9 !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #0f172a !important;
+}
+
+body.light-mode .detail-btn:hover {
+    background: #e2e8f0 !important;
+}
+
+/* ============================================================
+   LIGHT MODE CHO TRANG QUẢN TRỊ (ADMIN)
+   ============================================================ */
+body.light-mode {
+    background-color: #f1f5f9 !important;
+    color: #0f172a !important;
+}
+
+body.light-mode .admin-sidebar {
+    background: #ffffff !important;
+    border-right: 1px solid #cbd5e1 !important;
+}
+
+body.light-mode .main-header {
+    background: #ffffff !important;
+    border-bottom: 1px solid #cbd5e1 !important;
+}
+
+body.light-mode .header-title {
+    color: #0f172a !important;
+}
+
+body.light-mode .card-box {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
+}
+
+body.light-mode table.admin-table th {
+    background: #f8fafc !important;
+    color: #475569 !important;
+}
+
+body.light-mode table.admin-table td {
+    border-bottom: 1px solid #e2e8f0 !important;
+    color: #1e293b !important;
+}
+
+body.light-mode table.admin-table tr:hover {
+    background: rgba(0, 0, 0, 0.02) !important;
+}
+
+body.light-mode .form-edit input,
+body.light-mode .order-form select,
+body.light-mode .order-form input[type="text"] {
+    background: #f8fafc !important;
+    color: #0f172a !important;
+    border: 1px solid #cbd5e1 !important;
+}
+
+body.light-mode .brand-name,
+body.light-mode .admin-info-text span,
+body.light-mode .menu-heading {
+    color: #64748b !important;
+}
+
+body.light-mode .sidebar-menu a {
+    color: #334155 !important;
+}
+
+body.light-mode .sidebar-menu a:hover {
+    background: rgba(0, 0, 0, 0.05) !important;
+    color: #0f172a !important;
+}
+
+body.light-mode .sidebar-menu a.active {
+    background: linear-gradient(90deg, #ff416c, #ff4b2b) !important;
+    color: white !important;
+}
+
+/* Đổi màu chữ thẻ h3 khi ở chế độ Light Mode */
+body.light-mode h3 {
+    color: #0f172a !important;
+}
+
+
+/* Đổi màu chữ và nền của nút chuyển đổi theme khi ở chế độ Light Mode */
+body.light-mode .theme-toggle-btn {
+    background: rgba(0, 0, 0, 0.08) !important;
+    border: 1px solid rgba(0, 0, 0, 0.2) !important;
+    color: #0f172a !important;
+}
+
+/* Đảm bảo khi hover vào nút ở chế độ Light Mode nhìn cũng đẹp mắt */
+body.light-mode .theme-toggle-btn:hover {
+    background: rgba(0, 0, 0, 0.15) !important;
 }

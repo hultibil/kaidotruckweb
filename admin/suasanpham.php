@@ -16,7 +16,6 @@ if (!$product) {
     http_response_code(404);
     exit('Không tìm thấy sản phẩm.');
 }
-
 $error = '';
 $data = $product;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -70,10 +69,25 @@ $categories = $conn->query('SELECT id, name FROM categories ORDER BY name ASC');
 <title>Sửa thông tin sản phẩm</title><link rel="stylesheet" href="../css/style.css"><link rel="icon" href="../image/kaidoLogomini.png">
 <style>
 .form-box{max-width:750px;margin:25px auto;padding:28px;background:#252525;border-radius:12px;color:#eee}
-.form-box label{display:block;margin-top:15px;margin-bottom:5px}.form-box input,.form-box select,.form-box textarea{width:100%;box-sizing:border-box;padding:10px;background:#171717;color:white;border:1px solid #666;border-radius:6px}
+.form-box label{display:block;margin-top:15px;margin-bottom:5px}
+.form-box input,.form-box select,.form-box textarea{width:100%;box-sizing:border-box;padding:10px;background:#171717;color:white;border:1px solid #666;border-radius:6px}
 .form-box button{padding:12px 20px;margin-top:18px;border:0;background:#21895b;color:white;cursor:pointer;border-radius:6px}
 .form-box .error{color:#ffb0b0}.form-box a{color:#a4ccff}.form-box img{max-width:200px;max-height:140px;object-fit:contain}
-</style></head><body><main class="form-box">
+
+/* Hỗ trợ Light Mode cho các trang quản trị */
+body.light-mode { background-color: #f1f5f9 !important; color: #0f172a !important; }
+body.light-mode .form-box { background: #ffffff !important; border: 1px solid #cbd5e1 !important; color: #0f172a !important; box-shadow: 0 4px 15px rgba(0,0,0,0.05) !important; }
+body.light-mode .form-box input, body.light-mode .form-box select, body.light-mode .form-box textarea { background: #f8fafc !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important; }
+body.light-mode h1, body.light-mode h2, body.light-mode h3, body.light-mode label { color: #0f172a !important; }
+body.light-mode .theme-toggle-btn { background: rgba(0,0,0,0.08) !important; border: 1px solid rgba(0,0,0,0.2) !important; color: #0f172a !important; }
+</style></head><body>
+
+<div style="text-align: right; padding: 15px 30px;">
+    <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 12px; border-radius: 6px; cursor: pointer;">
+        🌙 Dark
+    </button>
+</div>
+<main class="form-box">
 <h1>SỬA SẢN PHẨM #<?= (int)$product['id'] ?></h1>
 <p><a href="admin.php?tab=products">← Danh sách sản phẩm</a> | <a href="thongso.php?product_id=<?= (int)$id ?>">Thông số kỹ thuật</a></p>
 <?php if ($error !== ''): ?><p class="error"><?= h($error) ?></p><?php endif; ?>
@@ -99,4 +113,4 @@ $categories = $conn->query('SELECT id, name FROM categories ORDER BY name ASC');
 <label>Đổi hình ảnh (để trống nếu giữ ảnh cũ)</label><input type="file" name="image_file" accept="image/jpeg,image/png,image/gif,image/webp">
 <button type="submit">Lưu thay đổi</button>
 </form>
-</main></body></html>
+</main></body><script src="../js/slide.js"></script></html>

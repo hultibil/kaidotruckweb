@@ -57,7 +57,8 @@
 /* ==================== THANH ĐIỀU HƯỚNG MỚI ==================== */
 .nav-container {
     width: 100%;
-    margin-bottom: 15px;
+    margin-top: 15px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: center; /* Đưa toàn bộ khung chứa nút ra giữa màn hình (trên PC) */
 }
@@ -69,7 +70,7 @@
     gap: 5px;
     overflow-x: auto;
     white-space: nowrap;
-    padding: 1px 5px;
+    padding: 5px 10px;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     max-width: 100%;

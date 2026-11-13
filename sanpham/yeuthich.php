@@ -146,28 +146,103 @@ $st->close();
             text-decoration: none;
             font-weight: bold;
         }
+
+        /* --- LIGHT MODE STYLING --- */
+        body.light-mode {
+            background-color: #f1f5f9 !important;
+            color: #0f172a !important;
+        }
+        body.light-mode h1 {
+            color: #0f172a !important;
+        }
+        body.light-mode .fav-card {
+            background: #ffffff !important;
+            border: 1px solid #cbd5e1 !important;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05) !important;
+        }
+        body.light-mode .fav-card:hover {
+            background: #f8fafc !important;
+        }
+        body.light-mode .fav-card h2 {
+            color: #0f172a !important;
+        }
+        body.light-mode .fav-card p {
+            color: #475569 !important;
+        }
+        body.light-mode .empty-box {
+            background: #ffffff !important;
+            border: 1px solid #cbd5e1 !important;
+            color: #0f172a !important;
+        }
+        body.light-mode .empty-box p {
+            color: #475569 !important;
+        }
+        body.light-mode .theme-toggle-btn {
+            background: rgba(0,0,0,0.08) !important;
+            border: 1px solid rgba(0,0,0,0.2) !important;
+            color: #0f172a !important;
+        }
     </style>
 </head>
 <body>
+    <!-- THANH MÀU XÁM (Đầu trang - Smart Header: Tự ẩn khi lướt xuống, hiện khi lướt lên) -->
+    <div class="header" id="mainHeader">
+        <div class="header-left">
+            <img class="logo" src="../image/kaidologo.jpg">
+            <h2>Dự án khác</h2>
+        </div>
+        <div class="header-right">
+            <!-- NÚT BẤM CHUYỂN ĐỔI DARK / LIGHT MODE -->
+            <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()">
+                🌙 Dark
+            </button>
 
-<!-- HEADER MENU CHUNG -->
-<div class="header">
-    <img class="logo" src="../image/kaidologo.jpg" alt="Logo">
-    <h2>Sản phẩm yêu thích</h2>
-    <div class="nut0"><a href="../index.php">Trang chủ</a></div>
-    <div class="nut1"><a href="../khac/khac.php">Dự án khác</a></div>
-    <div class="nut2"><a href="../hoithem.php">Trò chuyện</a></div>
-    <div class="nut4chon"><a href="../tienich.php">Tài khoản/Mua hàng</a></div>
-    <div class="nut5"><a href="../kythuat/details.php">Chi tiết kỹ thuật</a></div>
-    <div class="nut6"><a href="../Blog/blog.php">Tin tức</a></div>
-    <div class="nut3"><a href="../gamemini.php">Game mini</a></div>
-</div>
+            <!-- HIỂN THỊ TÊN TÀI KHOẢN HOẶC ĐĂNG NHẬP -->
+            <?php if (isset($_SESSION['username'])): ?>
+                <div class="user-header-badge">
+                    <span>👋 Hi, <strong><?= htmlspecialchars($_SESSION['username']) ?></strong></span>
+                </div>
+            <?php else: ?>
+                <div class="user-header-badge visitor">
+                    <a href="../Taikhoan/dangnhap.php">🔑 Đăng nhập/ đăng ký</a>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <!-- THANH ĐIỀU HƯỚNG MỚI (Nằm dưới thanh màu xám, không ghim, lướt ngang trên mobile) -->
+    <div id="dautrang"> 
+    <div class="nav-container">
+        <div class="nav-scroll-wrapper">
+            <div class="nut0">
+                <a href="../index.php" onclick="clickSound()">Trang chủ</a>
+            </div>
+            <div class="nut1">
+                <a>Dự án khác</a>
+            </div>
+            <div class="nut2">
+                <a href="../hoithem.php">Trò chuyện</a>
+            </div>
+            <div class="nut4chon">
+                <a href="../tienich.php" onclick="clickSound()">Tài khoản/Mua hàng</a>
+            </div>
+            <div class="nut5">
+                <a href="../kythuat/details.php">Chi tiết kỹ thuật</a>
+            </div>
+            <div class="nut6">
+                <a href="../Blog/blog.php" onclick="clickSound()">Tin tức</a>
+            </div>
+            <div class="nut3">
+                <a href="../gamemini.php" onclick="clickSound()">Game mini</a>
+            </div>
+        </div>
+    </div>
 
 <div class="fav-container">
     <h1>♥ DANH SÁCH SẢN PHẨM YÊU THÍCH</h1>
     <?php if (!$rows): ?>
         <div class="empty-box">
-            <p style="font-size: 18px; color: #aaa;">Bạn chưa lưu sản phẩm yêu thích nào.</p>
+            <p style="font-size: 18px;">Bạn chưa lưu sản phẩm yêu thích nào.</p>
             <a href="shop.php">Khám phá cửa hàng ngay</a>
         </div>
     <?php else: ?>
@@ -221,51 +296,58 @@ $st->close();
 
 <div id="info">
     <div class="thongtinweb">
-<div class="footer">
-    <div>
-    <h3 class="text">Social Media</h3>
-    <p>--Mạng xã hội Tik Tok--</p>
-    <div class="tiktok"><a href="https://www.tiktok.com/@elfaria425">Tik tok: @elfaria425 | Chính chủ chế tạo ngoại hình, thiết kế xe chính</a></div><br>
-    <div class="tiktok2"><a href=https://www.tiktok.com/@meihirou>Tik tok: @meihirou | Phụ trợ, kỹ sư, thiết kế trang web</a></div><br>
-    <div class="tiktok3"><a href="https://www.tiktok.com/@hoai.anh2017.3">Tik tok: @hoai.anh2017.3 | Phụ trợ, thiết kế trang web</a><br><p>Ủng hộ chúng mình bằng cách nhấn Follow <3 </p></div>
-    <p>--Liên hệ bằng email--</p>
-    <p>akahiru5@gmail.com</p>
-    <p>--Kênh Youtube--</p>
-    <div class="youtube">
-    <a href="https://www.youtube.com/@Nguy%E1%BB%85nqu%E1%BB%91cc%C6%B0%E1%BB%9Dng-w9j4l">Kênh Youtube: Cường Nguyễn</a></div><br>
-    <div class="youtube2">
-    <a href="https://www.youtube.com/@tienlam2159">Kênh Youtube: Lâm Tiến</a>
+        <div class="footer">
+            <div>
+                <h3 class="text">Social Media</h3>
+                <p>--Mạng xã hội Tik Tok--</p>
+                <div class="tiktok"><a href="https://www.tiktok.com/@elfaria425">Tik tok: @elfaria425 | Chính chủ chế tạo ngoại hình, thiết kế xe chính</a></div><br>
+                <div class="tiktok2"><a href="https://www.tiktok.com/@meihirou">Tik tok: @meihirou | Phụ trợ, kỹ sư, thiết kế trang web</a></div><br>
+                <div class="tiktok3"><a href="https://www.tiktok.com/@hoai.anh2017.3">Tik tok: @hoai.anh2017.3 | Phụ trợ, thiết kế trang web</a><br><p>Ủng hộ chúng mình bằng cách nhấn Follow <3 </p></div>
+                <p>--Liên hệ bằng email--</p>
+                <p>akahiru5@gmail.com</p>
+                <p>--Kênh Youtube--</p>
+                <div class="youtube">
+                <a href="https://www.youtube.com/@Nguy%E1%BB%85nqu%E1%BB%91cc%C6%B0%E1%BB%9Dng-w9j4l">Kênh Youtube: Cường Nguyễn</a></div><br>
+                <div class="youtube2">
+                <a href="https://www.youtube.com/@tienlam2159">Kênh Youtube: Lâm Tiến</a>
+                </div>
+                <p>Ủng hộ chúng mình bằng cách nhấn Subcribe <3 </p>
+            </div>
+            <div>
+                <h3 class="text">Thông tin trang web</h3>
+                <p>Xây dựng thương hiệu tại: Thành phố Gia Lai </p>
+                <p>Được thiết kế bởi: quốc cường rc</p>
+                <p>Bản quyền © 2025 Kaido. All rights reserved.</p>
+            </div>
+            <h1 id="gio"></h1>
+            <script>
+            function capNhatGio() {
+                let now = new Date();
+                let gio = now.toLocaleTimeString();
+                document.getElementById("gio").innerHTML = gio;
+            }
+            setInterval(capNhatGio, 1000);
+            </script>
+            <p class="date">Cập nhật trang web lần cuối: 29/09/2026</p>
+        </div>
     </div>
-    <p>Ủng hộ chúng mình bằng cách nhấn Subcribe <3 </p>
-</div>
-    <div>
-        <h3 class="text">Thông tin trang web</h3>
-        <p>Xây dựng thương hiệu tại: Thành phố Gia Lai </p>
-        <p>Được thiết kế bởi: quốc cường rc</p>
-        <p>Bản quyền © 2025 Kaido. All rights reserved.</p>
-    </div>
-    <h1 id="gio"></h1>
-    <script>
-function capNhatGio() {
-    let now = new Date();
-    let gio = now.toLocaleTimeString();
-    document.getElementById("gio").innerHTML = gio;
-}
-setInterval(capNhatGio, 1000);
-</script>
-    <p class="date">Cập nhật trang web lần cuối: 29/09/2026</p>
 </div>
 
-
-<!--Đặt Cho loading-->
+<!-- Script xử lý Dark/Light Mode & Loading -->
 <script>
+document.addEventListener('DOMContentLoaded', initTheme);
+
+// Loading screen
 window.addEventListener("load", function() {
     const loading = document.getElementById("loading");
-    loading.style.opacity = "0";
-    setTimeout(function() {
-        loading.style.display = "none";
-    }, 500);
+    if (loading) {
+        loading.style.opacity = "0";
+        setTimeout(function() {
+            loading.style.display = "none";
+        }, 500);
+    }
 });
 </script>
 </body>
+<script src="../js/slide.js"></script>
 </html>

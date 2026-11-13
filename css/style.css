@@ -22,7 +22,7 @@
 
 
 /* ==================== 1. FONT ==================== */
-@import url('css/fonts.css');
+@import url('fonts.css');
 @import url('nav.css'); /* Dùng chung menu header cho tất cả các trang, không cần copy lặp lại */
 @import url('darklight.css'); /* Dùng chung cho tất cả các trang, không cần copy lặp lại */
 @import url('nutdangnhap.css'); /* Dùng chung cho tất cả các trang, không cần copy lặp lại */
@@ -33,7 +33,7 @@ html {
 }
 
 body {
-    padding: 130px;
+    padding: 20px 20px 40px 20px;
     background: #111827;
     color: white;
     font-family: 'HarmonyOS Sans', sans-serif;
@@ -582,8 +582,13 @@ img {
     }
 }
 
-@media (max-width: 900px) {
+@media (min-width: 901px) {
+    body {
+        padding-top: 90px; 
+    }
+}
 
+@media (max-width: 900px) {
     body {
         padding: 15px;
     }

@@ -63,11 +63,8 @@ $captcha_error = isset($_GET['error']) && $_GET['error'] === 'captcha';
             <label>Xác thực CAPTCHA: <?= $captcha_a ?> + <?= $captcha_b ?> = ?</label>
             <input type="number" name="captcha_answer" placeholder="Nhập kết quả" required>
         </div>
-
         <button type="submit">Đăng ký</button>
-
     </form>
-
     <p>
         Đã có tài khoản?
         <a href="dangnhap.php">Đăng nhập</a>
@@ -76,7 +73,6 @@ $captcha_error = isset($_GET['error']) && $_GET['error'] === 'captcha';
     <a href="../index.php" class="back-home">
         ← Trở về trang chủ
     </a>
-
 </div>
 </body>
 <script src="../js/slide.js"></script>

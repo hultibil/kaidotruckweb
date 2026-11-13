@@ -98,22 +98,104 @@ $donHang = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             color: #94a3b8;
             font-size: 14px;
         }
+        /* --- LIGHT MODE STYLING --- */
+        body.light-mode {
+            background-color: #f1f5f9 !important;
+            color: #0f172a !important;
+        }
+        body.light-mode .history-container h1 {
+            color: #0f172a !important;
+        }
+        body.light-mode .muted-text {
+            color: #64748b !important;
+        }
+        body.light-mode .history-panel,
+        body.light-mode .empty-history {
+            background: #ffffff !important;
+            border: 1px solid #cbd5e1 !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
+        }
+        body.light-mode .empty-history p {
+            color: #475569 !important;
+        }
+        body.light-mode .history-table th {
+            background: #f8fafc !important;
+            color: #475569 !important;
+            border-bottom: 2px solid #e2e8f0 !important;
+        }
+        body.light-mode .history-table td {
+            border-bottom: 1px solid #e2e8f0 !important;
+            color: #1e293b !important;
+        }
+        body.light-mode .history-table tr:hover {
+            background: #f8fafc !important;
+        }
+        body.light-mode .order-code {
+            color: #0284c7 !important; /* Xanh đậm dễ đọc trên nền trắng */
+        }
+        body.light-mode .order-price {
+            color: #0ad897 !important; /* Xanh lá đậm dễ đọc trên nền trắng */
+        }
+        body.light-mode .theme-toggle-btn {
+            background: rgba(0, 0, 0, 0.08) !important;
+            border: 1px solid rgba(0, 0, 0, 0.2) !important;
+            color: #0f172a !important;
+        }
     </style>
 </head>
 <body>
 
-<!-- HEADER MENU CHUNG -->
-<div class="header">
-    <img class="logo" src="../image/kaidologo.jpg" alt="Logo">
-    <h2>TRUNG TÂM CỬA HÀNG LINH KIỆN & THIẾT BỊ ĐIỆN TỬ</h2>
-    <div class="nut0"><a href="../index.php">Trang chủ</a></div>
-    <div class="nut1"><a href="../khac/khac.php">Dự án khác</a></div>
-    <div class="nut2"><a href="../hoithem.php">Trò chuyện</a></div>
-    <div class="nut4chon"><a href="../tienich.php">Tài khoản/Mua hàng</a></div>
-    <div class="nut5"><a href="../kythuat/details.php">Chi tiết kỹ thuật</a></div>
-    <div class="nut6"><a href="../Blog/blog.php">Tin tức</a></div>
-    <div class="nut3"><a href="../gamemini.php">Game mini</a></div>
-</div>
+<<!-- THANH MÀU XÁM (Đầu trang - Smart Header: Tự ẩn khi lướt xuống, hiện khi lướt lên) -->
+    <div class="header" id="mainHeader">
+        <div class="header-left">
+            <img class="logo" src="../image/kaidologo.jpg">
+            <h2>Trang chủ giới thiệu Kaido</h2>
+        </div>
+        <div class="header-right">
+            <!-- NÚT BẤM CHUYỂN ĐỔI DARK / LIGHT MODE -->
+            <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()">
+                🌙 Dark
+            </button>
+
+            <!-- HIỂN THỊ TÊN TÀI KHOẢN HOẶC ĐĂNG NHẬP -->
+            <?php if (isset($_SESSION['username'])): ?>
+                <div class="user-header-badge">
+                    <span>👋 Hi, <strong><?= htmlspecialchars($_SESSION['username']) ?></strong></span>
+                </div>
+            <?php else: ?>
+                <div class="user-header-badge visitor">
+                    <a href="../Taikhoan/dangnhap.php">🔑 Đăng nhập/ đăng ký</a>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+    
+    <!-- THANH ĐIỀU HƯỚNG MỚI (Nằm dưới thanh màu xám, không ghim, lướt ngang trên mobile) -->
+    <div class="nav-container">
+        <div class="nav-scroll-wrapper">
+            <div class="nut0">
+                <a href="../index.php" onclick="clickSound()">Trang chủ</a>
+            </div>
+            <div class="nut1">
+                <a>Dự án khác</a>
+            </div>
+            <div class="nut2">
+                <a href="../hoithem.php">Trò chuyện</a>
+            </div>
+            <div class="nut4chon">
+                <a href="../tienich.php" onclick="clickSound()">Tài khoản/Mua hàng</a>
+            </div>
+            <div class="nut5">
+                <a href="../kythuat/details.php">Chi tiết kỹ thuật</a>
+            </div>
+            <div class="nut6">
+                <a href="../Blog/blog.php" onclick="clickSound()">Tin tức</a>
+            </div>
+            <div class="nut3">
+                <a href="../gamemini.php" onclick="clickSound()">Game mini</a>
+            </div>
+        </div>
+    </div>
 
 <div class="history-container">
     <h1>🧾 LỊCH SỬ MUA HÀNG</h1>
@@ -161,10 +243,47 @@ $donHang = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         </div>
     <?php endif; ?>
 </div>
-
 <div class="quaylai">
     <a href="../tienich.php">← Quay lại trang tiện ích</a>
 </div>
 
+   <div class="thongtinweb">
+    <h4 class="text">Bạn đang ở cuối trang.</h4>
+<div class="footer">
+    <div>
+    <h3 class="text">Social Media</h3>
+    <p>--Mạng xã hội Tik Tok--</p>
+    <div class="tiktok"><a href="https://www.tiktok.com/@elfaria425">Tik tok: @elfaria425 | Chính chủ chế tạo ngoại hình, thiết kế xe chính</a></div><br>
+    <div class="tiktok2"><a href=https://www.tiktok.com/@meihirou>Tik tok: @meihirou | Phụ trợ, kỹ sư, thiết kế trang web</a></div><br>
+    <div class="tiktok3"><a href="https://www.tiktok.com/@hoai.anh2017.3">Tik tok: @hoai.anh2017.3 | Phụ trợ, thiết kế trang web</a><br><p>Ủng hộ chúng mình bằng cách nhấn Follow <3 </p></div>
+    <p>--Liên hệ bằng email--</p>
+    <p>akahiru5@gmail.com</p>
+    <p>--Kênh Youtube--</p>
+    <div class="youtube">
+    <a href="https://www.youtube.com/@Nguy%E1%BB%85nqu%E1%BB%91cc%C6%B0%E1%BB%9Dng-w9j4l">Kênh Youtube: Cường Nguyễn</a></div><br>
+    <div class="youtube2">
+    <a href="https://www.youtube.com/@tienlam2159">Kênh Youtube: Lâm Tiến</a>
+    </div>
+    <p>Ủng hộ chúng mình bằng cách nhấn Subcribe <3 </p>
+</div>
+    <div>
+        <h3 class="text">Thông tin trang web</h3>
+        <p>Xây dựng thương hiệu tại: Thành phố Gia Lai </p>
+        <p>Được thiết kế bởi: quốc cường rc</p>
+        <p>Bản quyền © 2025 Kaido. All rights reserved.</p>
+    </div>
+    <h1 id="gio"></h1>
+    <script>
+function capNhatGio() {
+    let now = new Date();
+    let gio = now.toLocaleTimeString();
+    document.getElementById("gio").innerHTML = gio;
+}
+setInterval(capNhatGio, 1000);
+</script>
+    <p class="date">Cập nhật trang web lần cuối: 29/09/2026</p>
+</div>
+
 </body>
+<script src="../js/slide.js"></script>
 </html>

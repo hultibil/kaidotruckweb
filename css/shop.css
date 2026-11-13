@@ -5,7 +5,7 @@
 
 /* Import dùng chung: font chữ + header/menu điều hướng (nav.css gồm
    cả phần responsive riêng cho header, không cần viết lại ở đây) */
-@import url('css/fonts.css');
+@import url('fonts.css');
 @import url('nav.css');
 @import url('darklight.css'); /* Dùng chung cho tất cả các trang, không cần copy lặp lại */
 @import url('nutdangnhap.css'); /* Dùng chung cho tất cả các trang, không cần copy lặp lại */
@@ -15,7 +15,7 @@ html {
 }
 
 body {
-    padding: 130px 20px 40px 20px;
+    padding: 20px 20px 40px 20px;
     background: #111827;
     color: #ffffff;
     font-family: 'HarmonyOS Sans', sans-serif;
@@ -290,6 +290,13 @@ form button:hover {
    ================================================================= */
 
 /* ---- 6.1 Tablet (<= 900px): thu gọn padding/tiêu đề, chưa đổi layout lưới ---- */
+
+@media (min-width: 901px) {
+    body {
+        padding-top: 90px; 
+    }
+}
+
 @media (max-width: 900px) {
     body {
         padding: 110px 15px 30px 15px;

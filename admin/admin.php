@@ -478,6 +478,11 @@ $msg = $_GET['msg'] ?? '';
             <div class="header-title">
                 HỆ THỐNG QUẢN TRỊ KAIDO SHOP
             </div>
+            <div class="topbar-actions" style="display: flex; align-items: center; gap: 10px;">
+                <!-- NÚT BẤM CHUYỂN ĐỔI DARK / LIGHT MODE -->
+                <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 12px; border-radius: 6px; cursor: pointer;">
+                    🌙 Dark
+                </button>
             <div class="topbar-actions">
                 <a href="../index.php" target="_blank">🌐 Trang chủ Cửa hàng</a>
                 <a href="../Taikhoan/dangxuat.php" style="color:#ef4444;">🚪 Đăng xuất</a>
@@ -704,6 +709,6 @@ $msg = $_GET['msg'] ?? '';
             </div>
         </div>
     </main>
-
 </body>
+<script src="../js/slide.js"></script>
 </html>

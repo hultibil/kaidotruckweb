@@ -212,7 +212,7 @@ $result = mysqli_query($conn, $sql);
     <div class="header" id="mainHeader">
         <div class="header-left">
             <img class="logo" src="../image/kaidologo.jpg">
-            <h2>Trang chủ giới thiệu Kaido</h2>
+            <h2>Cửa hàng linh kiện công nghệ Kaido</h2>
         </div>
         <div class="header-right">
             <!-- NÚT BẤM CHUYỂN ĐỔI DARK / LIGHT MODE -->
@@ -235,28 +235,29 @@ $result = mysqli_query($conn, $sql);
 
     <!-- THANH ĐIỀU HƯỚNG MỚI (Nằm dưới thanh màu xám, không ghim, lướt ngang trên mobile) -->
     <div id="dautrang"> 
-    <div class="nav-container">
-        <div class="nav-scroll-wrapper">
-            <div class="nut0">
-                <a href="../index.php" onclick="clickSound()">Trang chủ</a>
-            </div>
-            <div class="nut1">
-                <a href="../khac/khac.php">Dự án khác</a>
-            </div>
-            <div class="nut2">
-                <a href="../hoithem.php">Trò chuyện</a>
-            </div>
-            <div class="nut4chon">
-                <a href="../tienich.php" onclick="clickSound()">Tài khoản/Mua hàng</a>
-            </div>
-            <div class="nut5">
-                <a href="../kythuat/details.php">Chi tiết kỹ thuật</a>
-            </div>
-            <div class="nut6">
-                <a href="../Blog/blog.php" onclick="clickSound()">Tin tức</a>
-            </div>
-            <div class="nut3">
-                <a href="../gamemini.php" onclick="clickSound()">Game mini</a>
+        <div class="nav-container">
+            <div class="nav-scroll-wrapper">
+                <div class="nut0">
+                    <a href="../index.php" onclick="clickSound()">Trang chủ</a>
+                </div>
+                <div class="nut1">
+                    <a href="../khac/khac.php">Dự án khác</a>
+                </div>
+                <div class="nut2">
+                    <a href="../hoithem.php">Trò chuyện</a>
+                </div>
+                <div class="nut4chon">
+                    <a href="../tienich.php" onclick="clickSound()">Tài khoản/Mua hàng</a>
+                </div>
+                <div class="nut5">
+                    <a href="../kythuat/details.php">Chi tiết kỹ thuật</a>
+                </div>
+                <div class="nut6">
+                    <a href="../Blog/blog.php" onclick="clickSound()">Tin tức</a>
+                </div>
+                <div class="nut3">
+                    <a href="../gamemini.php" onclick="clickSound()">Game mini</a>
+                </div>
             </div>
         </div>
     </div>
@@ -303,7 +304,6 @@ $result = mysqli_query($conn, $sql);
     </div>
 </div>
 
-<div id="dautrang">
 
     <!-- ==================== KHU VỰC TÌM KIẾM & PHÂN LOẠI ==================== -->
     <div class="filter-section">
