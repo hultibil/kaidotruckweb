@@ -246,7 +246,9 @@ body.light-mode .detail-btn:hover {
 /* ============================================================
    LIGHT MODE CHO TRANG QUẢN TRỊ (ADMIN)
    ============================================================ */
-body.light-mode {
+
+
+.body.light-mode {
     background-color: #f1f5f9 !important;
     color: #0f172a !important;
 }

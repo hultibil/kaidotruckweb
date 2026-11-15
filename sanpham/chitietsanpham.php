@@ -194,6 +194,7 @@ $res_specs = mysqli_query($conn, $sql_specs);
     </style>
 <link rel="stylesheet" href="../css/glassy.css">
 <script src="../js/glassy-theme.js"></script>
+<script src="../js/shop-actions.js" defer></script>
 </head>
 <body class="glassy-page">
 <?php $glassyBase = '../'; require __DIR__ . '/../layout/glassy-sidebar.php'; ?>

@@ -188,6 +188,7 @@ $st->close();
 </head>
 <body class="glassy-page">
 <?php $glassyBase = '../'; require __DIR__ . '/../layout/glassy-sidebar.php'; ?>
+<script src="../js/shop-actions.js" defer></script>
 <div id="glassy-content" class="glassy-content" tabindex="-1">
     <!-- THANH MÀU XÁM (Đầu trang - Smart Header: Tự ẩn khi lướt xuống, hiện khi lướt lên) -->
     <div class="header" id="mainHeader">

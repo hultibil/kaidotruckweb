@@ -4,8 +4,27 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 require_once __DIR__ . '/../db.php';
 require_once __DIR__ . '/../donhang/trangthai.php';
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') { http_response_code(405); exit('Chỉ hỗ trợ POST.'); }
-dhCheckToken();
-$userId = dhRequireLogin();
+$isAjax = isset($_POST['ajax']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '') === 'xmlhttprequest';
+if (empty($_SESSION['user_id'])) {
+    http_response_code(401);
+    if ($isAjax) {
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode(['ok' => false, 'message' => 'Vui lòng đăng nhập trước khi thêm sản phẩm yêu thích.'], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+    dhRequireLogin();
+}
+$token = $_POST['csrf_token'] ?? '';
+if (empty($_SESSION['dh_csrf']) || !is_string($token) || $token === '' || !hash_equals($_SESSION['dh_csrf'], $token)) {
+    http_response_code(403);
+    if ($isAjax) {
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode(['ok' => false, 'message' => 'Phiên đăng nhập đã hết hạn. Vui lòng tải lại trang.'], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+    exit('Yêu cầu không hợp lệ (CSRF). Vui lòng tải lại trang.');
+}
+$userId = (int)$_SESSION['user_id'];
 $id = filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
 $action = (string)($_POST['action'] ?? '');
 $from = (string)($_POST['return_page'] ?? 'shop');
@@ -27,6 +46,12 @@ if ($action === 'add') {
 $st->bind_param('ii', $userId, $id);
 $st->execute();
 $st->close();
+
+if ($isAjax) {
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['ok' => true, 'liked' => $action === 'add', 'message' => $action === 'add' ? 'Đã thêm vào yêu thích.' : 'Đã bỏ khỏi yêu thích.'], JSON_UNESCAPED_UNICODE);
+    exit;
+}
 
 $to = 'shop.php#dautrang';
 if ($from === 'detail') $to = 'chitietsanpham.php?id=' . $id;

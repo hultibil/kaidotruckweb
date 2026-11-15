@@ -173,7 +173,8 @@ $msg = $_GET['msg'] ?? '';
 
         /* 1. SIDEBAR TRÁI */
         .admin-sidebar {
-            width: 260px;
+            width: 235px;
+            flex-shrink: 0;
             background: #1e293b;
             border-right: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
@@ -181,6 +182,15 @@ $msg = $_GET['msg'] ?? '';
             flex-shrink: 0;
             z-index: 10;
         }
+
+        .admin-sidebar {
+        width: 235px;          /* Chiều rộng mặc định khi mới tải trang */
+        min-width: 235px;      /* Giới hạn nhỏ nhất khi thu lại */
+        max-width: 450px;      /* Giới hạn lớn nhất khi kéo rộng ra */
+        resize: horizontal;    /* Kích hoạt tính năng kéo dãn theo chiều ngang */
+        overflow: auto;        /* Bắt buộc phải có overflow để trình duyệt hiển thị tính năng kéo */
+        flex-shrink: 0;
+}   
 
         /* Ảnh Logo Thương Hiệu ở Góc Trên Sidebar */
         .brand-logo-container {
@@ -425,6 +435,7 @@ $msg = $_GET['msg'] ?? '';
         }
     </style>
 <link rel="stylesheet" href="../css/glassy.css">
+<link rel="stylesheet" href="../css/darklight.css">
 <script src="../js/glassy-theme.js"></script>
 </head>
 <body class="glassy-page glassy-native-admin">
@@ -454,23 +465,19 @@ $msg = $_GET['msg'] ?? '';
         <button type="button" class="glassy-theme-toggle">Chuyển giao diện</button>
         <nav class="sidebar-menu">
             <div class="menu-heading">Bảng Điều Khiển</div>
-            <a href="admin.php?tab=products" class="<?= $tab === 'products' ? 'active' : '' ?>">
-                Quản lý Sản phẩm
-            </a>
-            <a href="admin.php?tab=orders" class="<?= $tab === 'orders' ? 'active' : '' ?>">
-                Quản lý Đơn hàng
-            </a>
-            <a href="admin.php?tab=users" class="<?= $tab === 'users' ? 'active' : '' ?>">
-                Quản lý Người dùng
-            </a>
+            <a href="admin.php?tab=products">Quản lý Sản phẩm</a>
+            <a href="admin.php?tab=orders">Quản lý Đơn hàng</a>
+            <a href="admin.php?tab=users">Quản lý Người dùng</a>
 
-            <div class="menu-heading" style="margin-top: 15px;">Kho & Danh Mục</div>
-            <a href="danhmuc.php">
-                Quản lý Danh mục
-            </a>
-            <a href="khohang.php">
-                Tồn kho & Cảnh báo
-            </a>
+            <div class="menu-heading" style="margin-top: 15px;">Thống Kê</div>
+            <a href="thongke.php">Báo cáo Tổng quan</a>
+            <a href="thongke_doanhthu.php">Thống kê Doanh thu</a>
+            <a href="thongke_donhang.php">Thống kê Đơn hàng</a>
+            <a href="thongke_banchay.php">Sản phẩm Bán chạy</a>
+
+            <div class="menu-heading" style="margin-top: 15px;">Kho &amp; Danh Mục</div>
+            <a href="danhmuc.php">Quản lý Danh mục</a>
+            <a href="khohang.php">Tồn kho &amp; Cảnh báo</a>
         </nav>
     </aside>
 
@@ -663,7 +670,13 @@ $msg = $_GET['msg'] ?? '';
                     </div>
 
                 <?php else: ?>
-                    <h2 style="margin-top:0; font-size:20px; color:#f8fafc; margin-bottom: 20px;">Danh sách tài khoản người dùng</h2>
+                    <?php
+                    $customerCount = (int)$conn->query("SELECT COUNT(*) AS n FROM users WHERE role = 'user'")->fetch_assoc()['n'];
+                    ?>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                        <h2 style="margin:0; font-size:20px; color:#f8fafc;">Quản lý khách hàng</h2>
+                        <span style="color:#94a3b8;">Tổng khách hàng: <strong style="color:#38bdf8;"><?= $customerCount ?></strong></span>
+                    </div>
                     <div style="overflow-x:auto;">
                         <table class="admin-table">
                             <thead>
@@ -679,7 +692,7 @@ $msg = $_GET['msg'] ?? '';
                             </thead>
                             <tbody>
                             <?php
-                            $result = $conn->query('SELECT id, username, email, full_name, phone, role, created_at FROM users ORDER BY id DESC');
+                            $result = $conn->query("SELECT id, username, email, full_name, phone, role, created_at FROM users WHERE role = 'user' ORDER BY id DESC");
                             if ($result->num_rows > 0):
                                 while ($row = $result->fetch_assoc()):
                             ?>

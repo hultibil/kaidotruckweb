@@ -11,6 +11,7 @@ session_start();
     <link rel="icon" href="image/kaidoLogomini.png">
     <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/glassy.css">
+<link rel="stylesheet" href="css/darklight.css">
 <script src="js/glassy-theme.js"></script>
 </head>
 <body class="glassy-page glassy-home">

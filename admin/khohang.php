@@ -41,10 +41,25 @@ foreach ($all as $product) {
 
         /* 1. SIDEBAR TRÁI */
         .admin-sidebar {
-            width: 260px; background: #1e293b;
+            width: 235px;
+            flex-shrink: 0;
+            background: #1e293b;
             border-right: 1px solid rgba(255, 255, 255, 0.08);
-            display: flex; flex-direction: column; flex-shrink: 0; z-index: 10;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            z-index: 10;
         }
+
+        .admin-sidebar {
+        width: 235px;          /* Chiều rộng mặc định khi mới tải trang */
+        min-width: 235px;      /* Giới hạn nhỏ nhất khi thu lại */
+        max-width: 450px;      /* Giới hạn lớn nhất khi kéo rộng ra */
+        resize: horizontal;    /* Kích hoạt tính năng kéo dãn theo chiều ngang */
+        overflow: auto;        /* Bắt buộc phải có overflow để trình duyệt hiển thị tính năng kéo */
+        flex-shrink: 0;
+}   
+
         .brand-logo-container {
             padding: 20px 15px; text-align: center; background: rgba(0, 0, 0, 0.2);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -128,6 +143,32 @@ foreach ($all as $product) {
             .admin-sidebar { width: 100%; }
             .content-body { padding: 15px; }
         }
+        /* Tăng độ tương phản chữ khi bật Light Mode cho trang Quản lý kho */
+body.light-mode .stat-card span {
+    color: #334155 !important; /* Đổi nhãn tiêu đề thẻ thống kê thành màu tối đậm */
+    font-weight: 600;
+}
+
+body.light-mode .stat-card strong {
+    color: #0f172a !important; /* Số liệu thống kê đậm và rõ nét hơn */
+}
+
+body.light-mode .filter-form label {
+    color: #1e293b !important; /* Chữ hướng dẫn trong form lọc */
+    font-weight: 500;
+}
+
+body.light-mode .filter-form input, 
+body.light-mode .filter-form select {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border: 1px solid #94a3b8 !important;
+}
+
+body.light-mode table.admin-table th {
+    color: #1e293b !important; /* Tiêu đề cột trong bảng sắc nét hơn */
+    font-weight: 700;
+}
     </style>
 <link rel="stylesheet" href="../css/glassy.css">
 <script src="../js/glassy-theme.js"></script>
@@ -160,9 +201,15 @@ foreach ($all as $product) {
             <a href="admin.php?tab=orders">Quản lý Đơn hàng</a>
             <a href="admin.php?tab=users">Quản lý Người dùng</a>
 
-            <div class="menu-heading" style="margin-top: 15px;">Kho & Danh Mục</div>
+            <div class="menu-heading" style="margin-top: 15px;">Thống Kê</div>
+            <a href="thongke.php">Báo cáo Tổng quan</a>
+            <a href="thongke_doanhthu.php">Thống kê Doanh thu</a>
+            <a href="thongke_donhang.php">Thống kê Đơn hàng</a>
+            <a href="thongke_banchay.php">Sản phẩm Bán chạy</a>
+
+            <div class="menu-heading" style="margin-top: 15px;">Kho &amp; Danh Mục</div>
             <a href="danhmuc.php">Quản lý Danh mục</a>
-            <a href="khohang.php" class="active">Tồn kho & Cảnh báo</a>
+            <a href="khohang.php">Tồn kho &amp; Cảnh báo</a>
         </nav>
     </aside>
 
@@ -188,7 +235,7 @@ foreach ($all as $product) {
                         <span>Tổng sản phẩm</span>
                         <strong><?= $counts['total'] ?></strong>
                     </div>
-                    <div class="stat-card" style="border-color: rgba(245, 158, 11, 0.3);">
+                    <div class="stat-card" style="border-color: rgba(206, 131, 2, 0.3);">
                         <span style="color:#fbbf24;">⚠️ Sắp hết hàng</span>
                         <strong style="color:#fbbf24;"><?= $counts['low'] ?></strong>
                     </div>

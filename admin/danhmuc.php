@@ -93,10 +93,25 @@ $messages = ['added' => 'Đã thêm danh mục thành công.', 'updated' => 'Đ�
 
         /* 1. SIDEBAR TRÁI */
         .admin-sidebar {
-            width: 260px; background: #1e293b;
+            width: 235px;
+            flex-shrink: 0;
+            background: #1e293b;
             border-right: 1px solid rgba(255, 255, 255, 0.08);
-            display: flex; flex-direction: column; flex-shrink: 0; z-index: 10;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            z-index: 10;
         }
+
+        .admin-sidebar {
+        width: 235px;          /* Chiều rộng mặc định khi mới tải trang */
+        min-width: 235px;      /* Giới hạn nhỏ nhất khi thu lại */
+        max-width: 450px;      /* Giới hạn lớn nhất khi kéo rộng ra */
+        resize: horizontal;    /* Kích hoạt tính năng kéo dãn theo chiều ngang */
+        overflow: auto;        /* Bắt buộc phải có overflow để trình duyệt hiển thị tính năng kéo */
+        flex-shrink: 0;
+}    
+
         .brand-logo-container {
             padding: 20px 15px; text-align: center;
             background: rgba(0, 0, 0, 0.2);
@@ -203,9 +218,15 @@ $messages = ['added' => 'Đã thêm danh mục thành công.', 'updated' => 'Đ�
             <a href="admin.php?tab=orders">Quản lý Đơn hàng</a>
             <a href="admin.php?tab=users">Quản lý Người dùng</a>
 
-            <div class="menu-heading" style="margin-top: 15px;">Kho & Danh Mục</div>
-            <a href="danhmuc.php" class="active">Quản lý Danh mục</a>
-            <a href="khohang.php">Tồn kho & Cảnh báo</a>
+            <div class="menu-heading" style="margin-top: 15px;">Thống Kê</div>
+            <a href="thongke.php">Báo cáo Tổng quan</a>
+            <a href="thongke_doanhthu.php">Thống kê Doanh thu</a>
+            <a href="thongke_donhang.php">Thống kê Đơn hàng</a>
+            <a href="thongke_banchay.php">Sản phẩm Bán chạy</a>
+
+            <div class="menu-heading" style="margin-top: 15px;">Kho &amp; Danh Mục</div>
+            <a href="danhmuc.php">Quản lý Danh mục</a>
+            <a href="khohang.php">Tồn kho &amp; Cảnh báo</a>
         </nav>
     </aside>
 
