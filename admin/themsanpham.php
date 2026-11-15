@@ -90,13 +90,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         body.light-mode h1 { text-shadow: none !important; color: #0f172a !important; }
         body.light-mode .theme-toggle-btn { background: rgba(0,0,0,0.08) !important; border: 1px solid rgba(0,0,0,0.2) !important; color: #0f172a !important; }
     </style>
+<link rel="stylesheet" href="../css/glassy.css">
+<script src="../js/glassy-theme.js"></script>
 </head>
-<body>
+<body class="glassy-page">
+<?php $glassyBase = '../'; require __DIR__ . '/../layout/glassy-sidebar.php'; ?>
+<div id="glassy-content" class="glassy-content" tabindex="-1">
 
 <div style="text-align: right; padding: 15px 30px;">
-    <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 12px; border-radius: 6px; cursor: pointer;">
-        🌙 Dark
-    </button>
+
 </div>
 
 <div class="form-container">
@@ -169,6 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </form>
 </div>
+</div><!-- glassy-content -->
 </body>
 <script src="../js/slide.js"></script>
 </html>

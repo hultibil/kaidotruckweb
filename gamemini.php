@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <title>Game Kaido</title>
     <link rel="icon" href="image/kaidoLogomini.png">
@@ -120,8 +121,12 @@
             padding: 0 20px;
         }
     </style>
+<link rel="stylesheet" href="css/glassy.css">
+<script src="js/glassy-theme.js"></script>
 </head>
-<body>
+<body class="glassy-page">
+<?php $glassyBase = ''; require __DIR__ . '/layout/glassy-sidebar.php'; ?>
+<div id="glassy-content" class="glassy-content" tabindex="-1">
     <!--TRANG LOADING-->
     <div id="loading">
         <img src="image/imgload.png">
@@ -339,5 +344,6 @@ window.addEventListener("load", function() {
     }, 500);
 });
 </script>
+</div><!-- glassy-content -->
 </body>
 </html>

@@ -227,9 +227,13 @@ $thanhToan = ($don['payment_method'] === 'cod' || $don['payment_method'] === nul
             color: #0f172a !important;
         }
     </style>
+<link rel="stylesheet" href="../css/glassy.css">
+<script src="../js/glassy-theme.js"></script>
 </head>
 
-<body class="cart-page">
+<body class="glassy-page cart-page">
+<?php $glassyBase = '../'; require __DIR__ . '/../layout/glassy-sidebar.php'; ?>
+<div id="glassy-content" class="glassy-content" tabindex="-1">
     <!-- THANH MÀU XÁM (Đầu trang - Smart Header) -->
     <div class="header" id="mainHeader">
         <div class="header-left">
@@ -238,9 +242,7 @@ $thanhToan = ($don['payment_method'] === 'cod' || $don['payment_method'] === nul
         </div>
         <div class="header-right">
             <!-- NÚT BẤM CHUYỂN ĐỔI DARK / LIGHT MODE -->
-            <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()">
-                🌙 Dark
-            </button>
+
 
             <!-- HIỂN THỊ TÊN TÀI KHOẢN HOẶC ĐĂNG NHẬP -->
             <?php if (isset($_SESSION['username'])): ?>
@@ -372,6 +374,7 @@ $thanhToan = ($don['payment_method'] === 'cod' || $don['payment_method'] === nul
     <script>
     document.addEventListener('DOMContentLoaded', initTheme);
     </script>
+</div><!-- glassy-content -->
 </body>
 <script src="../js/slide.js"></script>
 </html>

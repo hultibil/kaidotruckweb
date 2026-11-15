@@ -158,8 +158,12 @@ if ($a > 0 && $b > 0) {
             }
         }
     </style>
+<link rel="stylesheet" href="../css/glassy.css">
+<script src="../js/glassy-theme.js"></script>
 </head>
-<body>
+<body class="glassy-page">
+<?php $glassyBase = '../'; require __DIR__ . '/../layout/glassy-sidebar.php'; ?>
+<div id="glassy-content" class="glassy-content" tabindex="-1">
 
 <!-- HEADER MENU CHUNG -->
 <div class="header">
@@ -302,5 +306,6 @@ window.addEventListener("load", function() {
     }, 500);
 });
 </script>
+</div><!-- glassy-content -->
 </body>
 </html>

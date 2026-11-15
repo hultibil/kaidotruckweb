@@ -424,8 +424,10 @@ $msg = $_GET['msg'] ?? '';
             .content-body { padding: 15px; }
         }
     </style>
+<link rel="stylesheet" href="../css/glassy.css">
+<script src="../js/glassy-theme.js"></script>
 </head>
-<body>
+<body class="glassy-page glassy-native-admin">
 
     <!-- 1. BÊN TRÁI: SIDEBAR ĐA NHIỆM PHONG CÁCH ADMINLTE -->
     <aside class="admin-sidebar">
@@ -449,6 +451,7 @@ $msg = $_GET['msg'] ?? '';
         </div>
 
         <!-- Menu Các Tab Đa Nhiệm & Quản Lý -->
+        <button type="button" class="glassy-theme-toggle">Chuyển giao diện</button>
         <nav class="sidebar-menu">
             <div class="menu-heading">Bảng Điều Khiển</div>
             <a href="admin.php?tab=products" class="<?= $tab === 'products' ? 'active' : '' ?>">
@@ -480,9 +483,7 @@ $msg = $_GET['msg'] ?? '';
             </div>
             <div class="topbar-actions" style="display: flex; align-items: center; gap: 10px;">
                 <!-- NÚT BẤM CHUYỂN ĐỔI DARK / LIGHT MODE -->
-                <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 12px; border-radius: 6px; cursor: pointer;">
-                    🌙 Dark
-                </button>
+
             <div class="topbar-actions">
                 <a href="../index.php" target="_blank">🌐 Trang chủ Cửa hàng</a>
                 <a href="../Taikhoan/dangxuat.php" style="color:#ef4444;">🚪 Đăng xuất</a>

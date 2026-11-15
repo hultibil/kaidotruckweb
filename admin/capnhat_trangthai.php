@@ -74,7 +74,11 @@ $donHang = $conn->query('SELECT id,recipient_name,created_at,total_amount,status
 ?>
 <!doctype html><html lang="vi"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Admin quản lý đơn hàng</title>
-<link rel="stylesheet" href="../donhang/style-donhang.css"></head><body><main class="wrap">
+<link rel="stylesheet" href="../css/glassy.css">
+<script src="../js/glassy-theme.js"></script>
+</head><body class="glassy-page">
+<?php $glassyBase = '../'; require __DIR__ . '/../layout/glassy-sidebar.php'; ?>
+<div id="glassy-content" class="glassy-content" tabindex="-1"><main class="wrap">
 <nav class="nav"><a href="admin.php">Quản trị</a><a href="quanly_tuongthich.php">Tương thích</a><a href="../index.php">Trang chủ</a><a href="../donhang/donhang.php">Đơn hàng của tôi</a></nav>
 <h1>Quản trị trạng thái đơn hàng</h1><p class="muted">Mỗi lần thay đổi được lưu thành một mốc nhật ký.</p>
 <?php if ($thongBao): ?><p class="notice"><?= h($thongBao) ?></p><?php endif; ?>
@@ -94,4 +98,5 @@ $donHang = $conn->query('SELECT id,recipient_name,created_at,total_amount,status
 <button class="btn" type="submit" style="margin-top:8px">Cập nhật</button>
 </form><?php else: ?><span class="muted">Đã kết thúc</span><?php endif; ?></td></tr>
 <?php endforeach; ?>
-</tbody></table></div></main></body></html>
+</tbody></table></div></main></div><!-- glassy-content -->
+</body></html>

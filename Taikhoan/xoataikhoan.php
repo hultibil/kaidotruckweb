@@ -22,13 +22,15 @@ if (empty($_SESSION['csrf_token'])) {
     <link rel="icon" href="../image/kaidoLogomini.png">
     <link rel="stylesheet" href="../css/dndk.css">
     <link rel="stylesheet" href="../css/xoataikhoan.css">
+<link rel="stylesheet" href="../css/glassy.css">
+<script src="../js/glassy-theme.js"></script>
 </head>
-<body class="account-page">
+<body class="glassy-page account-page">
+<?php $glassyBase = '../'; require __DIR__ . '/../layout/glassy-sidebar.php'; ?>
+<div id="glassy-content" class="glassy-content" tabindex="-1">
 
     <!-- Nút chuyển đổi Dark / Light Mode góc trên -->
-    <button id="themeToggle" class="auth-theme-btn" onclick="toggleTheme()">
-        🌙 Dark
-    </button>
+
 
     <div class="account-container danger-zone-container">
         
@@ -123,5 +125,6 @@ if (empty($_SESSION['csrf_token'])) {
             }
         }
     </script>
+</div><!-- glassy-content -->
 </body>
 </html>

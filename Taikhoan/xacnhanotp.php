@@ -52,9 +52,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .sub-note{font-size:14px;opacity:.8;margin:0 0 14px;line-height:1.5}
         .linkbtn{background:none;border:0;padding:0;color:#ff416c;cursor:pointer;font:inherit;text-decoration:underline;width:auto;display:inline}
     </style>
+<link rel="stylesheet" href="../css/glassy.css">
+<script src="../js/glassy-theme.js"></script>
 </head>
-<body>
-    <button id="themeToggle" class="auth-theme-btn" onclick="toggleTheme()">🌙 Dark</button>
+<body class="glassy-page">
+<?php $glassyBase = '../'; require __DIR__ . '/../layout/glassy-sidebar.php'; ?>
+<div id="glassy-content" class="glassy-content" tabindex="-1">
+
 <div class="auth-box">
     <h2>Nhập mã OTP</h2>
     <p class="sub-note">Nếu email <b><?= pr_h(pr_mask_email($email)) ?></b> có tài khoản, mã gồm 6 chữ số đã được gửi đến đó (hiệu lực <?= PR_OTP_TTL_MIN ?> phút). Hãy kiểm tra cả mục Spam.</p>
@@ -75,6 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
     <p><a href="quenmatkhau.php">← Dùng email khác</a></p>
 </div>
+</div><!-- glassy-content -->
 </body>
 <script src="../js/slide.js"></script>
 </html>

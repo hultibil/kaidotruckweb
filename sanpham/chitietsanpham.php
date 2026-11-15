@@ -192,8 +192,12 @@ $res_specs = mysqli_query($conn, $sql_specs);
         body.light-mode .description-box { border-top-color: #e2e8f0 !important; }
         body.light-mode .theme-toggle-btn { background: rgba(0,0,0,0.08) !important; border: 1px solid rgba(0,0,0,0.2) !important; color: #0f172a !important; }
     </style>
+<link rel="stylesheet" href="../css/glassy.css">
+<script src="../js/glassy-theme.js"></script>
 </head>
-<body>
+<body class="glassy-page">
+<?php $glassyBase = '../'; require __DIR__ . '/../layout/glassy-sidebar.php'; ?>
+<div id="glassy-content" class="glassy-content" tabindex="-1">
 
 <!-- THANH MÀU XÁM (Đầu trang - Smart Header: Tự ẩn khi lướt xuống, hiện khi lướt lên) -->
     <div class="header" id="mainHeader">
@@ -203,9 +207,7 @@ $res_specs = mysqli_query($conn, $sql_specs);
         </div>
         <div class="header-right">
             <!-- NÚT BẤM CHUYỂN ĐỔI DARK / LIGHT MODE -->
-            <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()">
-                🌙 Dark
-            </button>
+
 
             <!-- HIỂN THỊ TÊN TÀI KHOẢN HOẶC ĐĂNG NHẬP -->
             <?php if (isset($_SESSION['username'])): ?>
@@ -382,6 +384,7 @@ window.addEventListener("load", function() {
     }
 });
 </script>
+</div><!-- glassy-content -->
 </body>
 <script src="../js/slide.js"></script>
 </html>

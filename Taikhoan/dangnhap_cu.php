@@ -6,12 +6,14 @@
     <title>Đăng nhập vào Kaido</title>
     <link rel="icon" href="../image/kaidoLogomini.png">
     <link rel="stylesheet" href="../css/dndk.css">
+<link rel="stylesheet" href="../css/glassy.css">
+<script src="../js/glassy-theme.js"></script>
 </head>
-<body>
+<body class="glassy-page">
+<?php $glassyBase = '../'; require __DIR__ . '/../layout/glassy-sidebar.php'; ?>
+<div id="glassy-content" class="glassy-content" tabindex="-1">
     <!-- Nút chuyển đổi Dark / Light mode -->
-    <button id="themeToggle" class="auth-theme-btn" onclick="toggleTheme()">
-        🌙 Dark
-    </button>
+
 <div class="auth-box">
     <h2>Đăng nhập vào Kaido</h2>
     <form action="xulydangnhap.php" method="POST">
@@ -33,6 +35,7 @@
         ← Về trang chủ
     </a>
 </div>
+</div><!-- glassy-content -->
 </body>
 <script src="../js/slide.js"></script>
 </html>

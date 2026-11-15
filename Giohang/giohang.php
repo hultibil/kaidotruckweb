@@ -73,10 +73,14 @@ foreach ($sanPham as $sp) {
         .checkout-form .checkout-btn { margin-top: 14px; }
         .cart-summary .muted { opacity: .75; font-size: .9em; }
     </style>
+<link rel="stylesheet" href="../css/glassy.css">
+<script src="../js/glassy-theme.js"></script>
 </head>
 
 
-<body class="cart-page">
+<body class="glassy-page cart-page">
+<?php $glassyBase = '../'; require __DIR__ . '/../layout/glassy-sidebar.php'; ?>
+<div id="glassy-content" class="glassy-content" tabindex="-1">
     <!-- THANH MÀU XÁM (Đầu trang - Smart Header: Tự ẩn khi lướt xuống, hiện khi lướt lên) -->
     <div class="header" id="mainHeader">
         <div class="header-left">
@@ -85,9 +89,7 @@ foreach ($sanPham as $sp) {
         </div>
         <div class="header-right">
             <!-- NÚT BẤM CHUYỂN ĐỔI DARK / LIGHT MODE -->
-            <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()">
-                🌙 Dark
-            </button>
+
             <!-- HIỂN THỊ TÊN TÀI KHOẢN HOẶC ĐĂNG NHẬP -->
             <?php if (isset($_SESSION['username'])): ?>
                 <div class="user-header-badge">
@@ -258,7 +260,7 @@ setInterval(capNhatGio, 1000);
 </script>
     <p class="date">Cập nhật trang web lần cuối: 29/09/2026</p>
 </div>
+</div><!-- glassy-content -->
 </body>
-<script src="../js/darklight.js"></script>
 <script src="../js/slide.js"></script>
 </html>

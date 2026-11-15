@@ -32,7 +32,11 @@ if (isset($_GET['ok'])) $thongBao = 'Đã cập nhật kết quả tương thíc
 $rules = $conn->query('SELECT t.id,t.ket_qua,t.ghi_chu,t.updated_at,p1.product_name AS a,p2.product_name AS b FROM tuong_thich_linh_kien t LEFT JOIN products p1 ON p1.id=t.product_a_id LEFT JOIN products p2 ON p2.id=t.product_b_id ORDER BY t.updated_at DESC LIMIT 100')->fetch_all(MYSQLI_ASSOC);
 $nhan = ['tuong_thich' => 'Tương thích', 'khong_tuong_thich' => 'Không tương thích', 'chua_xac_dinh' => 'Chưa xác định'];
 ?>
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Quản lý tương thích - Kaido</title><link rel="stylesheet" href="../css/kaido-muasam.css"><style>body{margin:0;background:#151921;color:#fff;font-family:Arial,sans-serif}</style></head><body>
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Quản lý tương thích - Kaido</title><link rel="stylesheet" href="../css/glassy.css">
+<script src="../js/glassy-theme.js"></script>
+</head><body class="glassy-page">
+<?php $glassyBase = '../'; require __DIR__ . '/../layout/glassy-sidebar.php'; ?>
+<div id="glassy-content" class="glassy-content" tabindex="-1">
 <nav class="kaido-shop-nav"><a href="admin.php">Quản trị</a><a href="capnhat_trangthai.php">Đơn hàng</a><a href="../sanpham/tuongthich.php">Xem phía khách</a><a href="../index.php">Trang chủ</a></nav>
 <main class="kaido-main"><h1>Quản lý tương thích linh kiện</h1>
 <?php if ($thongBao): ?><p class="kaido-msg kaido-ok"><?= h($thongBao) ?></p><?php endif; ?>
@@ -46,4 +50,5 @@ $nhan = ['tuong_thich' => 'Tương thích', 'khong_tuong_thich' => 'Không tươ
 <button class="kaido-btn" type="submit">Lưu kết quả</button></form>
 <section class="kaido-panel"><h2>Các cặp đã thiết lập</h2><div style="overflow-x:auto"><table class="kaido-table"><thead><tr><th>Linh kiện A</th><th>Linh kiện B</th><th>Kết luận</th><th>Ghi chú</th><th>Cập nhật</th></tr></thead><tbody>
 <?php foreach ($rules as $r): ?><tr><td><?= h($r['a'] ?? 'Đã xóa') ?></td><td><?= h($r['b'] ?? 'Đã xóa') ?></td><td><?= h($nhan[$r['ket_qua']] ?? $r['ket_qua']) ?></td><td><?= h($r['ghi_chu']) ?></td><td><?= h($r['updated_at']) ?></td></tr><?php endforeach; ?>
-</tbody></table></div></section></main></body></html>
+</tbody></table></div></section></main></div><!-- glassy-content -->
+</body></html>

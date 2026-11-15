@@ -1,0 +1,634 @@
+@font-face {
+    font-family: "HarmonyOS Sans";
+    src: url("../font/HarmonyOS_Sans_Regular.ttf") format("truetype");
+    font-display: swap;
+}
+@font-face {
+    font-family: "HarmonyOS Sans";
+    src: url("../font/HarmonyOS_Sans_Bold.ttf") format("truetype");
+    font-weight: 650 900;
+    font-display: swap;
+}
+
+/* Shared blue glass surfaces for the storefront and its administration pages. */
+body.glassy-page {
+    --ink: #0f172a;
+    --muted: #475569;
+    --glass: rgba(236, 247, 255, .42);
+    --paper: #ecf6ff;
+    --border: rgba(239, 249, 255, .52);
+    --accent: #1c53a0;
+    --primary-gradient: linear-gradient(130deg, #245aa9, #184994 72%, #164286);
+    --shadow: 0 12px 34px #102d571f, inset 0 1px #ffffff33;
+    --sidebar-width: 214px;
+    --sidebar-glass: linear-gradient(150deg, #214e82e0, #17365fe6);
+    --frame-glass: linear-gradient(145deg, #eff8ff48, #4d84be15);
+    --page-gradient: linear-gradient(125deg, #8faecf, #c8e2fa 38%, #91b6df 73%, #d0e8fa);
+    --glow-top: #effaff;
+    --glow-middle: #e2f3ff;
+    --glow-bottom: #a5cdf4;
+    --field-border: #688cb4;
+    color-scheme: light;
+    color: var(--ink) !important;
+    font-family: "HarmonyOS Sans", system-ui, sans-serif !important;
+    min-height: 100vh;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    background:
+        radial-gradient(ellipse at 94% 0%, var(--glow-top) 0%, transparent 32%),
+        radial-gradient(ellipse at 32% 10%, var(--glow-middle) 0%, transparent 41%),
+        radial-gradient(ellipse at 80% 82%, var(--glow-bottom) 0%, transparent 48%),
+        var(--page-gradient) fixed !important;
+    background-attachment: fixed !important;
+}
+
+.glassy-page .glassy-content {
+    box-sizing: border-box;
+    min-width: 0;
+    min-height: calc(100vh - 32px);
+    margin: 16px 16px 16px calc(var(--sidebar-width) + 30px);
+    padding: clamp(16px, 2.5vw, 34px);
+    border: 1px solid var(--border);
+    border-radius: 26px;
+    background: var(--frame-glass);
+    box-shadow: var(--shadow);
+}
+
+.glassy-sidebar, .glassy-page.glassy-native-admin .admin-sidebar {
+    box-sizing: border-box;
+    position: fixed;
+    z-index: 1100;
+    inset: 16px auto 16px 16px;
+    width: var(--sidebar-width);
+    height: auto;
+    max-height: calc(100dvh - 32px);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 16px 12px;
+    text-align: left;
+    color: #edf6ff;
+    background: var(--sidebar-glass);
+    border: 1px solid #b4d6ff80;
+    border-radius: 22px;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(22px);
+}
+
+.glassy-sidebar a { color: inherit; text-decoration: none; }
+.glassy-brand, .glassy-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 8px;
+}
+.glassy-brand img, .glassy-profile > span:first-child {
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+    object-fit: contain;
+    display: grid;
+    place-items: center;
+    background: #ecf6ff;
+    color: #23568e;
+    border-radius: 11px;
+}
+.glassy-brand small, .glassy-profile small {
+    display: block;
+    color: #e2efff;
+    font-size: 11px;
+}
+.glassy-profile { margin-top: auto; border-top: 1px solid #b4d6ff4d; padding-top: 13px; }
+.glassy-profile strong { display: block; overflow-wrap: anywhere; font-size: 13px; }
+.glassy-menu summary { display: none; cursor: pointer; }
+.glassy-section-label {
+    color: #def0ff;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: .12em;
+    font-weight: 700;
+    margin: 13px 9px 5px;
+}
+.glassy-nav-link {
+    display: flex;
+    gap: 9px;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 650;
+    padding: 7px 9px;
+    min-height: 24px;
+    border-radius: 9px;
+}
+.glassy-nav-link span { width: 17px; text-align: center; font-size: 16px; }
+.glassy-nav-link:hover { background: #dcecff3d; }
+.glassy-sidebar .glassy-nav-link[aria-current="page"] {
+    background: #f0f7ff;
+    color: #142b48;
+    box-shadow: 0 4px 12px #102d5730;
+}
+.glassy-skip { position: fixed; z-index: 1600; left: 20px; top: -100px; padding: 10px; background: white; color: #142b48; }
+.glassy-skip:focus { top: 20px; }
+.glassy-page :is(a, button, input, textarea, select, summary):focus-visible {
+    outline: 2px solid #144b9d;
+    outline-offset: 3px;
+}
+.glassy-sidebar :is(a, summary):focus-visible { outline-color: #ecf6ff; }
+
+.glassy-overview { text-align: left; }
+.glassy-overview-heading, .glassy-date, .glassy-actions { display: flex; align-items: center; gap: 10px; }
+.glassy-overview-heading { justify-content: space-between; flex-wrap: wrap; margin-bottom: 18px; }
+.glassy-overview-heading h1 { font-size: clamp(27px, 4.1vw, 48px); letter-spacing: -.045em; line-height: 1.05; margin: 0 0 7px; }
+.glassy-overview-heading p { color: var(--muted); margin: 0; font-size: 14px; }
+.glassy-actions { flex-wrap: wrap; }
+.glassy-actions a, .glassy-feature a {
+    padding: 9px 15px;
+    border-radius: 99px;
+    border: 1px solid var(--border);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+    background: var(--paper);
+    color: var(--ink);
+    display: inline-block;
+}
+.glassy-actions a:last-child { background: #102746; color: #eff7ff; border-color: #102746; }
+.glassy-actions a:hover, .glassy-feature a:hover { box-shadow: 0 4px 14px #0d274832; }
+.glassy-feature-grid { display: grid; grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr); gap: 14px; }
+.glassy-feature, .glassy-calendar, .glassy-tiles a {
+    box-sizing: border-box;
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    box-shadow: var(--shadow);
+    padding: clamp(14px, 2vw, 26px);
+}
+.glassy-feature {
+    min-height: 305px;
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr);
+    align-items: center;
+    gap: 10px;
+    color: #f6faff;
+    background: radial-gradient(ellipse at 84% 17%, #75c5ff5c, transparent 64%), var(--primary-gradient);
+}
+.glassy-feature-tag {
+    font-size: 11px;
+    font-weight: 750;
+    padding: 5px 10px;
+    border: 1px solid #e5f3ff85;
+    background: #ffffff19;
+    border-radius: 99px;
+    display: inline-block;
+}
+.glassy-feature h2 { margin: 12px 0 8px; line-height: 1.04; font-size: clamp(25px, 3.7vw, 52px); letter-spacing: -.048em; }
+.glassy-feature h2 em { font: italic .96em Georgia, serif; }
+.glassy-feature p { margin: 0 0 16px; font-size: 14px; color: #eaf5ff; }
+.glassy-orbit {
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    align-self: center;
+    border: 6px solid #e9f5ff;
+    border-left-color: #d4eaff69;
+    border-radius: 50%;
+    padding: 7px;
+    box-shadow: 0 0 0 6px #c5e4ff25, 0 12px 30px #0b2a604a;
+}
+.glassy-orbit img { width: 100%; height: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 50%; }
+.glassy-calendar { background: var(--glass); backdrop-filter: blur(15px); align-content: center; }
+.glassy-date strong { font-size: 46px; line-height: 1; color: var(--accent); }
+.glassy-date span { font-weight: 750; }
+.glassy-date small { display: block; font-size: 12px; font-weight: 500; color: var(--muted); }
+.glassy-week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; margin: 15px 0; }
+.glassy-week span { text-align: center; border-radius: 8px; font-size: 12px; font-weight: 700; padding: 4px 0; }
+.glassy-week small { display: block; font-size: 10px; }
+.glassy-week [aria-current] { color: white; background: var(--primary-gradient); }
+.glassy-calendar > a {
+    display: grid;
+    grid-template-columns: 24px 1fr auto;
+    gap: 5px;
+    align-items: center;
+    color: var(--ink);
+    background: var(--glass);
+    font-size: 13px;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 9px;
+    margin-top: 6px;
+}
+.glassy-calendar > a:hover { background: var(--paper); }
+.glassy-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 14px; }
+.glassy-tiles a {
+    display: grid;
+    justify-items: start;
+    gap: 6px;
+    min-height: 126px;
+    color: var(--ink);
+    background: var(--glass);
+    text-decoration: none;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+.glassy-tiles a:hover { transform: translateY(-3px); box-shadow: 0 16px 34px #102d573a; }
+.glassy-tiles a:nth-child(3) { color: #f5faff; background: var(--primary-gradient); }
+.glassy-tiles a > span {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: var(--ink);
+    background: #eef7ff;
+    color: #142b48;
+}
+.glassy-tiles strong { font-size: clamp(15px, 1.8vw, 25px); letter-spacing: -.025em; }
+.glassy-tiles small { font-size: 12px; }
+
+/* Existing page components keep their controls and adopt the shared surfaces. */
+body.glassy-page:not(.glassy-native-admin) { display: block; }
+.glassy-page .glassy-content > .header {
+    position: static;
+    transform: none !important;
+    gap: 10px;
+    flex-wrap: wrap;
+    background: var(--glass) !important;
+    color: var(--ink) !important;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin: 0 0 16px;
+    padding: 12px 16px;
+    box-shadow: var(--shadow);
+}
+.glassy-page .header h2 { color: var(--ink) !important; }
+.glassy-page .header-right { flex-wrap: wrap; }
+.glassy-page :is(.nav-container, .header > [class^="nut"]) { display: none; }
+.glassy-page :is(.silver, .chuyen) {
+    color: var(--ink) !important;
+    background: none !important;
+    -webkit-text-fill-color: currentColor;
+    text-shadow: none !important;
+    animation: none !important;
+}
+.glassy-page .glassy-content :is(img, video, canvas, iframe) { max-width: 100%; }
+.glassy-page .glassy-content :is(video, canvas) { height: auto; }
+.glassy-page .glassy-content :is(#dautrang, #xecongnong) { scroll-margin-top: 16px; }
+.glassy-page .glassy-content > #dautrang { margin-top: 28px; }
+.glassy-page .glassy-content :is(
+    .gioithieu, .sukien, .xe, .thoisokhai, .thoimoi, .hiendai, .hientai, .hino,
+    .xediahinh, .xetaiv5, .xetaiv6, .xe-details, .thongso-box, .blog-header,
+    .blog-post, .tienich-card, .product-card, .cart-card, .cart-summary,
+    .order-card, .cart-header, .account-card, .auth-box, .form-box,
+    .form-container, .spec-card, .compat-form-box, .compat-result-box,
+    .td-info-box, .td-timeline, .td-history, .panel, .kaido-panel, .thongtinweb
+), .glassy-page.glassy-native-admin :is(.card-box, .main-header) {
+    box-sizing: border-box;
+    max-width: 100%;
+    color: var(--ink) !important;
+    background: var(--glass) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+}
+.glassy-page .glassy-content :is(.text, .product-info h3, .cart-header h1, .cart-header p, .auth-box h2,
+    .auth-box label, .auth-box p, .auth-box .back-home, .account-info, .account-header h1,
+    .account-header p, .td-muted, .muted-text, .product-card h3, .blog-post h3),
+.glassy-native-admin :is(.card-box h2, .header-title, .topbar-actions a) {
+    color: var(--ink) !important;
+    text-shadow: none;
+}
+.glassy-page .glassy-content :is(.gioithieu p, .gioithieu a, .sukien p, .footer .text) {
+    color: var(--ink) !important;
+    background: none !important;
+}
+.glassy-page .glassy-content :is(.price, .product-total, .product-price, .auth-box a) {
+    color: var(--accent) !important;
+}
+.glassy-page .glassy-content :is(.auth-box, .form-container) { margin: clamp(12px, 5vw, 62px) auto; }
+.glassy-page .auth-box { width: min(100%, 450px); }
+.glassy-page .auth-theme-btn { position: static; display: block; margin-left: auto; }
+.glassy-page .glassy-content :is(input:not([type="checkbox"]):not([type="radio"]), select, textarea),
+.glassy-native-admin :is(input:not([type="checkbox"]):not([type="radio"]), select, textarea) {
+    max-width: 100%;
+    box-sizing: border-box;
+    color: var(--ink) !important;
+    background: var(--paper) !important;
+    border-color: var(--field-border) !important;
+}
+.glassy-page :is(.checkout-btn, .auth-box button[type="submit"], .kaido-btn, .compat-btn,
+    .glassy-content .btn-save, .admin-main .btn-save) {
+    color: #f5faff !important;
+    background: var(--primary-gradient) !important;
+}
+.glassy-page .glassy-content :is(.theme-toggle-btn, .auth-theme-btn) {
+    background: var(--paper) !important;
+    color: var(--ink) !important;
+    border: 1px solid var(--border);
+}
+.glassy-page .kaido-main, .glassy-page .wrap { max-width: 100%; }
+.glassy-page .kaido-panel { padding: 16px; margin: 14px 0; }
+.glassy-page :is(.kaido-shop-nav, .wrap > .nav) { display: flex; flex-wrap: wrap; gap: 10px; }
+.glassy-page :is(.kaido-shop-nav, .wrap > .nav) a {
+    color: var(--ink); background: var(--paper); border-radius: 10px; padding: 8px 11px;
+}
+.glassy-page .table-scroll { overflow-x: auto; }
+.glassy-page :is(.kaido-table, .wrap table, .admin-table, .compat-table, .td-table) { width: 100%; border-collapse: collapse; }
+.glassy-page :is(.kaido-table, .wrap table, .admin-table, .compat-table, .td-table) :is(td, th) {
+    color: var(--ink) !important;
+    background: var(--glass) !important;
+    border-bottom: 1px solid #527ab344;
+    padding: 9px;
+}
+.glassy-page .kaido-form { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; }
+.glassy-page .kaido-form label { display: grid; gap: 6px; }
+.glassy-page .admin-main {
+    box-sizing: border-box;
+    min-width: 0;
+    margin: 16px 16px 16px calc(var(--sidebar-width) + 30px);
+}
+.glassy-page.glassy-native-admin .admin-sidebar :is(.sidebar-menu a, .sidebar-menu .menu-label, .brand-name) { color: #eff7ff; }
+.glassy-page.glassy-native-admin .admin-sidebar a.active { color: var(--ink) !important; background: var(--paper) !important; }
+.glassy-page .main-header { flex-wrap: wrap; gap: 10px; }
+html[data-glassy-theme="dark"] body.glassy-page {
+    --ink: #0f172a;
+    --muted: #475569;
+    --glass: rgba(44, 77, 120, .38);
+    --paper: #172e4d;
+    --border: rgba(170, 209, 250, .34);
+    --accent: #a9d6ff;
+    --field-border: #789bc3;
+    --sidebar-glass: linear-gradient(150deg, #1e487ad9, #0e213dd9);
+    --frame-glass: linear-gradient(145deg, #77a9e12c, #0c24443a);
+    --page-gradient: linear-gradient(125deg, #0b172c, #142c4c 45%, #132946 72%, #0d1c33);
+    --glow-top: #26476c;
+    --glow-middle: #233f63;
+    --glow-bottom: #1c3a60;
+    color-scheme: dark;
+}
+
+@media (max-width: 940px) {
+    body.glassy-page { --sidebar-width: 172px; }
+    .glassy-feature-grid { grid-template-columns: 1fr; }
+    .glassy-orbit { max-width: 200px; justify-self: center; }
+    .glassy-calendar { max-width: none; }
+}
+@media (max-width: 700px) {
+    .glassy-sidebar, .glassy-page.glassy-native-admin .admin-sidebar {
+        position: static;
+        width: auto;
+        max-height: none;
+        margin: 10px;
+        border-radius: 16px;
+        gap: 8px;
+    }
+    .glassy-menu summary { display: list-item; padding: 6px 8px; font-weight: 700; }
+    .glassy-menu nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 5px; }
+    .glassy-section-label { grid-column: 1 / -1; margin-top: 8px; }
+    .glassy-page .glassy-content, .glassy-page .admin-main { margin: 10px; }
+    .glassy-page .glassy-content { border-radius: 16px; }
+    .glassy-feature { min-height: 220px; }
+    .glassy-orbit { border-width: 4px; padding: 4px; }
+    .glassy-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .glassy-tiles a { min-height: 106px; }
+    .glassy-page .admin-main { width: auto; }
+    .glassy-page.glassy-native-admin { display: block; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .glassy-tiles a { transition: none; }
+    .glassy-tiles a:hover { transform: none; }
+}
+
+.glassy-page .glassy-content :is(.fav-card, .product-detail-container, .description-box, .empty-box,
+    .chatbox, .spec-box), .glassy-page.glassy-native-admin .stat-card {
+    color: var(--ink) !important;
+    background: var(--glass) !important;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+}
+.glassy-page :is(.fav-card, .product-detail-container, .description-box, .empty-box)
+    :is(h1, h2, h3, p, .spec-label) {
+    color: var(--ink) !important;
+}
+.glassy-page :is(.add-cart-btn, .btn-submit, .wrap .btn, .tienich-card > a, .detail-btn) {
+    color: #f5faff !important;
+    background: var(--primary-gradient) !important;
+}
+.glassy-page :is(.kaido-main > h1, .wrap > h1) { margin: 18px 0 8px; }
+.glassy-page .wrap .notice, .glassy-page .kaido-msg {
+    padding: 12px;
+    border-radius: 10px;
+    background: #e5f4dc;
+    color: #29491f;
+}
+.glassy-page :is(.wrap .notice.bad, .kaido-msg.kaido-bad) {
+    color: #79261f;
+    background: #ffded6;
+}
+.glassy-page :is(.wrap .badge, .wrap .btn) {
+    display: inline-block;
+    padding: 6px 10px;
+    border: 0;
+    border-radius: 8px;
+    color: #fff;
+}
+.glassy-page .wrap .btn { cursor: pointer; }
+.glassy-page .wrap :is(select, input), .glassy-page .kaido-form :is(select, input) {
+    padding: 7px;
+    border: 1px solid;
+    border-radius: 8px;
+}
+
+.glassy-page.glassy-native-admin .admin-main {
+    background: var(--frame-glass);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 12px;
+}
+.glassy-page.glassy-native-admin .main-header { min-height: 65px; height: auto; padding: 12px 16px; }
+.glassy-page #fastDownBtn { left: calc(var(--sidebar-width) + 42px); }
+.glassy-page :is(#fastDownBtn, #jumpBtn) {
+    width: clamp(66px, 12vw, 108px);
+    height: clamp(66px, 12vw, 108px);
+    z-index: 20;
+    background: var(--primary-gradient);
+    font-size: clamp(13px, 2vw, 21px);
+}
+@media (max-width: 700px) {
+    .glassy-page #fastDownBtn { left: 16px; bottom: 16px; }
+    .glassy-page #jumpBtn { right: 16px; bottom: 16px; }
+}
+
+.glassy-theme-toggle {
+    align-self: stretch;
+    margin: 0 4px;
+    padding: 8px 10px;
+    border: 1px solid #b4d6ff80;
+    border-radius: 10px;
+    background: #0d254a3d;
+    color: #f0f7ff;
+    font: inherit;
+    font-size: 13px;
+    text-align: left;
+    cursor: pointer;
+}
+.glassy-theme-toggle:hover { background: #0d254a78; }
+.glassy-page .glassy-theme-toggle:focus-visible { outline-color: #e4f4ff; }
+.glassy-page :is(.glassy-feature, .glassy-tiles a, .auth-box, .product-card,
+    .cart-card, .cart-summary, .account-card, .blog-post, .card-box) {
+    backdrop-filter: blur(12px);
+}
+.glassy-page :is(.glassy-feature, .glassy-tiles a:nth-child(3)) {
+    background: linear-gradient(135deg, #23569be6, #153c78f0);
+}
+.glassy-page :is(.glassy-content, .admin-main) :is(input, textarea)::placeholder {
+    color: var(--muted);
+    opacity: 1;
+}
+.glassy-page :is(.auth-box, .description-box, .blog-post, .account-card, .cart-card,
+    .product-card, .card-box, .spec-card) :is(h1, h2, h3, label, dt, dd) {
+    color: var(--ink) !important;
+}
+.glassy-page :is(.glassy-content, .admin-main) :is(.muted, .muted-text, .td-muted, .sub-note) {
+    color: var(--muted) !important;
+}
+.glassy-page .glassy-content :is(.glassy-feature a, .glassy-calendar > a, .glassy-tiles a):focus-visible {
+    outline-color: var(--accent);
+}
+
+/* Translucent blue glass with bright edges and separate readable surfaces. */
+body.glassy-page {
+    --ink: #0b294b;
+    --muted: #294c70;
+    --glass: rgba(242, 250, 255, .32);
+    --paper: rgba(245, 251, 255, .72);
+    --border: rgba(255, 255, 255, .66);
+    --shadow: 0 18px 45px #123d6b18, inset 0 1px 0 #ffffffb3,
+        inset 0 -1px 0 #ffffff38;
+    --frame-glass: linear-gradient(140deg, #ffffff20, #d7efff0a);
+    --sidebar-glass: linear-gradient(155deg, #e6f6ff85, #c6e7ff52);
+    --page-gradient: linear-gradient(125deg, #8fc4ed, #d4efff 34%, #a8d5f5 64%, #c7e8fd);
+    --glow-top: #f4fbff;
+    --glow-middle: #e0f5ff;
+    --glow-bottom: #77b7ed;
+    --primary-gradient: linear-gradient(135deg, #0861c3, #074997);
+    --accent: #064c99;
+}
+html[data-glassy-theme="dark"] body.glassy-page {
+    --ink: #f1f8ff;
+    --muted: #c8def3;
+    --glass: rgba(22, 48, 82, .38);
+    --paper: rgba(20, 48, 83, .78);
+    --border: rgba(192, 225, 255, .32);
+    --shadow: 0 18px 45px #020e2638, inset 0 1px 0 #d8eeff59,
+        inset 0 -1px 0 #bddfff14;
+    --frame-glass: linear-gradient(140deg, #8bcaff14, #17345b08);
+    --sidebar-glass: linear-gradient(155deg, #4679af40, #162c4b52);
+    --page-gradient: linear-gradient(125deg, #09192e, #133354 34%, #0d2947 64%, #10243e);
+    --glow-top: #214a72;
+    --glow-middle: #1f4369;
+    --glow-bottom: #184d76;
+    --accent: #acd9ff;
+}
+.glassy-page :is(.glassy-sidebar, .admin-sidebar, .glassy-calendar,
+    .glassy-tiles a, .auth-box, .product-card, .cart-card, .cart-summary,
+    .account-card, .blog-post, .card-box, .form-container, .kaido-panel,
+    .compat-form-box, .compat-result-box, .fav-card, .product-detail-container) {
+    -webkit-backdrop-filter: blur(32px) saturate(135%);
+    backdrop-filter: blur(32px) saturate(135%);
+    box-shadow: var(--shadow);
+    border-radius: 24px;
+}
+.glassy-page .glassy-content { border-radius: 30px; }
+.glassy-page .glassy-sidebar,
+.glassy-page.glassy-native-admin .admin-sidebar {
+    color: var(--ink);
+    border-color: var(--border);
+}
+.glassy-page :is(.glassy-brand small, .glassy-profile small, .glassy-section-label),
+.glassy-page.glassy-native-admin .admin-sidebar :is(.sidebar-menu a, .sidebar-menu .menu-label, .brand-name) {
+    color: var(--muted);
+}
+.glassy-page .glassy-sidebar .glassy-nav-link[aria-current="page"],
+.glassy-page.glassy-native-admin .admin-sidebar a.active {
+    background: var(--paper) !important;
+    color: var(--ink) !important;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+}
+.glassy-page .glassy-nav-link { border: 1px solid transparent; border-radius: 13px; }
+.glassy-page .glassy-nav-link:hover { background: var(--glass); }
+.glassy-page .glassy-theme-toggle {
+    color: var(--ink);
+    background: var(--glass);
+    border-color: var(--border);
+    border-radius: 20px;
+    box-shadow: inset 0 1px #ffffff4d;
+}
+.glassy-page .glassy-theme-toggle:hover { background: var(--paper); }
+.glassy-page .glassy-theme-toggle:focus-visible,
+.glassy-page .glassy-sidebar :is(a, summary):focus-visible { outline-color: var(--accent); }
+.glassy-page :is(.glassy-feature, .glassy-tiles a:nth-child(3)) {
+    color: var(--ink);
+    background: linear-gradient(135deg, #54b7ff38, #368ae62e);
+    border: 1px solid var(--border);
+    -webkit-backdrop-filter: blur(32px) saturate(135%);
+    backdrop-filter: blur(32px) saturate(135%);
+}
+.glassy-page .glassy-feature p { color: var(--muted); }
+.glassy-page .glassy-feature-tag {
+    background: var(--glass);
+    border-color: var(--border);
+    color: var(--ink);
+}
+.glassy-page .glassy-orbit {
+    border-color: #effaffb3;
+    border-left-color: #d5ecff40;
+    box-shadow: 0 0 0 7px #d9f2ff20, 0 14px 35px #07477326;
+}
+.glassy-page .glassy-actions a:last-child {
+    background: var(--primary-gradient);
+    border-color: #9dd3ff94;
+    color: #fff;
+}
+.glassy-page .glassy-calendar > a { background: var(--glass); }
+.glassy-page .glassy-tiles a > span {
+    background: var(--paper);
+    color: var(--ink);
+    border: 1px solid var(--border);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    body.glassy-page { --glass: #e2f2ff; --sidebar-glass: #c9e5fa; }
+    html[data-glassy-theme="dark"] body.glassy-page { --glass: #193452; --sidebar-glass: #142d49; }
+}
+@media (prefers-reduced-transparency: reduce) {
+    body.glassy-page { --glass: #e2f2ff; --sidebar-glass: #c9e5fa; }
+    html[data-glassy-theme="dark"] body.glassy-page { --glass: #193452; --sidebar-glass: #142d49; }
+}
+@media (max-width: 700px) {
+    .glassy-page .glassy-content { border-radius: 22px; }
+}
+
+/* Legacy page styles set these text colors directly. Match their glass surfaces. */
+.glassy-page .glassy-content :is(.product-card h2, .account-card .info-row strong,
+    .order-card h2, .order-card h3, .cart-summary h2, .cart-summary h3) {
+    color: var(--ink) !important;
+    text-shadow: none;
+}
+.glassy-page .glassy-content :is(.product-card p, .account-card .info-row span,
+    .cart-card .product-info p, .order-card .order-header p, .order-card .order-product p,
+    .account-footer p) {
+    color: var(--muted) !important;
+}
+.glassy-page .glassy-content .product-card p strong {
+    color: var(--accent);
+}
+.glassy-page .glassy-content .product-card a[href] {
+    color: #fff;
+    background: var(--primary-gradient);
+}
+.glassy-page .glassy-content > .header,
+.glassy-native-admin .main-header {
+    -webkit-backdrop-filter: blur(32px) saturate(135%);
+    backdrop-filter: blur(32px) saturate(135%);
+}

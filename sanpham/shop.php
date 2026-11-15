@@ -199,8 +199,12 @@ $result = mysqli_query($conn, $sql);
     text-decoration: underline;
 }
     </style>
+<link rel="stylesheet" href="../css/glassy.css">
+<script src="../js/glassy-theme.js"></script>
 </head>
-<body>
+<body class="glassy-page">
+<?php $glassyBase = '../'; require __DIR__ . '/../layout/glassy-sidebar.php'; ?>
+<div id="glassy-content" class="glassy-content" tabindex="-1">
 
 <!-- TRANG LOADING -->
     <div id="loading">
@@ -216,9 +220,7 @@ $result = mysqli_query($conn, $sql);
         </div>
         <div class="header-right">
             <!-- NÚT BẤM CHUYỂN ĐỔI DARK / LIGHT MODE -->
-            <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()">
-                🌙 Dark
-            </button>
+
 
             <!-- HIỂN THỊ TÊN TÀI KHOẢN HOẶC ĐĂNG NHẬP -->
             <?php if (isset($_SESSION['username'])): ?>
@@ -442,6 +444,7 @@ else:
         }, 500);
     });
     </script>
+</div><!-- glassy-content -->
 </body>
 <script src="../js/slide.js"></script>
 </html>

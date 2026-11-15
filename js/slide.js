@@ -14,6 +14,7 @@ let lastScrollTop = 0;
 const mainHeader = document.getElementById('mainHeader');
 
 window.addEventListener('scroll', function() {
+    if (!mainHeader || document.body.classList.contains('glassy-page')) return;
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     
     if (scrollTop > lastScrollTop && scrollTop > 80) {

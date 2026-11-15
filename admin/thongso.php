@@ -109,12 +109,14 @@ body.light-mode .spec-box th { background: #f8fafc !important; color: #475569 !i
 body.light-mode .spec-box td { border-bottom: 1px solid #e2e8f0 !important; color: #1e293b !important; }
 body.light-mode h1, body.light-mode h2 { color: #0f172a !important; }
 body.light-mode .theme-toggle-btn { background: rgba(0,0,0,0.08) !important; border: 1px solid rgba(0,0,0,0.2) !important; color: #0f172a !important; }
-</style></head><body>
+</style><link rel="stylesheet" href="../css/glassy.css">
+<script src="../js/glassy-theme.js"></script>
+</head><body class="glassy-page">
+<?php $glassyBase = '../'; require __DIR__ . '/../layout/glassy-sidebar.php'; ?>
+<div id="glassy-content" class="glassy-content" tabindex="-1">
 
 <div style="text-align: right; padding: 15px 30px;">
-    <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 12px; border-radius: 6px; cursor: pointer;">
-        🌙 Dark
-    </button>
+
 </div>
 <main class="spec-box">
 <h1>THÔNG SỐ KỸ THUẬT</h1>
@@ -139,4 +141,5 @@ function addRow() {
     document.getElementById('spec-rows').appendChild(tr);
 }
 </script>
-</main></body><script src="../js/slide.js"></script></html>
+</main></div><!-- glassy-content -->
+</body><script src="../js/slide.js"></script></html>

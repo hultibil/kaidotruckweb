@@ -3,73 +3,27 @@ session_start();
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang chủ giới thiệu Kaido</title>
     <link rel="icon" href="image/kaidoLogomini.png">
     <link rel="stylesheet" href="css/style.css">
-<body>
+<link rel="stylesheet" href="css/glassy.css">
+<script src="js/glassy-theme.js"></script>
+</head>
+<body class="glassy-page glassy-home">
+<?php $glassyBase = ''; require __DIR__ . '/layout/glassy-sidebar.php'; ?>
+<div id="glassy-content" class="glassy-content" tabindex="-1">
     <!-- TRANG LOADING -->
     <div id="loading">
         <img src="image/imgload.png">
         <p>Đang tải, gần xong rồi!!<span id="dots">...</span></p>
     </div>
 
-    <!-- THANH MÀU XÁM (Đầu trang - Smart Header: Tự ẩn khi lướt xuống, hiện khi lướt lên) -->
-    <div class="header" id="mainHeader">
-        <div class="header-left">
-            <img class="logo" src="image/kaidologo.jpg">
-            <h2>Trang chủ giới thiệu Kaido</h2>
-        </div>
-        <div class="header-right">
-            <!-- NÚT BẤM CHUYỂN ĐỔI DARK / LIGHT MODE -->
-            <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()">
-                🌙 Dark
-            </button>
-
-            <!-- HIỂN THỊ TÊN TÀI KHOẢN HOẶC ĐĂNG NHẬP -->
-            <?php if (isset($_SESSION['username'])): ?>
-                <div class="user-header-badge">
-                    <span>👋 Hi, <strong><?= htmlspecialchars($_SESSION['username']) ?></strong></span>
-                </div>
-            <?php else: ?>
-                <div class="user-header-badge visitor">
-                    <a href="Taikhoan/dangnhap.php">🔑 Đăng nhập/ đăng ký</a>
-                </div>
-            <?php endif; ?>
-        </div>
-    </div>
-
-    <!-- THANH ĐIỀU HƯỚNG MỚI (Nằm dưới thanh màu xám, không ghim, lướt ngang trên mobile) -->
-    <div id="dautrang"> 
-    <div class="nav-container">
-        <div class="nav-scroll-wrapper">
-            <div class="nut0chon">
-                <a>Trang chủ</a>
-            </div>
-            <div class="nut1">
-                <a href="khac/khac.php" onclick="clickSound()">Dự án khác</a>
-            </div>
-            <div class="nut2">
-                <a href="hoithem.php" onclick="clickSound()">Trò chuyện</a>
-            </div>
-            <div class="nut4">
-                <a href="tienich.php" onclick="clickSound()">Tài khoản/Mua hàng</a>
-            </div>
-            <div class="nut5">
-                <a href="kythuat/details.php">Chi tiết kỹ thuật</a>
-            </div>
-            <div class="nut6">
-                <a href="Blog/blog.php" onclick="clickSound()">Tin tức</a>
-            </div>
-            <div class="nut3">
-                <a href="gamemini.php" onclick="clickSound()">Game mini</a>
-            </div>
-        </div>
-    </div>
-
+    <?php require __DIR__ . '/layout/glassy-overview.php'; ?>
+    <div id="dautrang">
     <h1 class="silver">KAIDO - The powerful mini engine</h1>
     <div class="gioithieu">
         <p>Mục lục</p>
@@ -234,7 +188,7 @@ session_start();
     <h1 class="text">...Coming soon...<br>Dự kiến: 04/02/2027<br></h1>
 </div>
 <!--Quảng cáo-->
-<h3 class="chuyen">Phần mục quảng cáo</h1>
+<h3 class="chuyen">Phần mục quảng cáo</h3>
 <div class="ads">
     <img src="image/quangcao.jpg" loading="lazy" class="anhquangcao">
 <div class="bangquangcao">
@@ -308,6 +262,9 @@ window.addEventListener("load", function() {
     }, 500);
 });
 </script>
+</div>
+</div>
+</div><!-- glassy-content -->
+<script src="js/slide.js"></script>
 </body>
-    <script src="js/slide.js"></script>
 </html>

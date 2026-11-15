@@ -142,10 +142,14 @@ $donHang = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             color: #0f172a !important;
         }
     </style>
+<link rel="stylesheet" href="../css/glassy.css">
+<script src="../js/glassy-theme.js"></script>
 </head>
-<body>
+<body class="glassy-page">
+<?php $glassyBase = '../'; require __DIR__ . '/../layout/glassy-sidebar.php'; ?>
+<div id="glassy-content" class="glassy-content" tabindex="-1">
 
-<<!-- THANH MÀU XÁM (Đầu trang - Smart Header: Tự ẩn khi lướt xuống, hiện khi lướt lên) -->
+<!-- THANH MÀU XÁM (Đầu trang - Smart Header: Tự ẩn khi lướt xuống, hiện khi lướt lên) -->
     <div class="header" id="mainHeader">
         <div class="header-left">
             <img class="logo" src="../image/kaidologo.jpg">
@@ -153,9 +157,7 @@ $donHang = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         </div>
         <div class="header-right">
             <!-- NÚT BẤM CHUYỂN ĐỔI DARK / LIGHT MODE -->
-            <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()">
-                🌙 Dark
-            </button>
+
 
             <!-- HIỂN THỊ TÊN TÀI KHOẢN HOẶC ĐĂNG NHẬP -->
             <?php if (isset($_SESSION['username'])): ?>
@@ -284,6 +286,7 @@ setInterval(capNhatGio, 1000);
     <p class="date">Cập nhật trang web lần cuối: 29/09/2026</p>
 </div>
 
+</div><!-- glassy-content -->
 </body>
 <script src="../js/slide.js"></script>
 </html>

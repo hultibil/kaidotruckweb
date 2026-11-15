@@ -25,8 +25,12 @@ if (isset($_SESSION['user_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tài khoản của bạn</title>
     <link rel="stylesheet" href="../css/dndk.css">
+<link rel="stylesheet" href="../css/glassy.css">
+<script src="../js/glassy-theme.js"></script>
 </head>
-<body class="account-page">
+<body class="glassy-page account-page">
+<?php $glassyBase = '../'; require __DIR__ . '/../layout/glassy-sidebar.php'; ?>
+<div id="glassy-content" class="glassy-content" tabindex="-1">
     <!-- THANH MÀU XÁM (Đầu trang - Smart Header: Tự ẩn khi lướt xuống, hiện khi lướt lên) -->
     <div class="header" id="mainHeader">
         <div class="header-left">
@@ -35,9 +39,7 @@ if (isset($_SESSION['user_id'])) {
         </div>
         <div class="header-right">
             <!-- NÚT BẤM CHUYỂN ĐỔI DARK / LIGHT MODE -->
-            <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()">
-                🌙 Dark
-            </button>
+
 
             <!-- HIỂN THỊ TÊN TÀI KHOẢN HOẶC ĐĂNG NHẬP -->
             <?php if (isset($_SESSION['username'])): ?>
@@ -165,6 +167,7 @@ if (isset($_SESSION['user_id'])) {
             }
         }
     </script>
+</div><!-- glassy-content -->
 </body>
 </html>
 
@@ -233,8 +236,12 @@ if (isset($_SESSION['user_id'])) {
             }
         }
     </style>
+<link rel="stylesheet" href="../css/glassy.css">
+<script src="../js/glassy-theme.js"></script>
 </head>
-<body>
+<body class="glassy-page">
+<?php $glassyBase = '../'; require __DIR__ . '/../layout/glassy-sidebar.php'; ?>
+<div id="glassy-content" class="glassy-content" tabindex="-1">
     <script>
         window.addEventListener('DOMContentLoaded', () => {
             const notif = document.createElement('div');
@@ -299,6 +306,7 @@ setInterval(capNhatGio, 1000);
     <p class="date">Cập nhật trang web lần cuối: 29/09/2026</p>
 </div>
 
+</div><!-- glassy-content -->
 </body>
 </html>
 <?php
