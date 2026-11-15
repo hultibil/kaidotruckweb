@@ -378,7 +378,7 @@ html[data-glassy-theme="light"] .glassy-page table.admin-table tbody tr:hover{ba
 .glassy-page #fastDownBtn{left:calc(var(--sidebar-width) + 42px)}
 .glassy-page :is(#fastDownBtn,#jumpBtn){width:clamp(66px,12vw,108px);height:clamp(66px,12vw,108px);z-index:20;background:var(--primary-gradient);font-size:clamp(13px,2vw,21px)}
 
-@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+@supports not ((backdrop-filter:blur(1px))  or (-webkit-backdrop-filter:blur(1px))){
   body.glassy-page{--glass:#e2f2ff;--sidebar-glass:#c9e5fa}
   html[data-glassy-theme="dark"] body.glassy-page{--glass:#102438;--sidebar-glass:#102b49}
 }
@@ -416,4 +416,178 @@ html[data-glassy-theme="light"] .glassy-page table.admin-table tbody tr:hover{ba
 @media (prefers-reduced-motion:reduce){
   .glassy-page :is(.glassy-tiles a,.cart-footer a){transition:none}
   .glassy-page :is(.glassy-tiles a:hover,.cart-footer a:hover){transform:none}
+}
+html[data-glassy-theme="light"] body.glassy-page {
+    --ink: #102a43;
+    --muted: #16324f;
+    --accent: #184a8b;
+}
+
+html[data-glassy-theme="light"] .glassy-page,
+html[data-glassy-theme="light"] .glassy-page .glassy-content,
+html[data-glassy-theme="light"] .glassy-page .admin-main {
+    color: #102a43 !important;
+}
+
+html[data-glassy-theme="light"] .glassy-page :is(
+    p, span, small, label, li, td, th, strong, em, b,
+    .muted, .muted-text, .td-muted, .text-muted
+) {
+    color: #16324f !important;
+    text-shadow: none !important;
+    opacity: 1 !important;
+}
+
+html[data-glassy-theme="light"] .glassy-page :is(
+    h1, h2, h3, h4, h5, h6,
+    .text, .header-title, .menu-heading,
+    .cart-header h1, .cart-header p,
+    .account-header h1, .account-header p,
+    .blog-header h1, .blog-post h3,
+    .detail-info h1, .description-box h3, .specs-section h3
+) {
+    color: #102a43 !important;
+    text-shadow: none !important;
+}
+
+html[data-glassy-theme="light"] .glassy-page :is(
+    .gioithieu p, .sukien p, .xe p, .thoisokhai p, .thoimoi p,
+    .hiendai p, .hientai p, .hino p, .xediahinh p, .xetaiv5 p, .xetaiv6 p,
+    .blog-post p, .blog-post small,
+    .product-card p, .fav-card p, .cart-card p, .order-card p,
+    .account-card p, .account-card span, .account-card strong,
+    .compat-form-box p, .compat-result-box p, .thongtinweb p, .footer p
+) {
+    color: #16324f !important;
+    text-shadow: none !important;
+    opacity: 1 !important;
+}
+
+html[data-glassy-theme="light"] .glassy-page .product-card h2,
+html[data-glassy-theme="light"] .glassy-page .fav-card h2,
+html[data-glassy-theme="light"] .glassy-page .fav-card h3,
+html[data-glassy-theme="light"] .glassy-page .product-info h3,
+html[data-glassy-theme="light"] .glassy-page .blog-post h2,
+html[data-glassy-theme="light"] .glassy-page .blog-post h3 {
+    color: #102a43 !important;
+}
+
+html[data-glassy-theme="light"] .glassy-page .product-card .price,
+html[data-glassy-theme="light"] .glassy-page .product-card .product-price,
+html[data-glassy-theme="light"] .glassy-page .fav-card .price,
+html[data-glassy-theme="light"] .glassy-page .cart-card .product-price,
+html[data-glassy-theme="light"] .glassy-page .cart-card .product-total,
+html[data-glassy-theme="light"] .glassy-page .order-card .product-total,
+html[data-glassy-theme="light"] .glassy-page .price,
+html[data-glassy-theme="light"] .glassy-page .total-price {
+    color: #184a8b !important;
+    font-weight: 700 !important;
+}
+
+html[data-glassy-theme="light"] .glassy-page .product-card a:not(.btn-save):not(.btn-action),
+html[data-glassy-theme="light"] .glassy-page .fav-card a:not(.btn-save):not(.btn-action),
+html[data-glassy-theme="light"] .glassy-page .blog-post a,
+html[data-glassy-theme="light"] .glassy-page .footer a,
+html[data-glassy-theme="light"] .glassy-page .thongtinweb a {
+    color: #1d4f91 !important;
+}
+
+html[data-glassy-theme="light"] .glassy-page .cart-summary,
+html[data-glassy-theme="light"] .glassy-page .cart-summary :is(p, span, strong, label),
+html[data-glassy-theme="light"] .glassy-page .order-card :is(p, span, strong),
+html[data-glassy-theme="light"] .glassy-page .account-card :is(p, span, strong),
+html[data-glassy-theme="light"] .glassy-page .compat-form-box :is(label, p),
+html[data-glassy-theme="light"] .glassy-page .compat-result-box :is(label, p, span, strong) {
+    color: #102a43 !important;
+}
+
+html[data-glassy-theme="light"] .glassy-page .account-card .info-row,
+html[data-glassy-theme="light"] .glassy-page .account-card .info-row :is(span, strong) {
+    color: #102a43 !important;
+}
+
+html[data-glassy-theme="light"] .glassy-page .specs-table th,
+html[data-glassy-theme="light"] .glassy-page .specs-table td,
+html[data-glassy-theme="light"] .glassy-page .compat-table th,
+html[data-glassy-theme="light"] .glassy-page .compat-table td,
+html[data-glassy-theme="light"] .glassy-page .td-table th,
+html[data-glassy-theme="light"] .glassy-page .td-table td {
+    color: #102a43 !important;
+}
+
+html[data-glassy-theme="light"] .glassy-page .specs-table th,
+html[data-glassy-theme="light"] .glassy-page .compat-table th,
+html[data-glassy-theme="light"] .glassy-page .td-table th {
+    background: rgba(210, 230, 247, 0.92) !important;
+}
+
+html[data-glassy-theme="light"] .glassy-page .specs-table td,
+html[data-glassy-theme="light"] .glassy-page .compat-table td,
+html[data-glassy-theme="light"] .glassy-page .td-table td {
+    background: rgba(241, 248, 255, 0.92) !important;
+}
+
+html[data-glassy-theme="light"] .glassy-page .product-detail-container :is(
+    .detail-info h1, .detail-info h2, .detail-info p,
+    .description-box h3, .description-box p,
+    .specs-section h3, .specs-section p,
+    .stock-status, .category-badge
+) {
+    color: #102a43 !important;
+}
+
+html[data-glassy-theme="light"] .glassy-page .category-badge {
+    background: rgba(201, 226, 247, 0.92) !important;
+}
+
+html[data-glassy-theme="light"] .glassy-page .stock-status .in-stock {
+    color: #0f766e !important;
+}
+
+html[data-glassy-theme="light"] .glassy-page .stock-status .out-stock {
+    color: #b91c1c !important;
+}
+
+html[data-glassy-theme="light"] .glassy-page .cart-footer a,
+html[data-glassy-theme="light"] .glassy-page .back-links a,
+html[data-glassy-theme="light"] .glassy-page .back-home,
+html[data-glassy-theme="light"] .glassy-page .auth-box .back-home {
+    color: #16324f !important;
+}
+
+html[data-glassy-theme="light"] .glassy-page :is(input, textarea, select)::placeholder {
+    color: #4b647d !important;
+    opacity: 1 !important;
+}
+html[data-glassy-theme="light"] body.glassy-page .kaido-banner-content :is(span, h2, p) {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.75) !important;
+    opacity: 1 !important;
+}
+
+html[data-glassy-theme="light"] body.glassy-page .glassy-content .product-card > a[href*="chitietsanpham"],
+html[data-glassy-theme="light"] body.glassy-page .glassy-content .order-card .detail-btn {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    text-shadow: none !important;
+}
+
+html[data-glassy-theme="light"] body.glassy-page .cart-footer > a[href*="shop.php"] {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    text-shadow: none !important;
+}
+
+html[data-glassy-theme="light"] body.glassy-page .account-footer > a {
+    color: #0754a6 !important;
+    -webkit-text-fill-color: #0754a6 !important;
+    font-weight: 700 !important;
+    opacity: 1 !important;
+    text-shadow: none !important;
+}
+
+html[data-glassy-theme="light"] body.glassy-page .account-footer > a:hover {
+    color: #003b80 !important;
+    -webkit-text-fill-color: #003b80 !important;
 }

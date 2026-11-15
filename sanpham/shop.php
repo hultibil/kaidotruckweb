@@ -200,6 +200,7 @@ $result = mysqli_query($conn, $sql);
 }
     </style>
 <link rel="stylesheet" href="../css/glassy.css">
+<!-- ĐẶT ĐOẠN STYLE NÀY Ở ĐÂY (NẰM DƯỚI CÙNG TRONG <head>) -->
 <script src="../js/glassy-theme.js"></script>
 <script src="../js/shop-actions.js" defer></script>
 </head>
@@ -268,7 +269,7 @@ $result = mysqli_query($conn, $sql);
 <h1>TRUNG TÂM CỬA HÀNG LINH KIỆN & THIẾT BỊ ĐIỆN TỬ</h1>
 
 <!-- KAIDO PROMOTION CAROUSEL -->
-<div class="kaido-carousel">
+<div class="kaido-carousel">2
     <div class="kaido-slides">
         <div class="kaido-slide active">
             <img src="../image/xev5trinhchieu.jpg" alt="KAIDO">
@@ -448,4 +449,60 @@ else:
 </div><!-- glassy-content -->
 </body>
 <script src="../js/slide.js"></script>
+<script>
+document.addEventListener('submit', function(e) {
+    let form = e.target;
+    
+    // Kiểm tra nếu là form thêm vào giỏ hàng
+    if (form.action && form.action.includes('them_gio.php')) {
+        e.preventDefault(); // Chặn việc load lại trang
+        
+        let formData = new FormData(form);
+        formData.append('ajax', '1'); // Đánh dấu là request AJAX giống như xuly_yeuthich.php
+        
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Tìm khung thông báo ở dưới sản phẩm (hoặc dùng chung hàm thông báo của nút yêu thích)
+            // Giả sử trang shop của bạn có một thẻ chứa thông báo chung, hoặc bạn có thể tạo/gắn trực tiếp:
+            let noticeArea = document.getElementById('shop-notification-bar'); 
+            if (!noticeArea) {
+                // Nếu chưa có thanh thông báo chung ở dưới, ta tạo một thanh nhỏ ngay trên đầu danh sách sản phẩm hoặc dưới tiêu đề
+                noticeArea = document.createElement('div');
+                noticeArea.id = 'shop-notification-bar';
+                noticeArea.style.cssText = 'margin: 10px 0; padding: 10px 15px; border-radius: 6px; font-weight: 500; transition: all 0.3s;';
+                form.parentNode.insertBefore(noticeArea, form); // Chèn ngay trước form sản phẩm đó
+            }
+
+            if (data.ok) {
+                noticeArea.style.background = '#e6f4ea';
+                noticeArea.style.color = '#137333';
+                noticeArea.style.border = '1px solid #ceead6';
+                noticeArea.innerText = data.message;
+            } else {
+                noticeArea.style.background = '#fdecec';
+                noticeArea.style.color = '#a63d3d';
+                noticeArea.style.border = '1px solid #fad2d2';
+                noticeArea.innerText = data.message;
+            }
+
+            // Tự ẩn thông báo sau 3 giây
+            setTimeout(() => {
+                noticeArea.innerText = '';
+                noticeArea.style.background = 'transparent';
+                noticeArea.style.border = 'none';
+            }, 3000);
+        })
+        .catch(error => {
+            console.error('Lỗi:', error);
+        });
+    }
+});
+</script>
 </html>
