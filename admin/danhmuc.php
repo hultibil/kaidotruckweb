@@ -217,6 +217,7 @@ $messages = ['added' => 'Đã thêm danh mục thành công.', 'updated' => 'Đ�
             <a href="admin.php?tab=products">Quản lý Sản phẩm</a>
             <a href="admin.php?tab=orders">Quản lý Đơn hàng</a>
             <a href="admin.php?tab=users">Quản lý Người dùng</a>
+            <a href="admin.php?tab=reviews">Đánh giá sản phẩm</a>
 
             <div class="menu-heading" style="margin-top: 15px;">Thống Kê</div>
             <a href="thongke.php">Báo cáo Tổng quan</a>
@@ -227,6 +228,9 @@ $messages = ['added' => 'Đã thêm danh mục thành công.', 'updated' => 'Đ�
             <div class="menu-heading" style="margin-top: 15px;">Kho &amp; Danh Mục</div>
             <a href="danhmuc.php">Quản lý Danh mục</a>
             <a href="khohang.php">Tồn kho &amp; Cảnh báo</a>
+            <div class="menu-heading" style="margin-top: 15px;">Tin nhắn từ người dùng</div>
+            <a href="../tu-van/admintuvan.php">Phản hồi tư vấn</a>
+            <a href="../phan-hoi/adminphanhoi.php">Phản hồi vấn đề hệ thống</a>
         </nav>
     </aside>
 

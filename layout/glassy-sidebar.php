@@ -29,6 +29,8 @@ $glassyGroups = strpos($glassyRoute, 'admin/') === 0 ? [
         ['↔', 'Tương thích', 'sanpham/tuongthich.php'],
         ['☏', 'Trò chuyện', 'hoithem.php'],
         ['✦', 'Game mini', 'gamemini.php'],
+        ['☏', 'Tư vấn linh kiện', 'tu-van/tuvan.php'],
+        ['☏', 'Phản hồi vấn đề hệ thống', 'phan-hoi/phanhoi.php'],
     ],
 ];
 ?>

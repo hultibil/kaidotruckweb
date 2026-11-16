@@ -129,6 +129,7 @@ if (isset($_SESSION['user_id'])) {
                 <button><a href="../sanpham/danhgia_cho.php" style="color: inherit; text-decoration: none;">Đánh giá của tôi</a></button>
                 <button><a href="../sanpham/yeuthich.php" style="color: inherit; text-decoration: none;">Sản phẩm yêu thích</a></button>
                 <button><a href="../donhang/lichsu.php" style="color: inherit; text-decoration: none;">Lịch sử mua hàng</a></button>
+                <button><a href="lichsu_gui.php" style="color: inherit; text-decoration: none;">Lịch sử tư vấn &amp; phản hồi</a></button>
             </div>
         </div>
 

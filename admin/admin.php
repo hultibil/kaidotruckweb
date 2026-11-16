@@ -592,6 +592,9 @@ try {
             <div class="menu-heading" style="margin-top: 15px;">Kho &amp; Danh Mục</div>
             <a href="danhmuc.php">Quản lý Danh mục</a>
             <a href="khohang.php">Tồn kho &amp; Cảnh báo</a>
+            <div class="menu-heading" style="margin-top: 15px;">Tin nhắn từ người dùng</div>
+            <a href="../tu-van/admintuvan.php">Phản hồi tư vấn</a>
+            <a href="../phan-hoi/adminphanhoi.php">Phản hồi vấn đề hệ thống</a>
         </nav>
     </aside>
 
