@@ -77,7 +77,6 @@ foreach ($sanPham as $sp) {
 <script src="../js/glassy-theme.js"></script>
 </head>
 
-
 <body class="glassy-page cart-page">
 <?php $glassyBase = '../'; require __DIR__ . '/../layout/glassy-sidebar.php'; ?>
 <div id="glassy-content" class="glassy-content" tabindex="-1">

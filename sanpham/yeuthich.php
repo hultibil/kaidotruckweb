@@ -194,7 +194,7 @@ $st->close();
     <div class="header" id="mainHeader">
         <div class="header-left">
             <img class="logo" src="../image/kaidologo.jpg">
-            <h2>Dự án khác</h2>
+            <h2>Yêu thích</h2>
         </div>
         <div class="header-right">
             <!-- NÚT BẤM CHUYỂN ĐỔI DARK / LIGHT MODE -->

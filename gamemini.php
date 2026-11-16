@@ -137,7 +137,7 @@
     <div class="tittle">XE TẢI BAY</div>
     <div class="tittle" id="score">Điểm: 0</div>
 <div class="back">
-    <a href="index.php">Quay lại trang chủ</a>
+    <a href="index.php">Quay lại tổng quan</a>
 </div>
     <div class="game" id="gameArea">
         <div class="player" id="player"></div>
