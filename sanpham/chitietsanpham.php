@@ -3,6 +3,7 @@ session_start(); // cần cho giỏ hàng (CSRF token)
 // 1. Nhúng file kết nối cơ sở dữ liệu
 require_once '../db.php'; // Điều chỉnh lại đường dẫn file db.php nếu cần
 require_once '../donhang/trangthai.php'; // dhToken(), h()
+require_once __DIR__ . '/danhgia_helper.php'; // [ĐÁNH GIÁ] rv_stars(), rv_media_url()...
 
 // [YÊU THÍCH] Kiểm tra người đang đăng nhập đã thích sản phẩm này chưa
 $daThich = false;
@@ -37,6 +38,70 @@ if (!$product) {
 // 4. Truy vấn lấy danh sách Thông số kỹ thuật của sản phẩm này
 $sql_specs = "SELECT * FROM product_specs WHERE product_id = $product_id";
 $res_specs = mysqli_query($conn, $sql_specs);
+
+// [ĐÁNH GIÁ] Lấy tóm tắt + danh sách đánh giá đang hiển thị của sản phẩm
+$rvPhanBo = [5 => 0, 4 => 0, 3 => 0, 2 => 0, 1 => 0];
+$rvTong = 0; $rvTB = 0.0;
+$rvDs = []; $rvMedia = [];
+$rvMoiTrang = 6;
+$rvTrang = max(1, (int)($_GET['rvp'] ?? 1));
+$rvSoTrang = 1;
+$rvDonDuocDanhGia = 0;   // mã đơn đã giao có chứa sản phẩm này (0 = chưa mua / chưa giao)
+$rvDaDanhGia = false;
+$rvLoi = false;
+try {
+    $st = $conn->prepare("SELECT rating, COUNT(*) AS c FROM product_reviews WHERE product_id = ? AND status = 'visible' GROUP BY rating");
+    $st->bind_param('i', $product_id);
+    $st->execute();
+    $sum = 0;
+    foreach ($st->get_result()->fetch_all(MYSQLI_ASSOC) as $r) {
+        $rvPhanBo[(int)$r['rating']] = (int)$r['c'];
+        $rvTong += (int)$r['c'];
+        $sum += (int)$r['rating'] * (int)$r['c'];
+    }
+    $st->close();
+    $rvTB = $rvTong > 0 ? $sum / $rvTong : 0.0;
+
+    $rvSoTrang = max(1, (int)ceil($rvTong / $rvMoiTrang));
+    $rvTrang = min($rvTrang, $rvSoTrang);
+    $off = ($rvTrang - 1) * $rvMoiTrang;
+    $st = $conn->prepare("SELECT r.id, r.rating, r.comment, r.created_at, u.username
+                          FROM product_reviews r JOIN users u ON u.id = r.user_id
+                          WHERE r.product_id = ? AND r.status = 'visible'
+                          ORDER BY r.created_at DESC, r.id DESC LIMIT ? OFFSET ?");
+    $st->bind_param('iii', $product_id, $rvMoiTrang, $off);
+    $st->execute();
+    $rvDs = $st->get_result()->fetch_all(MYSQLI_ASSOC);
+    $st->close();
+
+    if ($rvDs) {
+        $ids = implode(',', array_map(fn($r) => (int)$r['id'], $rvDs));
+        $rm = $conn->query("SELECT review_id, file_path, media_type FROM review_media WHERE review_id IN ($ids) ORDER BY id");
+        foreach ($rm->fetch_all(MYSQLI_ASSOC) as $m) {
+            $rvMedia[(int)$m['review_id']][] = $m;
+        }
+    }
+
+    if (!empty($_SESSION['user_id'])) {
+        $uidRv = (int)$_SESSION['user_id'];
+        $st = $conn->prepare("SELECT MAX(o.id) AS oid FROM orders o JOIN order_items oi ON oi.order_id = o.id
+                              WHERE o.user_id = ? AND o.status = 'completed' AND oi.product_id = ?");
+        $st->bind_param('ii', $uidRv, $product_id);
+        $st->execute();
+        $rvDonDuocDanhGia = (int)($st->get_result()->fetch_assoc()['oid'] ?? 0);
+        $st->close();
+        if ($rvDonDuocDanhGia) {
+            $st = $conn->prepare('SELECT 1 FROM product_reviews WHERE user_id = ? AND product_id = ? LIMIT 1');
+            $st->bind_param('ii', $uidRv, $product_id);
+            $st->execute();
+            $rvDaDanhGia = (bool)$st->get_result()->fetch_assoc();
+            $st->close();
+        }
+    }
+} catch (Throwable $e) {
+    $rvLoi = true;
+    error_log('chitietsanpham/danhgia: ' . $e->getMessage()); // chưa chạy danhgia.sql thì ẩn khu đánh giá
+}
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -172,6 +237,27 @@ $res_specs = mysqli_query($conn, $sql_specs);
             transition: all 0.3s;
         }
         .fav-btn:hover, .fav-btn.on { background: #e91e63; color: #fff; }
+
+        /* [ĐÁNH GIÁ] */
+        .review-section { width: 100%; margin-top: 20px; border-top: 2px solid #eee; padding-top: 20px; }
+        .rv-summary { display: flex; flex-wrap: wrap; gap: 24px; align-items: center; margin: 10px 0 18px; }
+        .rv-avg { text-align: center; min-width: 110px; }
+        .rv-avg .num { font-size: 44px; font-weight: 800; line-height: 1; }
+        html body.glassy-page .glassy-content .rv-star-on { color: #f59e0b !important; letter-spacing: 2px; }
+        .rv-bars { flex: 1; min-width: 220px; }
+        .rv-bar { display: flex; align-items: center; gap: 8px; font-size: 13px; margin: 3px 0; }
+        .rv-bar .track { flex: 1; height: 8px; border-radius: 99px; background: rgba(120,150,190,.3); overflow: hidden; }
+        .rv-bar .fill { display: block; height: 100%; background: #f59e0b; }
+        .rv-item { padding: 14px 0; border-top: 1px solid rgba(120,150,190,.3); }
+        .rv-item .who { font-weight: 700; }
+        .rv-item .when { font-size: 12px; opacity: .75; margin-left: 8px; }
+        .rv-badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; background: rgba(16,185,129,.2); margin-left: 8px; }
+        .rv-media { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+        .rv-media img, .rv-media video { width: 96px; height: 96px; object-fit: cover; border-radius: 10px; border: 1px solid rgba(120,150,190,.4); background: #000; }
+        .rv-media video { width: 170px; }
+        .rv-pager { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+        html body.glassy-page .glassy-content .rv-pager a, html body.glassy-page .glassy-content a.rv-write { display: inline-block; padding: 7px 14px; border-radius: 99px; font-weight: 700; text-decoration: none; background: var(--paper, #fff) !important; color: var(--accent, #0756a8) !important; border: 1px solid var(--field-border, #8eb5db); }
+        html body.glassy-page .glassy-content .rv-pager a.cur, html body.glassy-page .glassy-content a.rv-write { background: var(--primary-gradient, #0861c3) !important; color: #fff !important; border-color: transparent; }
 
         .back-btn {
             display: inline-block;
@@ -326,6 +412,61 @@ $res_specs = mysqli_query($conn, $sql_specs);
             <p>Chưa có thông số kỹ thuật chi tiết cho sản phẩm này.</p>
         <?php endif; ?>
     </div>
+
+    <!-- [ĐÁNH GIÁ] Đánh giá của khách đã mua -->
+    <?php if (!$rvLoi): ?>
+    <div class="review-section" id="danhgia">
+        <h3>Đánh giá sản phẩm</h3>
+
+        <?php if ($rvDonDuocDanhGia): ?>
+            <p><a class="rv-write" href="danhgia.php?order_id=<?php echo (int)$rvDonDuocDanhGia; ?>&amp;product_id=<?php echo (int)$product['id']; ?>"><?php echo $rvDaDanhGia ? '✏️ Sửa đánh giá của bạn' : '⭐ Viết đánh giá'; ?></a></p>
+        <?php endif; ?>
+
+        <?php if ($rvTong === 0): ?>
+            <p>Chưa có đánh giá nào cho sản phẩm này.</p>
+        <?php else: ?>
+            <div class="rv-summary">
+                <div class="rv-avg">
+                    <div class="num"><?php echo number_format($rvTB, 1, ',', ''); ?></div>
+                    <div class="rv-star-on"><?php echo h(rv_stars((int)round($rvTB))); ?></div>
+                    <div style="font-size:13px"><?php echo (int)$rvTong; ?> đánh giá</div>
+                </div>
+                <div class="rv-bars">
+                    <?php for ($i = 5; $i >= 1; $i--): $pc = $rvTong ? round($rvPhanBo[$i] * 100 / $rvTong) : 0; ?>
+                        <div class="rv-bar"><span><?php echo $i; ?> ★</span><span class="track"><span class="fill" style="width:<?php echo (int)$pc; ?>%"></span></span><span><?php echo (int)$rvPhanBo[$i]; ?></span></div>
+                    <?php endfor; ?>
+                </div>
+            </div>
+
+            <?php foreach ($rvDs as $rv): ?>
+                <div class="rv-item">
+                    <div><span class="who"><?php echo h(rv_mask_name($rv['username'])); ?></span><span class="rv-badge">✓ Đã mua hàng</span><span class="when"><?php echo h(date('d/m/Y', strtotime($rv['created_at']))); ?></span></div>
+                    <div class="rv-star-on"><?php echo h(rv_stars((int)$rv['rating'])); ?></div>
+                    <?php if (trim((string)$rv['comment']) !== ''): ?><p style="margin:6px 0 0"><?php echo nl2br(h($rv['comment'])); ?></p><?php endif; ?>
+                    <?php if (!empty($rvMedia[(int)$rv['id']])): ?>
+                        <div class="rv-media">
+                            <?php foreach ($rvMedia[(int)$rv['id']] as $m): ?>
+                                <?php if ($m['media_type'] === 'video'): ?>
+                                    <video src="<?php echo h(rv_media_url($m['file_path'])); ?>" controls preload="metadata"></video>
+                                <?php else: ?>
+                                    <a href="<?php echo h(rv_media_url($m['file_path'])); ?>" target="_blank" rel="noopener"><img src="<?php echo h(rv_media_url($m['file_path'])); ?>" alt="Ảnh đánh giá" loading="lazy"></a>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+
+            <?php if ($rvSoTrang > 1): ?>
+                <div class="rv-pager">
+                    <?php for ($i = 1; $i <= $rvSoTrang; $i++): ?>
+                        <a class="<?php echo $i === $rvTrang ? 'cur' : ''; ?>" href="chitietsanpham.php?id=<?php echo (int)$product['id']; ?>&amp;rvp=<?php echo $i; ?>#danhgia"><?php echo $i; ?></a>
+                    <?php endfor; ?>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
+    </div>
+    <?php endif; ?>
 
 </div>
 

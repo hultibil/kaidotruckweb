@@ -123,16 +123,17 @@ if (isset($_SESSION['user_id'])) {
             <h2>Chức năng tài khoản</h2>
             <div class="account-actions">
                 <button><a href="../Chinhsuathongtin/chinhsuathongtin.php" style="color: inherit; text-decoration: none;">Chỉnh sửa thông tin</a></button>
-                <button><a href="../donhang/donhang.php" style="color: inherit; text-decoration: none;">Theo dõi đơn hàng</a></button>
-                <button><a href="../Giohang/giohang.php" style="color: inherit; text-decoration: none;">Giỏ hàng</a></button>
                 <button><a href="../Doimk/doimk.php" style="color: inherit; text-decoration: none;">Đổi mật khẩu</a></button>
+                <button><a href="../Giohang/giohang.php" style="color: inherit; text-decoration: none;">Giỏ hàng</a></button>
+                <button><a href="../donhang/donhang.php" style="color: inherit; text-decoration: none;">Theo dõi đơn hàng</a></button>
+                <button><a href="../sanpham/danhgia_cho.php" style="color: inherit; text-decoration: none;">Đánh giá của tôi</a></button>
                 <button><a href="../sanpham/yeuthich.php" style="color: inherit; text-decoration: none;">Sản phẩm yêu thích</a></button>
                 <button><a href="../donhang/lichsu.php" style="color: inherit; text-decoration: none;">Lịch sử mua hàng</a></button>
             </div>
         </div>
 
         <div class="account-footer">
-            <a href="../tienich.php">← Trở về</a>
+            <a href="../index.php">← Trở về trang tổng quan</a>
             <a href="xoataikhoan.php">Xóa tài khoản</a>
             <a href="dangxuat.php">Đăng xuất</a>
         </div>
