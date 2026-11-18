@@ -15,12 +15,14 @@ if ($ten === '' || mb_strlen($ten) > 100 ||
     $diaChi === '' || mb_strlen($diaChi) > 255) {
     http_response_code(422); exit('Thông tin người nhận chưa hợp lệ.');
 }
+$phuongThuc = (string)($_POST['payment_method'] ?? 'cod');
+if (!in_array($phuongThuc, ['cod', 'vietqr'], true)) { http_response_code(422); exit('Phương thức thanh toán không hợp lệ.'); }
 try {
-    $donId = taoDonHang($conn, $userId, $ten, $sdt, $diaChi, $_SESSION['cart'] ?? []);
+    $donId = taoDonHang($conn, $userId, $ten, $sdt, $diaChi, $_SESSION['cart'] ?? [], $phuongThuc);
     unset($_SESSION['cart']);
 
     unset($_SESSION['dh_csrf']);
-    header('Location: ../donhang/theodoi.php?id=' . $donId);
+    header('Location: ../donhang/' . ($phuongThuc === 'vietqr' ? 'thanhtoan_vietqr.php?id=' : 'theodoi.php?id=') . $donId);
     exit;
 } catch (Throwable $e) {
     http_response_code(400);

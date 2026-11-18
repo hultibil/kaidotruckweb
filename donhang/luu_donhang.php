@@ -1,8 +1,9 @@
 <?php
 
-function taoDonHang(mysqli $conn, int $userId, string $ten, string $sdt, string $diaChi, array $gioHang): int
+function taoDonHang(mysqli $conn, int $userId, string $ten, string $sdt, string $diaChi, array $gioHang, string $phuongThuc = 'cod'): int
 {
     if (!$gioHang) throw new RuntimeException('Giỏ hàng trống.');
+    if (!in_array($phuongThuc, ['cod', 'vietqr'], true)) throw new RuntimeException('Phương thức thanh toán không hợp lệ.');
     $conn->begin_transaction();
     try {
         $danhSach = [];
@@ -41,7 +42,7 @@ function taoDonHang(mysqli $conn, int $userId, string $ten, string $sdt, string 
              VALUES (?,?,?,?,?,?,?)'
         );
         $trangThai = 'pending';
-        $thanhToan = 'cod';
+        $thanhToan = $phuongThuc;   // 'cod' hoặc 'vietqr'
         $themDon->bind_param('isssdss', $userId, $ten, $sdt, $diaChi, $tong, $trangThai, $thanhToan);
         $themDon->execute();
         $donId = (int)$conn->insert_id;

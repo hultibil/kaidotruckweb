@@ -9,7 +9,7 @@ $THU_MUC_ANH = '../image/uploads/';
 
 // Danh sách đơn của tài khoản đang đăng nhập, mới nhất trước
 $stmt = $conn->prepare(
-    'SELECT id, created_at, total_amount, status
+    'SELECT id, created_at, total_amount, status, payment_method, payment_status
      FROM orders WHERE user_id=? ORDER BY created_at DESC, id DESC'
 );
 $stmt->bind_param('i', $userId);
@@ -207,6 +207,16 @@ try {
                         <small>Bạn có thể bỏ qua, đánh giá sau tại mục "Đánh giá của tôi".</small>
                     <?php else: ?>
                         ✓ Bạn đã đánh giá các sản phẩm trong đơn này. <a class="dg-lienket" href="../sanpham/danhgia_cho.php">Xem đánh giá của tôi</a>
+                    <?php endif; ?>
+                </div>
+                <?php endif; ?>
+
+                <?php if ($d['payment_method'] === 'vietqr' && $d['status'] !== 'cancelled'): ?>
+                <div class="dg-nhac" style="background:rgba(33,137,91,.12)">
+                    <?php if ($d['payment_status'] === 'paid'): ?>
+                        ✓ Đã thanh toán qua VietQR.
+                    <?php else: ?>
+                        Chưa thanh toán (VietQR). <a class="dg-nut" href="thanhtoan_vietqr.php?id=<?= (int)$d['id'] ?>">Thanh toán ngay</a>
                     <?php endif; ?>
                 </div>
                 <?php endif; ?>

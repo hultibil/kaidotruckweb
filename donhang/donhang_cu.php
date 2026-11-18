@@ -20,7 +20,7 @@ $donHang = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 $spTheoDon = [];
 if ($donHang) {
     $stmt = $conn->prepare(
-        'SELECT oi.order_id, oi.product_name, oi.quantity, oi.unit_price, p.image_path
+        'SELECT oi.order_id, oi.product_id, oi.product_name, oi.quantity, oi.unit_price, p.image_path
          FROM order_items oi
          JOIN orders o ON o.id = oi.order_id
          LEFT JOIN products p ON p.id = oi.product_id
@@ -33,6 +33,20 @@ if ($donHang) {
         $spTheoDon[(int)$it['order_id']][] = $it;
     }
 }
+
+// [ĐÁNH GIÁ] Các sản phẩm mà tài khoản này đã đánh giá (để chỉ nhắc những sản phẩm chưa đánh giá)
+$daDanhGia = [];
+try {
+    $stmt = $conn->prepare('SELECT product_id FROM product_reviews WHERE user_id=?');
+    $stmt->bind_param('i', $userId);
+    $stmt->execute();
+    foreach ($stmt->get_result()->fetch_all(MYSQLI_ASSOC) as $r) {
+        $daDanhGia[(int)$r['product_id']] = true;
+    }
+    $stmt->close();
+} catch (Throwable $e) {
+    error_log('donhang/danhgia: ' . $e->getMessage()); // chưa chạy danhgia.sql thì chỉ bỏ qua phần nhắc
+}
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -44,6 +58,14 @@ if ($donHang) {
     <link rel="stylesheet" href="../css/cart.css">
 <link rel="stylesheet" href="../css/glassy.css">
 <script src="../js/glassy-theme.js"></script>
+<style>
+    /* [ĐÁNH GIÁ] Khung nhắc đánh giá sản phẩm khi đơn đã giao thành công */
+    .dg-nhac{margin:12px 0;padding:12px 14px;border-radius:14px;border:1px dashed var(--field-border,#8eb5db);background:rgba(245,158,11,.10);text-align:left}
+    .dg-nhac-tieude{font-weight:700;margin-bottom:8px}
+    .dg-nhac-ds{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+    html body.glassy-page .dg-nhac a.dg-nut{display:inline-block;padding:7px 14px;border-radius:99px;font-size:13px;font-weight:700;text-decoration:none;color:#fff!important;background:var(--primary-gradient,#0861c3)!important}
+    html body.glassy-page .dg-nhac a.dg-lienket{color:var(--accent)!important;font-weight:700}
+</style>
 </head>
 
 <body class="glassy-page cart-page">
@@ -126,6 +148,17 @@ if ($donHang) {
                 $tongSL = 0;
                 foreach ($dsSP as $x) $tongSL += (int)$x['quantity'];
 
+                // [ĐÁNH GIÁ] sản phẩm trong đơn đã giao mà chưa đánh giá
+                $chuaDG = [];
+                if ($d['status'] === 'completed') {
+                    foreach ($dsSP as $x) {
+                        $pid = (int)$x['product_id'];
+                        if ($pid > 0 && empty($daDanhGia[$pid]) && !isset($chuaDG[$pid])) {
+                            $chuaDG[$pid] = $x['product_name'];
+                        }
+                    }
+                }
+
                 $tenAnh = $dau ? trim((string)($dau['image_path'] ?? '')) : '';
                 $anh = ($tenAnh !== '' && file_exists(__DIR__ . '/' . $THU_MUC_ANH . $tenAnh))
                     ? $THU_MUC_ANH . $tenAnh
@@ -159,6 +192,22 @@ if ($donHang) {
                             <p>và <?= $conLai ?> sản phẩm khác (tổng <?= $tongSL ?> sản phẩm)</p>
                         <?php endif; ?>
                     </div>
+                </div>
+                <?php endif; ?>
+
+                <?php if ($d['status'] === 'completed'): ?>
+                <div class="dg-nhac">
+                    <?php if ($chuaDG): ?>
+                        <div class="dg-nhac-tieude">⭐ Đơn hàng đã giao thành công! Bạn thấy sản phẩm thế nào?</div>
+                        <div class="dg-nhac-ds">
+                            <?php foreach ($chuaDG as $pid => $ten): ?>
+                                <a class="dg-nut" href="../sanpham/danhgia.php?order_id=<?= (int)$d['id'] ?>&amp;product_id=<?= (int)$pid ?>">Đánh giá: <?= h(mb_strimwidth($ten, 0, 40, '…', 'UTF-8')) ?></a>
+                            <?php endforeach; ?>
+                        </div>
+                        <small>Bạn có thể bỏ qua, đánh giá sau tại mục "Đánh giá của tôi".</small>
+                    <?php else: ?>
+                        ✓ Bạn đã đánh giá các sản phẩm trong đơn này. <a class="dg-lienket" href="../sanpham/danhgia_cho.php">Xem đánh giá của tôi</a>
+                    <?php endif; ?>
                 </div>
                 <?php endif; ?>
 

@@ -74,6 +74,39 @@ $duocPhep = [
     'cancelled' => [],
 ];
 
+// Admin xác nhận tay đã nhận tiền chuyển khoản VietQR (khi chưa có webhook)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mark_paid'])) {
+    admin_csrf_check();
+    $id = (int)($_POST['id'] ?? 0);
+    try {
+        $conn->begin_transaction();
+        $stmt = $conn->prepare('SELECT status, payment_method, payment_status FROM orders WHERE id = ? FOR UPDATE');
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $don = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+        if (!$don || $don['payment_method'] !== 'vietqr' || $don['payment_status'] !== 'unpaid' || $don['status'] === 'cancelled') {
+            throw new RuntimeException('Đơn không thể đánh dấu đã thanh toán.');
+        }
+        $stmt = $conn->prepare("UPDATE orders SET payment_status = 'paid' WHERE id = ?");
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $stmt->close();
+        $ghiChu = 'Admin xác nhận đã nhận chuyển khoản VietQR';
+        $stmt = $conn->prepare('INSERT INTO order_status_history (order_id, status, note) VALUES (?, ?, ?)');
+        $stmt->bind_param('iss', $id, $don['status'], $ghiChu);
+        $stmt->execute();
+        $stmt->close();
+        $conn->commit();
+        header('Location: admin.php?tab=orders&msg=pay_ok');
+    } catch (Throwable $e) {
+        $conn->rollback();
+        error_log('Danh dau thanh toan: ' . $e->getMessage());
+        header('Location: admin.php?tab=orders&msg=order_invalid');
+    }
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_order'])) {
     admin_csrf_check();
     $id           = (int)($_POST['id'] ?? 0);
@@ -195,6 +228,7 @@ $thong_bao = [
     'delete_failed' => ['err', 'Không xóa được sản phẩm (có thể đang được đơn hàng sử dụng).'],
     'invalid'       => ['err', 'Dữ liệu không hợp lệ (giá và tồn kho phải là số không âm).'],
     'order_updated' => ['ok',  'Đã cập nhật trạng thái đơn hàng.'],
+    'pay_ok'        => ['ok',  'Đã đánh dấu đơn hàng là đã thanh toán.'],
     'order_invalid' => ['err', 'Chuyển trạng thái không hợp lệ hoặc đơn hàng không tồn tại.'],
     'order_error'   => ['err', 'Lỗi cơ sở dữ liệu khi cập nhật đơn hàng. Vui lòng thử lại.'],
     'review_hidden'  => ['ok',  'Đã ẩn đánh giá (khách hàng không còn thấy ở trang sản phẩm).'],
@@ -704,7 +738,7 @@ try {
                     <h2 style="margin-top:0; font-size:20px; color:#f8fafc; margin-bottom: 20px;">Danh sách đơn hàng</h2>
                     <?php
                     $dsDon = $conn->query(
-                        'SELECT id, recipient_name, phone, shipping_address, created_at, total_amount, status
+                        'SELECT id, recipient_name, phone, shipping_address, created_at, total_amount, status, payment_method, payment_status
                          FROM orders ORDER BY id DESC LIMIT 200'
                     )->fetch_all(MYSQLI_ASSOC);
 
@@ -729,13 +763,14 @@ try {
                                     <th>Người nhận</th>
                                     <th>Sản phẩm</th>
                                     <th>Tổng tiền</th>
+                                    <th>Thanh toán</th>
                                     <th>Trạng thái</th>
                                     <th>Cập nhật</th>
                                 </tr>
                             </thead>
                             <tbody>
                             <?php if (!$dsDon): ?>
-                                <tr><td colspan="6" style="text-align:center; color:#94a3b8;">Chưa có đơn hàng nào.</td></tr>
+                                <tr><td colspan="7" style="text-align:center; color:#94a3b8;">Chưa có đơn hàng nào.</td></tr>
                             <?php else: ?>
                                 <?php foreach ($dsDon as $d):
                                     $tuyChon = $duocPhep[$d['status']] ?? [];
@@ -757,6 +792,26 @@ try {
                                         <?php endforeach; ?>
                                     </td>
                                     <td><strong style="color:#34d399;"><?= h(tien($d['total_amount'])) ?></strong></td>
+                                    <td>
+                                        <?php if ($d['payment_method'] === 'vietqr'): ?>
+                                            <span class="order-sub">VietQR</span><br>
+                                            <?php if ($d['payment_status'] === 'paid'): ?>
+                                                <strong style="color:#34d399;">✔ Đã thanh toán</strong>
+                                                <?php if ($d['status'] === 'cancelled'): ?><br><span style="color:#f87171;font-size:12px;">Đơn đã hủy – cần hoàn tiền tay</span><?php endif; ?>
+                                            <?php elseif ($d['status'] === 'cancelled'): ?>
+                                                <span class="order-sub">Đã hủy</span>
+                                            <?php else: ?>
+                                                <span style="color:#fbbf24;">Chưa thanh toán</span>
+                                                <form action="admin.php?tab=orders" method="POST" style="margin-top:4px;" onsubmit="return confirm('Xác nhận đã nhận đủ tiền chuyển khoản?');">
+                                                    <?= admin_csrf_field() ?>
+                                                    <input type="hidden" name="id" value="<?= (int)$d['id'] ?>">
+                                                    <button type="submit" name="mark_paid" class="btn-action btn-save">Đã nhận tiền</button>
+                                                </form>
+                                            <?php endif; ?>
+                                        <?php else: ?>
+                                            <span class="order-sub">COD</span>
+                                        <?php endif; ?>
+                                    </td>
                                     <td>
                                         <span class="order-badge" style="background:<?= h(mauTrangThai($d['status'])) ?>;">
                                             <?= h(tenTrangThai($d['status'])) ?>

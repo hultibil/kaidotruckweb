@@ -69,6 +69,8 @@ foreach ($sanPham as $sp) {
         .cart-notice { background: #fdecec; color: #a63d3d; padding: 10px 14px; border-radius: 8px; margin: 0 0 12px; }
         .checkout-form label { display: block; margin: 12px 0 4px; font-weight: 600; }
         .checkout-form input, .checkout-form textarea { width: 100%; box-sizing: border-box; padding: 9px 10px; border: 1px solid #ccc; border-radius: 6px; font: inherit; }
+        .checkout-form .pay-choice label { display: flex; align-items: center; gap: 8px; margin: 6px 0; font-weight: 400; }
+        .checkout-form .pay-choice input { width: auto; }
         .checkout-form textarea { min-height: 70px; resize: vertical; }
         .checkout-form .checkout-btn { margin-top: 14px; }
         .cart-summary .muted { opacity: .75; font-size: .9em; }
@@ -198,7 +200,6 @@ foreach ($sanPham as $sp) {
                 <?php elseif (empty($_SESSION['user_id'])): ?>
                     <p>Vui lòng <a href="../Taikhoan/dangnhap.php">đăng nhập</a> trước khi đặt hàng.</p>
                 <?php else: ?>
-                    <p class="muted">Thanh toán khi nhận hàng (COD).</p>
                     <form class="checkout-form" action="dat_hang.php" method="post">
                         <input type="hidden" name="csrf_token" value="<?= h(dhToken()) ?>">
                         <label for="ten">Tên người nhận</label>
@@ -208,6 +209,11 @@ foreach ($sanPham as $sp) {
                         <input id="sdt" name="sdt" required maxlength="20" pattern="[0-9+ .\-]{9,20}">
                         <label for="dia_chi">Địa chỉ giao hàng</label>
                         <textarea id="dia_chi" name="dia_chi" required maxlength="255"></textarea>
+                        <label>Phương thức thanh toán</label>
+                        <div class="pay-choice">
+                            <label><input type="radio" name="payment_method" value="cod" checked> Thanh toán khi nhận hàng (COD)</label>
+                            <label><input type="radio" name="payment_method" value="vietqr"> Chuyển khoản qua VietQR</label>
+                        </div>
                         <button class="checkout-btn" type="submit">
                             Tiến hành đặt hàng
                         </button>

@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/baove.php';   // PHẢI nằm đầu tiên: chặn người chưa đăng nhập / không phải admin[cite: 1]
 require_once __DIR__ . '/../donhang/trangthai.php'; // tenTrangThai(), mauTrangThai(), tien(), maDon()[cite: 1]
+require_once __DIR__ . '/../sanpham/danhgia_helper.php'; // [ĐÁNH GIÁ] rv_stars(), rv_media_url(), rv_upload_dir()
 
 /* ------------------------------------------------------------------
    XỬ LÝ XÓA sản phẩm (chỉ nhận POST + CSRF, không dùng link GET nữa)[cite: 1]
@@ -133,8 +134,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_order'])) {
     exit;
 }
 
+/* ------------------------------------------------------------------
+   [ĐÁNH GIÁ] ẨN / HIỆN / XÓA đánh giá, ĐÁNH DẤU ĐÃ ĐỌC (chỉ nhận POST + CSRF)
+------------------------------------------------------------------- */
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['review_action'])) {
+    admin_csrf_check();
+    $rid    = (int)($_POST['id'] ?? 0);
+    $hanhDong = (string)$_POST['review_action'];
+    $locBack  = in_array($_POST['f'] ?? '', ['all', 'new', 'hidden'], true) ? $_POST['f'] : 'all';
+    $back     = 'admin.php?tab=reviews&f=' . $locBack . '&p=' . max(1, (int)($_POST['p'] ?? 1));
+    $ketQua   = 'review_error';
+    try {
+        if ($hanhDong === 'read_all') {
+            $conn->query('UPDATE product_reviews SET is_read = 1, updated_at = updated_at WHERE is_read = 0');
+            $ketQua = 'review_read';
+        } elseif ($rid > 0 && ($hanhDong === 'hide' || $hanhDong === 'show')) {
+            $tt = $hanhDong === 'hide' ? 'hidden' : 'visible';
+            $stmt = $conn->prepare('UPDATE product_reviews SET status = ?, is_read = 1, updated_at = updated_at WHERE id = ?');
+            $stmt->bind_param('si', $tt, $rid);
+            $stmt->execute();
+            $stmt->close();
+            $ketQua = $hanhDong === 'hide' ? 'review_hidden' : 'review_shown';
+        } elseif ($rid > 0 && $hanhDong === 'delete') {
+            $conn->begin_transaction();
+            $stmt = $conn->prepare('SELECT file_path FROM review_media WHERE review_id = ?');
+            $stmt->bind_param('i', $rid);
+            $stmt->execute();
+            $duongDan = array_column($stmt->get_result()->fetch_all(MYSQLI_ASSOC), 'file_path');
+            $stmt->close();
+            $stmt = $conn->prepare('DELETE FROM product_reviews WHERE id = ?'); // review_media tự xóa theo (ON DELETE CASCADE)
+            $stmt->bind_param('i', $rid);
+            $stmt->execute();
+            $stmt->close();
+            $conn->commit();
+            foreach ($duongDan as $p) {
+                $f = rv_upload_dir() . basename($p);
+                if (is_file($f)) {
+                    @unlink($f);
+                }
+            }
+            $ketQua = 'review_deleted';
+        }
+    } catch (Throwable $e) {
+        try { $conn->rollback(); } catch (Throwable $e2) {}
+        error_log('admin/danhgia: ' . $e->getMessage());
+    }
+    header('Location: ' . $back . '&msg=' . $ketQua);
+    exit;
+}
+
 $tab = 'products';
-if (isset($_GET['tab']) && in_array($_GET['tab'], ['users', 'orders'], true)) {
+if (isset($_GET['tab']) && in_array($_GET['tab'], ['users', 'orders', 'reviews'], true)) {
     $tab = $_GET['tab'];
 }
 
@@ -147,8 +197,61 @@ $thong_bao = [
     'order_updated' => ['ok',  'Đã cập nhật trạng thái đơn hàng.'],
     'order_invalid' => ['err', 'Chuyển trạng thái không hợp lệ hoặc đơn hàng không tồn tại.'],
     'order_error'   => ['err', 'Lỗi cơ sở dữ liệu khi cập nhật đơn hàng. Vui lòng thử lại.'],
+    'review_hidden'  => ['ok',  'Đã ẩn đánh giá (khách hàng không còn thấy ở trang sản phẩm).'],
+    'review_shown'   => ['ok',  'Đã hiện lại đánh giá.'],
+    'review_deleted' => ['ok',  'Đã xóa đánh giá cùng ảnh/video đính kèm.'],
+    'review_read'    => ['ok',  'Đã đánh dấu tất cả đánh giá là đã đọc.'],
+    'review_error'   => ['err', 'Không thực hiện được. Kiểm tra đã chạy file danhgia.sql chưa.'],
 ];
 $msg = $_GET['msg'] ?? '';
+
+/* ------------------------------------------------------------------
+   [ĐÁNH GIÁ] Dữ liệu tab "Đánh giá sản phẩm" + số đánh giá chưa đọc (hiện ở menu)
+------------------------------------------------------------------- */
+$rvChuaDoc = 0;
+$rvLoiBang = false;
+$rvLoc = in_array($_GET['f'] ?? '', ['new', 'hidden'], true) ? $_GET['f'] : 'all';
+$rvTrang = max(1, (int)($_GET['p'] ?? 1));
+$rvMoiTrang = 15;
+$rvDs = []; $rvMedia = []; $rvTong = 0; $rvSoTrang = 1;
+$rvDem = ['all' => 0, 'new' => 0, 'hidden' => 0];
+try {
+    $dem = $conn->query("SELECT COUNT(*) AS a, COALESCE(SUM(is_read = 0), 0) AS n, COALESCE(SUM(status = 'hidden'), 0) AS hd FROM product_reviews")->fetch_assoc();
+    $rvDem = ['all' => (int)$dem['a'], 'new' => (int)$dem['n'], 'hidden' => (int)$dem['hd']];
+    if ($tab === 'reviews') {
+        $where = $rvLoc === 'new' ? 'WHERE r.is_read = 0' : ($rvLoc === 'hidden' ? "WHERE r.status = 'hidden'" : '');
+        $rvTong = $rvDem[$rvLoc];
+        $rvSoTrang = max(1, (int)ceil($rvTong / $rvMoiTrang));
+        $rvTrang = min($rvTrang, $rvSoTrang);
+        $off = ($rvTrang - 1) * $rvMoiTrang;
+        $stmt = $conn->prepare(
+            "SELECT r.id, r.product_id, r.order_id, r.rating, r.comment, r.status, r.is_read, r.created_at, r.updated_at,
+                    p.product_name, u.username, u.full_name, u.email
+               FROM product_reviews r
+               JOIN products p ON p.id = r.product_id
+               JOIN users u ON u.id = r.user_id
+               $where
+              ORDER BY r.is_read ASC, r.updated_at DESC, r.id DESC
+              LIMIT ? OFFSET ?"
+        );
+        $stmt->bind_param('ii', $rvMoiTrang, $off);
+        $stmt->execute();
+        $rvDs = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        if ($rvDs) {
+            $ids = implode(',', array_map(fn($r) => (int)$r['id'], $rvDs));
+            foreach ($conn->query("SELECT review_id, file_path, media_type FROM review_media WHERE review_id IN ($ids) ORDER BY id")->fetch_all(MYSQLI_ASSOC) as $m) {
+                $rvMedia[(int)$m['review_id']][] = $m;
+            }
+            // Mở tab = đã đọc những đánh giá đang hiển thị (vẫn giữ nhãn "Mới" ở lần hiển thị này)
+            $conn->query("UPDATE product_reviews SET is_read = 1, updated_at = updated_at WHERE is_read = 0 AND id IN ($ids)");
+        }
+    }
+    $rvChuaDoc = (int)$conn->query('SELECT COUNT(*) AS n FROM product_reviews WHERE is_read = 0')->fetch_assoc()['n'];
+} catch (Throwable $e) {
+    $rvLoiBang = true;
+    error_log('admin/danhgia: ' . $e->getMessage());
+}
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -426,6 +529,16 @@ $msg = $_GET['msg'] ?? '';
         .order-form input[type="text"] { width: 140px; }
         .order-sub { color: #94a3b8; font-size: 12px; }
 
+        /* [ĐÁNH GIÁ] */
+        .rv-badge-new { display:inline-block; padding:2px 8px; border-radius:99px; background:#ef4444; color:#fff; font-size:11px; font-weight:700; margin-left:6px; }
+        .menu-count { display:inline-block; min-width:20px; padding:1px 7px; margin-left:auto; border-radius:99px; background:#ef4444; color:#fff; font-size:11px; font-weight:700; text-align:center; }
+        .rv-filter a { display:inline-block; padding:7px 14px; margin-right:6px; border-radius:99px; border:1px solid #334155; font-size:13px; text-decoration:none; color:inherit; }
+        .rv-filter a.on { background:linear-gradient(90deg,#ff416c,#ff4b2b); color:#fff; border-color:transparent; }
+        .rv-thumbs { display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
+        .rv-thumbs img { width:64px; height:64px; object-fit:cover; border-radius:8px; border:1px solid #334155; }
+        .rv-thumbs video { width:150px; height:84px; border-radius:8px; background:#000; }
+        .rv-row-new { background: rgba(239,68,68,.07); }
+
         /* Responsive Mobile Layout */
         @media (max-width: 900px) {
             body { flex-direction: column; }
@@ -468,6 +581,7 @@ $msg = $_GET['msg'] ?? '';
             <a href="admin.php?tab=products">Quản lý Sản phẩm</a>
             <a href="admin.php?tab=orders">Quản lý Đơn hàng</a>
             <a href="admin.php?tab=users">Quản lý Người dùng</a>
+            <a href="admin.php?tab=reviews">Đánh giá sản phẩm<?php if ($rvChuaDoc > 0): ?><span class="menu-count"><?= (int)$rvChuaDoc ?></span><?php endif; ?></a>
 
             <div class="menu-heading" style="margin-top: 15px;">Thống Kê</div>
             <a href="thongke.php">Báo cáo Tổng quan</a>
@@ -478,6 +592,9 @@ $msg = $_GET['msg'] ?? '';
             <div class="menu-heading" style="margin-top: 15px;">Kho &amp; Danh Mục</div>
             <a href="danhmuc.php">Quản lý Danh mục</a>
             <a href="khohang.php">Tồn kho &amp; Cảnh báo</a>
+            <div class="menu-heading" style="margin-top: 15px;">Tin nhắn từ người dùng</div>
+            <a href="../tu-van/admintuvan.php">Phản hồi tư vấn</a>
+            <a href="../phan-hoi/adminphanhoi.php">Phản hồi vấn đề hệ thống</a>
         </nav>
     </aside>
 
@@ -668,6 +785,100 @@ $msg = $_GET['msg'] ?? '';
                             </tbody>
                         </table>
                     </div>
+
+                <?php elseif ($tab === 'reviews'): ?>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
+                        <h2 style="margin:0; font-size:20px;">Đánh giá sản phẩm từ khách hàng</h2>
+                        <?php if ($rvDem['new'] > 0): ?>
+                        <form method="POST" action="admin.php?tab=reviews" class="inline-form">
+                            <?= admin_csrf_field() ?>
+                            <input type="hidden" name="f" value="<?= h($rvLoc) ?>">
+                            <button type="submit" name="review_action" value="read_all" class="btn-action" style="background:#475569;">Đánh dấu tất cả đã đọc</button>
+                        </form>
+                        <?php endif; ?>
+                    </div>
+
+                    <?php if ($rvLoiBang): ?>
+                        <div class="alert-error">Chưa có bảng đánh giá trong CSDL. Hãy chạy file <code>danhgia.sql</code> trong phpMyAdmin.</div>
+                    <?php else: ?>
+                    <div class="rv-filter" style="margin-bottom:14px;">
+                        <a class="<?= $rvLoc === 'all' ? 'on' : '' ?>" href="admin.php?tab=reviews&amp;f=all">Tất cả (<?= (int)$rvDem['all'] ?>)</a>
+                        <a class="<?= $rvLoc === 'new' ? 'on' : '' ?>" href="admin.php?tab=reviews&amp;f=new">Chưa đọc (<?= (int)$rvDem['new'] ?>)</a>
+                        <a class="<?= $rvLoc === 'hidden' ? 'on' : '' ?>" href="admin.php?tab=reviews&amp;f=hidden">Đang ẩn (<?= (int)$rvDem['hidden'] ?>)</a>
+                    </div>
+
+                    <div style="overflow-x:auto;">
+                        <table class="admin-table">
+                            <thead>
+                                <tr><th>Sản phẩm</th><th>Khách hàng</th><th>Đánh giá</th><th>Thời gian</th><th>Hành động</th></tr>
+                            </thead>
+                            <tbody>
+                            <?php if (!$rvDs): ?>
+                                <tr><td colspan="5" style="text-align:center; color:#94a3b8;">Không có đánh giá nào.</td></tr>
+                            <?php endif; ?>
+                            <?php foreach ($rvDs as $r): $moi = (int)$r['is_read'] === 0; $an = $r['status'] === 'hidden'; ?>
+                                <tr class="<?= $moi ? 'rv-row-new' : '' ?>">
+                                    <td>
+                                        <a href="../sanpham/chitietsanpham.php?id=<?= (int)$r['product_id'] ?>#danhgia" target="_blank" style="color:#38bdf8; font-weight:600;"><?= h($r['product_name']) ?></a><br>
+                                        <span class="order-sub">Đơn <?= h(maDon((int)$r['order_id'])) ?></span>
+                                    </td>
+                                    <td>
+                                        <strong><?= h($r['username']) ?></strong><?= $moi ? '<span class="rv-badge-new">MỚI</span>' : '' ?><br>
+                                        <span class="order-sub"><?= h($r['full_name']) ?></span><br>
+                                        <span class="order-sub"><?= h($r['email']) ?></span>
+                                    </td>
+                                    <td style="min-width:260px; max-width:420px;">
+                                        <div style="color:#f59e0b; letter-spacing:2px; font-size:16px;"><?= h(rv_stars((int)$r['rating'])) ?></div>
+                                        <?php if (trim((string)$r['comment']) !== ''): ?>
+                                            <div style="margin-top:4px; white-space:pre-wrap; word-break:break-word;"><?= h($r['comment']) ?></div>
+                                        <?php else: ?>
+                                            <div class="order-sub">(không có nhận xét)</div>
+                                        <?php endif; ?>
+                                        <?php if (!empty($rvMedia[(int)$r['id']])): ?>
+                                            <div class="rv-thumbs">
+                                            <?php foreach ($rvMedia[(int)$r['id']] as $m): ?>
+                                                <?php if ($m['media_type'] === 'video'): ?>
+                                                    <video src="<?= h(rv_media_url($m['file_path'])) ?>" controls preload="metadata"></video>
+                                                <?php else: ?>
+                                                    <a href="<?= h(rv_media_url($m['file_path'])) ?>" target="_blank" rel="noopener"><img src="<?= h(rv_media_url($m['file_path'])) ?>" alt="" loading="lazy"></a>
+                                                <?php endif; ?>
+                                            <?php endforeach; ?>
+                                            </div>
+                                        <?php endif; ?>
+                                        <?php if ($an): ?><div style="margin-top:6px;"><span class="order-badge" style="background:#64748b;">Đang ẩn</span></div><?php endif; ?>
+                                    </td>
+                                    <td><span class="order-sub"><?= h(date('d/m/Y H:i', strtotime($r['created_at']))) ?></span>
+                                        <?php if ($r['updated_at'] !== $r['created_at']): ?><br><span class="order-sub">sửa: <?= h(date('d/m/Y H:i', strtotime($r['updated_at']))) ?></span><?php endif; ?></td>
+                                    <td>
+                                        <form class="inline-form" method="POST" action="admin.php?tab=reviews">
+                                            <?= admin_csrf_field() ?>
+                                            <input type="hidden" name="id" value="<?= (int)$r['id'] ?>">
+                                            <input type="hidden" name="f" value="<?= h($rvLoc) ?>">
+                                            <input type="hidden" name="p" value="<?= (int)$rvTrang ?>">
+                                            <button type="submit" name="review_action" value="<?= $an ? 'show' : 'hide' ?>" class="btn-action" style="background:<?= $an ? '#10b981' : '#f59e0b' ?>;"><?= $an ? 'Hiện lại' : 'Ẩn' ?></button>
+                                        </form>
+                                        <form class="inline-form" method="POST" action="admin.php?tab=reviews" onsubmit="return confirm('Xóa vĩnh viễn đánh giá này cùng ảnh/video đính kèm?');">
+                                            <?= admin_csrf_field() ?>
+                                            <input type="hidden" name="id" value="<?= (int)$r['id'] ?>">
+                                            <input type="hidden" name="f" value="<?= h($rvLoc) ?>">
+                                            <input type="hidden" name="p" value="<?= (int)$rvTrang ?>">
+                                            <button type="submit" name="review_action" value="delete" class="btn-action btn-delete">Xóa</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <?php if ($rvSoTrang > 1): ?>
+                        <div class="rv-filter" style="margin-top:14px;">
+                            <?php for ($i = 1; $i <= $rvSoTrang; $i++): ?>
+                                <a class="<?= $i === $rvTrang ? 'on' : '' ?>" href="admin.php?tab=reviews&amp;f=<?= h($rvLoc) ?>&amp;p=<?= $i ?>"><?= $i ?></a>
+                            <?php endfor; ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php endif; ?>
 
                 <?php else: ?>
                     <?php
