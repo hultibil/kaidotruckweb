@@ -46,7 +46,7 @@ $sent = isset($_GET['sent']) && !empty($_SESSION['consultation_sent']); unset($_
 <body>
     <main class="wrap" id="main-content">
         <div class="topbar">
-            <a class="brand" href="../index.php">KAIDO</a>
+            <a class="brand" href="../index.php">// FORM ĐIỀN TƯ VẤN</a>
             <div class="topbar-right">
                 <button type="button" id="themeToggle" class="theme-btn" onclick="toggleTvTheme()">☀️ Light</button>
                 <a class="back" href="../index.php">← Quay lại tổng quan</a>
@@ -100,7 +100,7 @@ $sent = isset($_GET['sent']) && !empty($_SESSION['consultation_sent']); unset($_
 
                 <div class="field">
                     <label for="subject">Bạn cần tư vấn về <span class="required">*</span></label>
-                    <input id="subject" name="subject" maxlength="150" placeholder="Ví dụ: Giá sản phẩm, lắp ráp xe, bảo hành" value="<?= tv_h($values['subject']) ?>" class="<?= isset($errors['subject'])?'invalid':'' ?>" aria-describedby="subject-error">
+                    <input id="subject" name="subject" maxlength="150" placeholder="Ví dụ: Giá sản phẩm, thắc mắc về linh kiện, bảo hành,.." value="<?= tv_h($values['subject']) ?>" class="<?= isset($errors['subject'])?'invalid':'' ?>" aria-describedby="subject-error">
                     <?php if(isset($errors['subject'])):?><small class="field-error" id="subject-error"><?= tv_h($errors['subject']) ?></small><?php endif;?>
                 </div>
 

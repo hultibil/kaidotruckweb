@@ -273,6 +273,7 @@ try {
             <a href="../admin/admin.php?tab=products">Quản lý Sản phẩm</a>
             <a href="../admin/admin.php?tab=orders">Quản lý Đơn hàng</a>
             <a href="../admin/admin.php?tab=users">Quản lý Người dùng</a>
+            <a href="quanly_tuongthich.php">Tương thích linh kiện</a>
             <a href="../admin/admin.php?tab=reviews">Đánh giá sản phẩm<?php if ($rvChuaDoc > 0): ?><span class="menu-count"><?= (int)$rvChuaDoc ?></span><?php endif; ?></a>
 
             <div class="menu-heading" style="margin-top: 15px;">Thống Kê</div>
@@ -286,7 +287,7 @@ try {
             <a href="../admin/khohang.php">Tồn kho &amp; Cảnh báo</a>
 
             <div class="menu-heading" style="margin-top: 15px;">Tin nhắn từ người dùng</div>
-            <a href="admintuvan.php" class="active">Phản hồi tư vấn</a>
+            <a href="admintuvan.php">Phản hồi tư vấn</a>
             <a href="../phan-hoi/adminphanhoi.php">Phản hồi vấn đề hệ thống</a>
         </nav>
     </aside>

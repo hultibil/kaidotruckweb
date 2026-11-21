@@ -61,7 +61,7 @@ unset($_SESSION['feedback_sent']);
 <body>
     <main class="wrap" id="main-content">
         <div class="topbar">
-            <a class="brand" href="../index.php">KAIDO</a>
+            <a class="brand" href="../index.php">// FORM ĐIỀN PHẢN HỒI</a>
             <div class="topbar-right">
                 <button type="button" id="themeToggle" class="theme-btn" onclick="togglePhTheme()">☀️ Light</button>
                 <a class="back" href="../index.php">← Quay lại trang tổng quan</a>

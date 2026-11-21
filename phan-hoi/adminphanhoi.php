@@ -285,6 +285,7 @@ try {
             <a href="../admin/thongke.php">Báo cáo Tổng quan</a>
             <a href="../admin/thongke_doanhthu.php">Thống kê Doanh thu</a>
             <a href="../admin/thongke_donhang.php">Thống kê Đơn hàng</a>
+            <a href="quanly_tuongthich.php">Tương thích linh kiện</a>
             <a href="../admin/thongke_banchay.php">Sản phẩm Bán chạy</a>
 
             <div class="menu-heading" style="margin-top: 15px;">Kho &amp; Danh Mục</div>
@@ -293,7 +294,7 @@ try {
 
             <div class="menu-heading" style="margin-top: 15px;">Tin nhắn từ người dùng</div>
             <a href="../tu-van/admintuvan.php">Phản hồi tư vấn</a>
-            <a href="adminphanhoi.php" class="active">Phản hồi vấn đề hệ thống</a>
+            <a href="adminphanhoi.php">Phản hồi vấn đề hệ thống</a>
         </nav>
     </aside>
 

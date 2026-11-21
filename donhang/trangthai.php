@@ -3,7 +3,7 @@
 // Mã trạng thái dùng trực tiếp giá trị enum của cột orders.status
 // pending | confirmed | shipping | completed | cancelled
 $DS_TRANG_THAI = [
-    'pending' => 'Chờ xác nhận',
+    'pending' => 'Đã xác nhận',
     'confirmed' => 'Đang chuẩn bị hàng',
     'shipping' => 'Đang giao hàng',
     'completed' => 'Đã giao thành công',

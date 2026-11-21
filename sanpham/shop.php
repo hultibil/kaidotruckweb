@@ -269,7 +269,7 @@ $result = mysqli_query($conn, $sql);
 <h1>TRUNG TÂM CỬA HÀNG LINH KIỆN & THIẾT BỊ ĐIỆN TỬ</h1>
 
 <!-- KAIDO PROMOTION CAROUSEL -->
-<div class="kaido-carousel">2
+<div class="kaido-carousel">
     <div class="kaido-slides">
         <div class="kaido-slide active">
             <img src="../image/xev5trinhchieu.jpg" alt="KAIDO">
@@ -312,7 +312,7 @@ $result = mysqli_query($conn, $sql);
     <!-- ==================== KHU VỰC TÌM KIẾM & PHÂN LOẠI ==================== -->
     <div class="filter-section">
         <!-- 1.2 Tìm kiếm sản phẩm -->
-        <form action="shop.php#dautrang" method="GET" class="search-box">
+        <form action="shop.php#dautrang" method="GET" class="search-box" id="search-form">
             <?php if ($category_id > 0): ?>
                 <input type="hidden" name="category_id" value="<?php echo $category_id; ?>">
             <?php endif; ?>
@@ -321,7 +321,7 @@ $result = mysqli_query($conn, $sql);
         </form>
 
         <!-- 1.2 Phân loại sản phẩm -->
-        <div class="category-buttons">
+        <div class="category-buttons" id="cat-buttons">
             <!-- Nút Tất cả -->
             <a href="shop.php#dautrang" class="cat-btn <?php echo ($category_id == 0) ? 'active' : ''; ?>">
                 Tất cả
@@ -339,7 +339,7 @@ $result = mysqli_query($conn, $sql);
         </div>
     </div>
 
-    <h3 class="text">
+    <h3 class="text" id="shop-title">
         <?php 
         if (!empty($search)) {
             echo "Kết quả tìm kiếm cho: \"" . htmlspecialchars($search) . "\"";
@@ -349,7 +349,7 @@ $result = mysqli_query($conn, $sql);
         ?>
     </h3>
 
-    <div class="shop-list">
+    <div class="shop-list" id="shop-list">
         <?php
 if ($result && mysqli_num_rows($result) > 0):
     while ($row = mysqli_fetch_assoc($result)):
@@ -370,7 +370,6 @@ if ($result && mysqli_num_rows($result) > 0):
             <?php endif; ?>
         </div>
         <h2><?php echo htmlspecialchars($row['product_name']); ?></h2>
-        <p><?php echo htmlspecialchars($row['description']); ?></p>
         <p>Giá: <strong><?php echo number_format($row['price'], 0, ',', '.'); ?> VNĐ</strong></p>
         <p>Tình trạng: <?php echo $status_text; ?></p>
         <a href="chitietsanpham.php?id=<?php echo $row['id']; ?>">Xem chi tiết</a>
@@ -450,15 +449,78 @@ else:
 </body>
 <script src="../js/slide.js"></script>
 <script>
+/* [AJAX] Tìm kiếm / lọc danh mục không tải lại trang */
+(function () {
+    const form = document.getElementById('search-form');
+    const cats = document.getElementById('cat-buttons');
+    const list = document.getElementById('shop-list');
+    const title = document.getElementById('shop-title');
+    if (!form || !cats || !list || !title) return;
+    let ctl = null;
+
+    function syncCategoryInput(catId) {
+        let hid = form.querySelector('input[name="category_id"]');
+        if (catId) {
+            if (!hid) { hid = document.createElement('input'); hid.type = 'hidden'; hid.name = 'category_id'; form.prepend(hid); }
+            hid.value = catId;
+        } else if (hid) { hid.remove(); }
+    }
+
+    function loadShop(url, push) {
+        if (ctl) ctl.abort();
+        ctl = new AbortController();
+        list.style.opacity = '.45';
+        fetch(url, { signal: ctl.signal, headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.text(); })
+            .then(html => {
+                const doc = new DOMParser().parseFromString(html, 'text/html');
+                const nList = doc.getElementById('shop-list'), nCats = doc.getElementById('cat-buttons'), nTitle = doc.getElementById('shop-title');
+                if (!nList || !nCats || !nTitle) throw new Error('bad page');
+                list.innerHTML = nList.innerHTML;
+                cats.innerHTML = nCats.innerHTML;
+                title.textContent = nTitle.textContent.trim();
+                const u = new URL(url, location.href);
+                syncCategoryInput(u.searchParams.get('category_id') || '');
+                form.querySelector('input[name="search"]').value = u.searchParams.get('search') || '';
+                if (push) history.pushState(null, '', u.pathname + u.search + '#dautrang');
+                list.style.opacity = '';
+            })
+            .catch(err => {
+                if (err.name === 'AbortError') return;
+                location.href = url; // lỗi thì quay về cách tải trang bình thường
+            });
+    }
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const u = new URL(form.getAttribute('action'), location.href);
+        u.hash = '';
+        new FormData(form).forEach((v, k) => { if (String(v).trim() !== '') u.searchParams.set(k, String(v).trim()); });
+        loadShop(u.toString(), true);
+    });
+
+    cats.addEventListener('click', function (e) {
+        const a = e.target.closest('a.cat-btn');
+        if (!a || e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
+        e.preventDefault();
+        const u = new URL(a.href, location.href);
+        u.hash = '';
+        loadShop(u.toString(), true);
+    });
+
+    window.addEventListener('popstate', function () { loadShop(location.href, false); });
+})();
+</script>
+<script>
 document.addEventListener('submit', function(e) {
     let form = e.target;
     
     // Kiểm tra nếu là form thêm vào giỏ hàng
     if (form.action && form.action.includes('them_gio.php')) {
-        e.preventDefault(); // Chặn việc load lại trang
+        e.preventDefault(); //chặn load
         
         let formData = new FormData(form);
-        formData.append('ajax', '1'); // Đánh dấu là request AJAX giống như xuly_yeuthich.php
+        formData.append('ajax', '1');
         
         fetch(form.action, {
             method: 'POST',
@@ -469,8 +531,6 @@ document.addEventListener('submit', function(e) {
         })
         .then(response => response.json())
         .then(data => {
-            // Tìm khung thông báo ở dưới sản phẩm (hoặc dùng chung hàm thông báo của nút yêu thích)
-            // Giả sử trang shop của bạn có một thẻ chứa thông báo chung, hoặc bạn có thể tạo/gắn trực tiếp:
             let noticeArea = document.getElementById('shop-notification-bar'); 
             if (!noticeArea) {
                 // Nếu chưa có thanh thông báo chung ở dưới, ta tạo một thanh nhỏ ngay trên đầu danh sách sản phẩm hoặc dưới tiêu đề

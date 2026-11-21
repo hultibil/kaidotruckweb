@@ -200,7 +200,8 @@ body.light-mode table.admin-table th {
             <a href="admin.php?tab=products">Quản lý Sản phẩm</a>
             <a href="admin.php?tab=orders">Quản lý Đơn hàng</a>
             <a href="admin.php?tab=users">Quản lý Người dùng</a>
-            <a href="admin.php?tab=reviews">Đánh giá sản phẩm<?php if ($rvChuaDoc > 0): ?><span class="menu-count"><?= (int)$rvChuaDoc ?></span><?php endif; ?></a>
+            <a href="quanly_tuongthich.php">Tương thích linh kiện</a>
+             <a href="admin.php?tab=reviews">Đánh giá sản phẩm</a>
 
             <div class="menu-heading" style="margin-top: 15px;">Thống Kê</div>
             <a href="thongke.php">Báo cáo Tổng quan</a>
