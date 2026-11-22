@@ -1,5 +1,7 @@
 <?php
 session_start(); // Bắt đầu session để quản lý đăng nhập
+require_once __DIR__ . '/donhang/trangthai.php'; // dhToken() cho nút "+ Giỏ" trong chat AI
+if (empty($_SESSION['ai_csrf'])) { $_SESSION['ai_csrf'] = bin2hex(random_bytes(32)); }
 ?>
 
 <!DOCTYPE html>
@@ -12,6 +14,25 @@ session_start(); // Bắt đầu session để quản lý đăng nhập
         <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/glassy.css">
 <script src="js/glassy-theme.js"></script>
+<style>
+/* [AI] Thẻ sản phẩm trong chatbox */
+.chatbox .ai-text{white-space:pre-wrap;word-break:break-word}
+.chatbox .ai-cards{display:grid;gap:8px;margin-top:10px}
+.chatbox .ai-card{display:flex;gap:10px;align-items:center;padding:8px;border-radius:12px;background:rgba(255,255,255,.12);border:1px solid rgba(128,160,200,.35)}
+.chatbox .ai-card img{width:64px;height:64px;object-fit:cover;border-radius:10px;flex:0 0 64px}
+.chatbox .ai-card-body{min-width:0;flex:1}
+.chatbox .ai-card-name{display:block;font-weight:700;text-decoration:none;word-break:break-word}
+.chatbox .ai-card-price{font-size:13px;margin:2px 0 6px;opacity:.9}
+.chatbox .ai-card-actions{display:flex;gap:6px;flex-wrap:wrap}
+.chatbox .ai-btn{padding:5px 12px;border-radius:99px;border:1px solid rgba(128,160,200,.6);background:transparent;font:inherit;font-size:13px;cursor:pointer;text-decoration:none}
+.chatbox .ai-btn-main{background:linear-gradient(135deg,#ff416c,#ff4b2b);border-color:transparent;color:#fff}
+.chatbox .ai-btn:disabled{opacity:.6;cursor:default}
+.chatbox .ai-failed{opacity:.85}
+.chatbox .ai-typing{opacity:.7;font-style:italic}
+html body.glassy-page .chatbox .ai-card-name,html body.glassy-page .chatbox .ai-card-price{color:var(--ink)!important}
+html body.glassy-page .chatbox .ai-btn{color:var(--ink)!important}
+html body.glassy-page .chatbox .ai-btn-main{color:#fff!important;-webkit-text-fill-color:#fff}
+</style>
 </head>
     <body class="glassy-page">
 <?php $glassyBase = ''; require __DIR__ . '/layout/glassy-sidebar.php'; ?>
@@ -74,16 +95,17 @@ session_start(); // Bắt đầu session để quản lý đăng nhập
     </div>
 
     </div>
-    <h3 class="text">Chatbox</h3>
+    <h3 class="text">Trò chuyện</h3>
 <!--Tro chuyen-->
 <div class="chatbox">
         <div class="chat" id="chat">
             <div class="ai-message">
-                <em>NPC KAIDO</em>
+                <em>KAIDO AI</em>
                 <p>
                     Xin chào!<br>
-                    Mình là NPC Kaido chuyên nói về xe tải của thương hiệu. 
-                    Bạn có thể hỏi bằng cách nhập trên thanh chat hoặc nhấn vào nút "Câu hỏi đề xuất".<br>
+                    Mình là trợ lý AI của Kaido: tư vấn linh kiện (ví dụ "pin cho xe RC dưới 200k"),
+                    và giải đáp về các mẫu xe của thương hiệu.
+                    Bạn có thể nhập câu hỏi hoặc nhấn vào nút "Câu hỏi đề xuất".<br>
                 </p>
             </div>
         </div>
@@ -93,7 +115,7 @@ session_start(); // Bắt đầu session để quản lý đăng nhập
             <input
                 type="text"
                 id="question"
-                placeholder="Bạn hỏi liên quan đến KAIDO đi..."
+                placeholder="Hỏi về linh kiện hoặc xe Kaido… (vd: pin dưới 200k)" maxlength="500"
                 onkeydown="if(event.key === 'Enter') sendMessage()"
             >
 
@@ -108,6 +130,14 @@ session_start(); // Bắt đầu session để quản lý đăng nhập
 
 
         <div id="questions" class="questions">
+
+            <button onclick="askQuestion('Gợi ý cho mình pin dưới 200k')">
+                Gợi ý pin dưới 200k
+            </button>
+
+            <button onclick="askQuestion('Mình mới làm xe RC, nên mua linh kiện gì?')">
+                Linh kiện cho xe RC
+            </button>
 
             <button onclick="askQuestion('KAIDO là gì?')">
                 KAIDO là gì?
@@ -154,10 +184,6 @@ session_start(); // Bắt đầu session để quản lý đăng nhập
             Xóa lịch sử
         </button>
 </div>
-<h3 class="text">Thông báo</h3>
-<p>Đây là NPC trò chuyện và chưa được hoàn thiện, bạn có thể hỏi thêm về Kaido mà bạn muốn, đúng câu hỏi NPC sẽ trả lời cho bạn!<br>
-NPC chỉ biết về Kaido, nếu bạn gửi câu hỏi bên ngoài NPC sẽ không biết không thể trả lời nên còn rất nhiều hạn chế <br>
-Chúng mình sẽ nâng cấp phần mục trò chuyện này vào lần sau.</p>
         <div class="thongtinweb">
     <h4 class="text">Bạn đang ở cuối trang.</h4>
 <div class="footer">
@@ -207,6 +233,15 @@ window.addEventListener("load", function() {
 </script>
 </div><!-- glassy-content -->
 </body>
+    <script>
+    window.KAIDO_AI = {
+        api: 'ai/chat_api.php',
+        csrf: <?= json_encode($_SESSION['ai_csrf']) ?>,
+        cartApi: 'Giohang/them_gio.php',
+        cartCsrf: <?= json_encode(dhToken()) ?>
+    };
+    </script>
     <script src="js/chat.js"></script>
+    <script src="js/ai-chat.js"></script>
     <script src="js/slide.js"></script>
 </html>

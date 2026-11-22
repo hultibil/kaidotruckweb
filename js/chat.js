@@ -14,19 +14,7 @@ function sendMessage() {
 }
 
 
-function askQuestion(question) {
-
-    const chat = document.getElementById("chat");
-
-    // Hiện câu hỏi của người dùng
-    const userMessage = document.createElement("div");
-
-    userMessage.className = "user-message";
-
-    userMessage.textContent = question;
-
-    chat.appendChild(userMessage);
-
+function kaidoRuleAnswer(question) {
 
     // Chuyển câu hỏi thành chữ thường
     const q = question.toLowerCase();
@@ -297,6 +285,25 @@ function askQuestion(question) {
             "Bạn có thể thử hỏi về xe V1, V2, V3, V4, V5, xe camera, " +
             "xe công nông hoặc xe địa hình nhé! Mình có thể mình sẽ giúp ích được cho bạn.";
     }
+
+    return answer;
+}
+
+
+function askQuestion(question) {
+
+    const chat = document.getElementById("chat");
+
+    // Hiện câu hỏi của người dùng
+    const userMessage = document.createElement("div");
+
+    userMessage.className = "user-message";
+
+    userMessage.textContent = question;
+
+    chat.appendChild(userMessage);
+
+    const answer = kaidoRuleAnswer(question);
 
 
     // =========================
